@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Relay | Ship software on schedule</title>
+<meta name="description" content="Relay turns your roadmap into a shipping cadence your whole team can see." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f3ef;
+    --paper:#ffffff;
+    --ink:#0c0c0b;
+    --ink-2:#4a4945;
+    --dim:#928f88;
+    --rule:rgba(12,12,11,.10);
+    --blue:#1f4bff;
+    --lime:#d4ff35;
+    --ease:cubic-bezier(.4,0,.2,1);
+    --shadow-sm:0 1px 2px rgba(12,12,11,.04);
+    --shadow:0 2px 8px rgba(12,12,11,.05),0 18px 44px -24px rgba(12,12,11,.24);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:'Archivo',system-ui,sans-serif;font-size:16px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  ::selection{background:var(--blue);color:#fff}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  h1,h2,h3{margin:0;font-weight:800;line-height:1;letter-spacing:-.04em}
+  p{margin:0}
+  :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+
+  /* ---------- NAV ---------- */
+  header{position:sticky;top:0;z-index:60;background:rgba(244,243,239,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:66px;gap:24px}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:900;font-size:20px;letter-spacing:-.05em}
+  .brand__mark{width:20px;height:20px;border-radius:6px;background:var(--blue);display:grid;place-items:center}
+  .brand__mark::after{content:"";width:8px;height:8px;border-radius:2px;background:var(--lime)}
+  .nav nav{display:flex;gap:4px;font-size:14px;font-weight:600;font-family:'JetBrains Mono'}
+  .nav nav a{padding:8px 13px;border-radius:9px;transition:.18s}
+  .nav nav a:hover{background:var(--ink);color:var(--bg)}
+  .nav-r{display:flex;align-items:center;gap:10px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;font-size:14px;font-weight:700;border-radius:10px;transition:.18s;letter-spacing:-.01em}
+  .btn--solid{background:var(--ink);color:var(--bg)}
+  .btn--solid:hover{background:var(--blue)}
+  .btn--ghost{background:transparent}
+  .btn--ghost:hover{background:rgba(12,12,11,.06)}
+  .btn--lg{padding:15px 26px;font-size:16px;border-radius:12px}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height: calc(100vh - 66px);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 40px 0 72px;
+  }
+  .hero__wrap{ width: 100%; display: grid; grid-template-columns: 1.02fr .98fr; gap: 56px; align-items: center; }
+  .hero__tag{display:inline-flex;align-items:center;gap:9px;font-family:'JetBrains Mono';font-size:12.5px;font-weight:500;padding:7px 14px;background:var(--lime);border-radius:999px}
+  .hero__grid{margin-top:22px}
+  .hero h1{font-size:clamp(36px,4.6vw,66px);line-height:.94;font-weight:900}
+  .hero h1 .outline{-webkit-text-stroke:2px var(--ink);color:transparent}
+  .hero__side{margin-top:26px}
+  .hero__side p{color:var(--ink-2);font-size:16.5px;font-weight:500;max-width:40ch}
+  .hero__cta{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+  .hero__meta{margin-top:18px;font-family:'JetBrains Mono';font-size:12px;color:var(--dim)}
+
+  /* product mockup */
+  .mock{background:var(--paper);border-radius:18px;box-shadow:var(--shadow);padding:16px;overflow:hidden}
+  .mock__bar{display:flex;align-items:center;gap:7px;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+  .mock__bar i{width:9px;height:9px;border-radius:50%;background:var(--rule)}
+  .mock__bar span{margin-left:10px;font-family:'JetBrains Mono';font-size:11.5px;color:var(--dim)}
+  .mock__body{padding-top:14px}
+  .mrow{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:11px;background:var(--bg);margin-bottom:8px}
+  .mrow .av{width:26px;height:26px;border-radius:7px;flex:none}
+  .mrow .t{font-size:13px;font-weight:700}
+  .mrow .s2{font-size:11.5px;color:var(--dim)}
+  .mrow .tag{margin-left:auto;font-family:'JetBrains Mono';font-size:10.5px;font-weight:500;padding:3px 9px;border-radius:999px;background:var(--paper);color:var(--dim)}
+  .mrow .tag.g{background:var(--lime);color:var(--ink)}
+
+  /* ---------- MARQUEE ---------- */
+  .bar{background:var(--ink);color:var(--bg);overflow:hidden;padding:15px 0;margin-top:auto}
+  .bar__in{display:flex;gap:44px;width:max-content;animation:slide 26s linear infinite;font-family:'JetBrains Mono';font-size:14px;font-weight:500;white-space:nowrap}
+  .bar__in span{display:flex;align-items:center;gap:44px}
+  .bar__in span::after{content:"■";color:var(--lime);font-size:9px}
+  @keyframes slide{to{transform:translateX(-50%)}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:92px 0}
+  .label{font-family:'JetBrains Mono';font-size:12.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:12px;margin-bottom:24px}
+  .label::before{content:"";width:30px;height:2px;background:var(--blue)}
+  h2.sec{font-size:clamp(30px,4.4vw,54px);max-width:19ch;font-weight:900}
+
+  /* stats, no boxes, just numbers with air */
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+  .strip .v{font-size:clamp(34px,4vw,50px);font-weight:900;letter-spacing:-.05em;line-height:1}
+  .strip .l{font-family:'JetBrains Mono';font-size:12px;color:var(--dim);margin-top:8px;text-transform:uppercase;font-weight:500}
+
+  /* features, soft cards, no borders */
+  .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+  .feat{padding:28px;background:var(--paper);border-radius:16px;box-shadow:var(--shadow-sm);transition:.22s}
+  .feat:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .feat .n{font-family:'JetBrains Mono';font-size:12px;color:var(--blue);font-weight:500;margin-bottom:16px}
+  .feat h3{font-size:19px;margin-bottom:9px;letter-spacing:-.02em}
+  .feat p{color:var(--ink-2);font-size:14.5px}
+
+  /* split, two soft panels */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .split__l,.split__r{padding:44px;border-radius:20px}
+  .split__l{background:var(--paper);box-shadow:var(--shadow-sm)}
+  .split__r{background:var(--ink);color:var(--bg)}
+  .split h3{font-size:25px;margin-bottom:16px;letter-spacing:-.03em;font-weight:800}
+  .split p{font-size:15px;color:var(--ink-2)}
+  .split__r p{color:rgba(244,243,239,.7)}
+  .code{margin-top:22px;font-family:'JetBrains Mono';font-size:13px;line-height:2;background:#050505;border-radius:12px;padding:18px 20px}
+  .code .k{color:var(--lime)}.code .s{color:#7fd18a}.code .c{color:#666}
+
+  /* steps, numbered, airy */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:44px}
+  .step .n{font-family:'JetBrains Mono';font-size:15px;font-weight:500;color:var(--blue);margin-bottom:16px}
+  .step h3{font-size:22px;margin-bottom:10px;letter-spacing:-.03em;font-weight:800}
+  .step p{color:var(--ink-2);font-size:15px}
+
+  /* pricing, soft cards */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start;margin-top:44px}
+  .plan{padding:32px;background:var(--paper);border-radius:18px;box-shadow:var(--shadow-sm)}
+  .plan.hi{background:var(--lime);box-shadow:var(--shadow);transform:translateY(-8px)}
+  .plan h3{font-size:17px;letter-spacing:-.01em;margin-bottom:6px;font-weight:800}
+  .plan .sub{font-family:'JetBrains Mono';font-size:12px;color:var(--dim);margin-bottom:22px}
+  .plan.hi .sub{color:rgba(12,12,11,.55)}
+  .plan .price{font-size:46px;font-weight:900;letter-spacing:-.05em;line-height:1}
+  .plan .price small{font-size:14px;font-weight:600;color:var(--dim)}
+  .plan.hi .price small{color:rgba(12,12,11,.55)}
+  .plan ul{list-style:none;padding:0;margin:24px 0 0}
+  .plan li{display:flex;gap:10px;font-size:14px;color:var(--ink-2);padding:7px 0}
+  .plan.hi li{color:rgba(12,12,11,.8)}
+  .plan li b{color:var(--blue);font-weight:700}
+  .plan.hi li b{color:var(--ink)}
+  .plan .btn{margin-top:24px;width:100%;justify-content:center}
+  .plan.hi .btn{background:var(--ink);color:var(--bg)}
+
+  /* faq, borderless list, subtle rules only */
+  .faq{margin-top:34px}
+  details{border-bottom:1px solid var(--rule)}
+  details:first-child{border-top:1px solid var(--rule)}
+  summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;padding:26px 0;font-size:19px;font-weight:700;letter-spacing:-.02em}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-family:'JetBrains Mono';color:var(--blue);font-weight:500}
+  details[open] summary::after{content:"–"}
+  details p{padding-bottom:26px;color:var(--ink-2);max-width:64ch}
+
+  /* cta, solid black, no decoration */
+  .cta{background:var(--ink);color:var(--bg);text-align:center}
+  .cta h2{font-size:clamp(34px,6vw,84px);font-weight:900}
+  .cta h2 span{-webkit-text-stroke:2px var(--lime);color:transparent}
+  .cta p{margin:20px auto 32px;max-width:44ch;color:rgba(244,243,239,.7)}
+  .cta .btn{background:var(--lime);color:var(--ink)}
+  .cta .btn:hover{background:var(--bg)}
+
+  footer{padding:40px 0;font-family:'JetBrains Mono';font-size:12.5px;color:var(--dim)}
+  .f-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+  @media(max-width:900px){
+    .nav nav{display:none}
+    .hero__grid,.split{grid-template-columns:1fr;gap:28px}
+    .strip{grid-template-columns:1fr 1fr;gap:24px}
+    .feats,.steps,.plans{grid-template-columns:1fr}
+    .plan.hi{transform:none}
+    section{padding:66px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand"><span class="brand__mark"></span>RELAY</a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#">Docs</a>
+    </nav>
+    <div class="nav-r">
+      <a href="#" class="btn btn--ghost">Log in</a>
+      <a href="#" class="btn btn--solid">Start free</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero__wrap">
+    <div>
+      <span class="hero__tag">● v4.0 · now with release trains</span>
+      <div class="hero__grid">
+        <h1>Ship software<br><span class="outline">on schedule.</span></h1>
+      </div>
+      <div class="hero__side">
+        <p>Relay turns a messy roadmap into a shipping cadence your whole team can see. Plan, build, and release in one board.</p>
+      </div>
+      <div class="hero__cta">
+        <a href="#" class="btn btn--solid btn--lg">Start free</a>
+        <a href="#" class="btn btn--ghost btn--lg">Book a demo</a>
+      </div>
+      <p class="hero__meta">NO CARD · 14-DAY TRIAL · SELF-HOST AVAILABLE</p>
+    </div>
+
+    <div class="mock">
+      <div class="mock__bar"><i></i><i></i><i></i><span>relay · release train v4.0</span></div>
+      <div class="mock__body">
+        <div class="mrow"><span class="av" style="background:#e0e7ff"></span><div><div class="t">Auth refactor</div><div class="s2">#482 · merged</div></div><span class="tag g">SHIPPED</span></div>
+        <div class="mrow"><span class="av" style="background:#dcfce7"></span><div><div class="t">Billing v2</div><div class="s2">#490 · in review</div></div><span class="tag">REVIEW</span></div>
+        <div class="mrow"><span class="av" style="background:#fef3c7"></span><div><div class="t">Onboarding flow</div><div class="s2">#501 · in progress</div></div><span class="tag">BUILDING</span></div>
+        <div class="mrow" style="margin-bottom:0"><span class="av" style="background:#fae8ff"></span><div><div class="t">Search index</div><div class="s2">#512 · queued</div></div><span class="tag">QUEUED</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <p class="label">Capabilities</p>
+    <h2 class="sec">Everything you need to ship, and nothing that gets in the way.</h2>
+    <div class="feats">
+      <div class="feat"><div class="n">01</div><h3>One board, every team</h3><p>Product, design and engineering see the same plan. No more three versions of the truth.</p></div>
+      <div class="feat"><div class="n">02</div><h3>Release trains</h3><p>Group work into a cadence. Relay warns you early when a train is about to leave late.</p></div>
+      <div class="feat"><div class="n">03</div><h3>Auto changelogs</h3><p>Every merged pull request becomes a line in the changelog. Written as you work.</p></div>
+      <div class="feat"><div class="n">04</div><h3>Velocity, honestly</h3><p>Track real throughput, not story-point theatre. Forecasts based on what actually shipped.</p></div>
+      <div class="feat"><div class="n">05</div><h3>Incident timeline</h3><p>When something breaks, the whole story lives in one place, from alert to postmortem.</p></div>
+      <div class="feat"><div class="n">06</div><h3>Opens where you work</h3><p>GitHub, Slack, Linear and Jira. Relay connects the tools instead of replacing them.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="split">
+      <div class="split__l">
+        <h3>Built for teams that ship daily.</h3>
+        <p>Relay is opinionated about one thing: momentum. It surfaces what's blocked, who's waiting, and what ships this week, without a meeting.</p>
+        <p style="margin-top:14px">Set a cadence once. Relay keeps every train on the rails and tells you the moment one slips.</p>
+      </div>
+      <div class="split__r">
+        <h3>Automate the boring parts.</h3>
+        <p>Wire up a release and let Relay handle the rest.</p>
+        <div class="code">
+<span class="c"># ship a release train</span><br>
+<span class="k">$</span> relay train create <span class="s">v4.0</span><br>
+<span class="k">→</span> collecting 24 merged PRs<br>
+<span class="k">→</span> changelog written <span class="s">· 24 entries</span><br>
+<span class="k">→</span> train departed <span class="s">on time</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how" style="padding-top:0">
+  <div class="wrap">
+    <p class="label">How it works</p>
+    <h2 class="sec">Three steps to a calmer release.</h2>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h3>Connect your repo</h3><p>Point Relay at GitHub or GitLab. It reads your issues and PRs, no manual entry.</p></div>
+      <div class="step"><div class="n">02</div><h3>Set a cadence</h3><p>Weekly, fortnightly, whenever. Relay groups work into trains and tracks them.</p></div>
+      <div class="step"><div class="n">03</div><h3>Ship on time</h3><p>Watch the board, clear the blockers, release. The changelog writes itself.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="padding-top:0">
+  <div class="wrap">
+    <p class="label">Pricing</p>
+    <h2 class="sec">Simple, per-seat, no surprises.</h2>
+    <div class="plans">
+      <div class="plan">
+        <h3>Starter</h3>
+        <div class="sub">FOR SOLO MAKERS</div>
+        <div class="price">$0<small>/mo</small></div>
+        <ul>
+          <li><b>✓</b> 1 release train</li>
+          <li><b>✓</b> 3 projects</li>
+          <li><b>✓</b> GitHub sync</li>
+        </ul>
+        <a href="#" class="btn btn--solid">Start free</a>
+      </div>
+      <div class="plan hi">
+        <h3>Team</h3>
+        <div class="sub">FOR SHIPPING TEAMS</div>
+        <div class="price">$18<small>/seat</small></div>
+        <ul>
+          <li><b>✓</b> Unlimited trains</li>
+          <li><b>✓</b> Auto changelogs</li>
+          <li><b>✓</b> Velocity forecasts</li>
+          <li><b>✓</b> Slack &amp; Linear</li>
+        </ul>
+        <a href="#" class="btn">Start 14-day trial</a>
+      </div>
+      <div class="plan">
+        <h3>Enterprise</h3>
+        <div class="sub">FOR LARGE ORGS</div>
+        <div class="price">Custom</div>
+        <ul>
+          <li><b>✓</b> SSO &amp; SCIM</li>
+          <li><b>✓</b> Self-hosted runner</li>
+          <li><b>✓</b> Audit logs</li>
+        </ul>
+        <a href="#" class="btn btn--solid">Contact sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <p class="label">Questions</p>
+    <h2 class="sec">Things people ask.</h2>
+    <div class="faq">
+      <details open><summary>Does Relay replace Jira or Linear?</summary><p>No. It connects to them. Relay is the shipping layer on top: it reads your issues and PRs and organises them into a cadence. Keep the tools your team already uses.</p></details>
+      <details><summary>What does "release train" actually mean?</summary><p>A train is a batch of work scheduled to ship together on a fixed date. Relay watches the train and warns you when it's likely to leave late.</p></details>
+      <details><summary>Can we self-host it?</summary><p>Yes, on the Enterprise plan. Run the whole app and runner inside your own infrastructure, with audit logs and SSO.</p></details>
+      <details><summary>How is the changelog written?</summary><p>From your merged pull requests. Relay drafts each entry and links it back to the PR, so the changelog stays honest without anyone writing it by hand.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap">
+    <h2>Stop guessing.<br><span>Start shipping.</span></h2>
+    <p>Set up in ten minutes. Free for solo makers, per-seat when your team grows.</p>
+    <a href="#" class="btn btn--lg">Start free</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap f-in">
+    <span>© 2026 RELAY INC.</span>
+    <span>DOCS / STATUS / CHANGELOG</span>
+    <span>MADE FOR TEAMS THAT SHIP</span>
+  </div>
+</footer>
+
+</body>
+</html>

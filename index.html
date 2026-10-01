@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Atlas | Landing page templates</title>
+<meta name="description" content="A small library of hand-built landing page templates." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/gallery.css">
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="container nav__inner">
+    <div class="nav__left">
+      <a href="#" class="brand"><span class="brand__mark"></span>Atlas</a>
+      <nav class="nav__links">
+        <a href="#templates">Templates</a>
+        <a href="#">Categories</a>
+        <a href="#">About</a>
+      </nav>
+    </div>
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input type="search" id="search" placeholder="Search templates & categories" aria-label="Search templates">
+    </label>
+    <div class="nav__actions">
+      <a href="#" class="muted">Log in</a>
+      <a href="#" class="btn btn--primary">Get templates</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__bg" aria-hidden="true" id="heroBg"></div>
+  <div class="tiles" aria-hidden="true">
+    <span class="t1"><img src="https://cdn.simpleicons.org/figma" alt=""></span>
+    <span class="t2"><img src="https://cdn.simpleicons.org/framer" alt=""></span>
+    <span class="t3"><img src="https://cdn.simpleicons.org/webflow" alt=""></span>
+    <span class="t4"><img src="https://cdn.simpleicons.org/inkscape" alt=""></span>
+    <span class="t5"><img src="https://cdn.simpleicons.org/sketch" alt=""></span>
+    <span class="t6"><img src="https://cdn.simpleicons.org/blender" alt=""></span>
+    <span class="t7"><img src="https://cdn.simpleicons.org/dribbble" alt=""></span>
+    <span class="t8"><img src="https://cdn.simpleicons.org/behance" alt=""></span>
+  </div>
+  <div class="container hero__content">
+    <h1>Landing page<br>templates for <span style="color:var(--fg-dim)">builders</span></h1>
+    <p>A small, growing library of hand-built landing pages. Real code, real layouts, no stock screenshots, no filler.</p>
+    <div class="hero__cta">
+      <a href="#templates" class="btn btn--primary">Browse templates</a>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section id="templates" class="tpl" style="padding-bottom: 40px;">
+  <div class="tpl__head">
+    <h2 class="tpl__title">Templates</h2>
+    <a href="#" class="tpl__all">All templates</a>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>
+    <p>No templates match that search.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>© 2026 Atlas Templates. Hand-built, one at a time.</span>
+    <span class="mono">atlas.templates</span>
+  </div>
+</footer>
+
+<script src="assets/js/gallery.js"></script>
+</body>
+</html>

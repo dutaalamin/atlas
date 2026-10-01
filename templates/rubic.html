@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RUBIC | Rubik's cube for the web</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000;
+    --fg:#f0f0f0;
+    --muted:#a1a1a1;
+    --dim:#6b6b6b;
+    --line:rgba(255,255,255,.09);
+    --line-2:rgba(255,255,255,.06);
+    --card:#0a0a0a;
+    --card-2:#101010;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  ::selection{background:#fff;color:#000}
+  a{color:inherit;text-decoration:none}
+  .serif{font-family:'DM Serif Display',Georgia,serif;font-weight:400}
+  .mono{font-family:'Geist Mono','JetBrains Mono',monospace}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .muted{color:var(--muted)}
+
+  /* nav */
+  header{position:sticky;top:0;z-index:60;background:rgba(0,0,0,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line-2)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:60px;font-size:13.5px}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-.01em;font-size:15px}
+  .mark{width:18px;height:18px;border-radius:4px;background:
+     conic-gradient(from 210deg,#c0392b 0 33%,#2f8a57 0 66%,#e6e4df 0);
+     box-shadow:inset 0 0 0 1px rgba(0,0,0,.5)}
+  .nav-c{display:flex;gap:6px;align-items:center;color:var(--muted)}
+  .nav-c a{display:flex;align-items:center;gap:5px;padding:7px 11px;border-radius:8px;transition:.2s}
+  .nav-c a:hover{color:#fff;background:rgba(255,255,255,.05)}
+  .chev{width:9px;height:9px;opacity:.5}
+  .nav-r{display:flex;align-items:center;gap:18px}
+  .nav-r .login{color:var(--muted)}
+  .nav-r .login:hover{color:#fff}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#000;font-weight:500;border-radius:9px;padding:8px 15px;transition:.2s;font-size:13.5px}
+  .pill:hover{background:#e6e6e6}
+  .ghost{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:9px;padding:8px 15px;color:#fff;transition:.2s;font-size:13.5px}
+  .ghost:hover{background:rgba(255,255,255,.06)}
+
+  /* hero */
+  .hero{position:relative;min-height:calc(100vh - 60px);display:flex;align-items:center;padding:40px 0;overflow:hidden}
+  .hero:before{content:"";position:absolute;inset:-30% 0 auto 0;height:70%;background:radial-gradient(60% 60% at 70% 20%,rgba(255,255,255,.055),transparent 70%);pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:110px;align-items:center;position:relative;max-width:1120px;margin:0 auto;transform:translate(-28px,-20px)}
+  .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:5px 13px;font-size:12.5px;color:var(--muted);background:rgba(255,255,255,.02);transition:.2s}
+  .badge:hover{color:#fff;border-color:rgba(255,255,255,.2)}
+  .hero h1{font-size:clamp(40px,5.6vw,76px);line-height:1.02;letter-spacing:-.02em;margin:22px 0 0}
+  .hero p.lede{color:var(--muted);font-size:16px;max-width:42ch;margin:22px 0 0}
+  .hero-cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .hero-note{margin-top:16px;font-size:12.5px;color:var(--dim)}
+  .stage{position:relative;height:520px}
+  #cube{width:100%;height:100%;display:block}
+  .stage:after{content:"";position:absolute;left:50%;bottom:8%;width:60%;height:26px;transform:translateX(-50%);background:radial-gradient(50% 50% at 50% 50%,rgba(255,255,255,.10),transparent 70%);filter:blur(6px)}
+
+  /* tech row */
+  .tech{border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);margin-top:56px}
+  .tech .inner{display:flex;align-items:center;gap:44px;justify-content:center;flex-wrap:wrap;padding:22px 24px;color:var(--dim);font-size:14px;font-weight:500;letter-spacing:-.01em}
+  .tech .lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#4a4a4a;font-weight:500}
+  .tech .logo{display:flex;align-items:center;gap:8px;opacity:.72;transition:.25s}
+  .tech .logo:hover{opacity:1;color:var(--muted)}
+
+  /* sections */
+  section{padding:96px 0}
+  .sec-head{max-width:640px;margin-bottom:44px}
+  .sec-head h2{font-size:clamp(24px,3.1vw,38px);line-height:1.12;letter-spacing:-.02em;margin:0}
+  .sec-head p{color:var(--muted);margin:14px 0 0;max-width:56ch}
+  .eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 14px;font-weight:500}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+
+  /* game panel mockup */
+  .panel{border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--card-2),var(--card));overflow:hidden}
+  .panel-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line-2);font-size:12px;color:var(--dim)}
+  .panel-bar .dots{display:flex;gap:6px}
+  .panel-bar .dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.12)}
+  .panel-body{padding:26px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+  .net{display:grid;grid-template-columns:repeat(3,26px);grid-template-rows:repeat(3,26px);gap:3px}
+  .net i{border-radius:4px;background:#1b1b1b}
+  .net i.r{background:#b8402f}.net i.g{background:#2f8a57}.net i.w{background:#e6e4df}
+  .net i.y{background:#cdb73a}.net i.b{background:#356aa8}.net i.o{background:#cf7a2e}
+  .net-wrap{display:grid;grid-template-columns:repeat(4,26px);grid-template-rows:repeat(3,26px);gap:3px}
+  .stat-row{display:flex;flex-direction:column;gap:18px;min-width:150px}
+  .stat-row .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  .stat-row .v{font-size:26px;letter-spacing:-.02em}
+  .panel-foot{display:flex;gap:8px;padding:0 26px 26px}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:12.5px;color:var(--muted)}
+  .chip.solid{background:#fff;color:#000;border-color:#fff}
+
+  /* code block */
+  .code{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;font-size:13px}
+  .code .top{display:flex;gap:6px;padding:11px 14px;border-bottom:1px solid var(--line-2)}
+  .code .top i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.12)}
+  .code pre{margin:0;padding:18px 20px;overflow:auto;line-height:1.75;color:#cfcfcf}
+  .code .c{color:#5f5f5f}.code .k{color:#e6e4df}.code .s{color:#7fb98a}.code .f{color:#c9a86a}.code .n{color:#a9c4e8}
+
+  /* feature grid */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:14px;overflow:hidden}
+  .card{background:#000;padding:28px}
+  .card:hover{background:var(--card)}
+  .card .ic{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);display:grid;place-items:center;color:var(--muted);margin-bottom:18px}
+  .card h3{margin:0 0 8px;font-size:15.5px;font-weight:500;letter-spacing:-.01em}
+  .card p{margin:0;color:var(--muted);font-size:13.5px}
+
+  /* leaderboard */
+  .lb{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+  .lb .row{display:grid;grid-template-columns:38px 1fr auto;gap:14px;padding:14px 18px;border-bottom:1px solid var(--line-2);font-size:13.5px;align-items:center}
+  .lb .row:last-child{border-bottom:none}
+  .lb .row.me{background:rgba(255,255,255,.04)}
+  .lb .rank{color:var(--dim);font-size:12.5px}
+  .lb .time{color:var(--muted)}
+  .lb .who{display:flex;align-items:center;gap:10px}
+  .av{width:22px;height:22px;border-radius:50%;background:linear-gradient(145deg,#2a2a2a,#141414);border:1px solid var(--line)}
+
+  /* testimonials */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .quote{border:1px solid var(--line);border-radius:14px;padding:24px;background:var(--card)}
+  .quote p{margin:0 0 18px;font-size:14.5px;color:#d8d8d8}
+  .quote .who{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+
+  /* faq */
+  .faq{max-width:760px;border-top:1px solid var(--line-2)}
+  details{border-bottom:1px solid var(--line-2)}
+  summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;padding:22px 0;font-size:15.5px;letter-spacing:-.01em}
+  summary::-webkit-details-marker{display:none}
+  summary .p{color:var(--dim);transition:.25s}
+  details[open] summary .p{transform:rotate(45deg);color:#fff}
+  details p{margin:0 0 22px;color:var(--muted);max-width:64ch}
+
+  /* cta */
+  .cta{border-top:1px solid var(--line-2);text-align:center;padding:120px 0}
+  .cta h2{font-size:clamp(28px,4vw,52px);line-height:1.06;letter-spacing:-.02em;margin:0 0 18px}
+  .cta p{color:var(--muted);margin:0 auto 28px;max-width:44ch}
+
+  footer{border-top:1px solid var(--line-2);padding:52px 0 36px;color:var(--dim);font-size:13px}
+  .f-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .f-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:36px}
+  .f-cols h4{margin:0 0 14px;font-size:12.5px;color:#fff;font-weight:500}
+  .f-cols a{display:block;margin-bottom:9px;color:var(--dim);transition:.2s}
+  .f-cols a:hover{color:var(--fg)}
+  .f-bottom{margin-top:44px;padding-top:20px;border-top:1px solid var(--line-2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @media(max-width:900px){
+    .hero-grid,.split{grid-template-columns:1fr;gap:36px}
+    .stage{height:340px}
+    .nav-c{display:none}
+    .grid3,.quotes,.f-cols{grid-template-columns:1fr}
+    .panel-body{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand">RUBIC</a>
+    <nav class="nav-c">
+      <a href="#play">Play <svg class="chev" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.3"/></svg></a>
+      <a href="#features">Features <svg class="chev" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.3"/></svg></a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#faq">Docs</a>
+      <a href="#">Pricing</a>
+    </nav>
+    <div class="nav-r">
+      <a href="#" class="login">Log in</a>
+      <a href="#" class="pill">Play now</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <a href="#" class="badge">Join us at Rubik's Open 2026 <span style="color:#666">›</span></a>
+      <h1 class="serif">Rubik's cube<br>for the web.</h1>
+      <p class="lede">A real 3D cube you can twist, scramble and solve, right in your browser. No installs, no plugins. Just you and the cube.</p>
+      <div class="hero-cta">
+        <a href="#" class="pill" style="padding:11px 20px">Play now</a>
+        <a href="#" class="ghost" style="padding:11px 20px">Watch the demo</a>
+      </div>
+    </div>
+    <div class="stage"><canvas id="cube"></canvas></div>
+  </div>
+</div>
+
+<!-- PLAY -->
+<section id="play">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Start in seconds</p>
+      <h2 class="serif">Load the page. The cube is already turning.</h2>
+      <p class="muted" style="margin-top:16px;max-width:46ch">No setup, no tutorial wall. Open RUBIC and you're looking at a real, physical-feeling cube, lit, weighted and smooth at 60fps on the web.</p>
+      <div class="code" style="margin-top:28px">
+        <div class="top"><i></i><i></i><i></i></div>
+        <pre><span class="c">// one line to start</span>
+<span class="k">import</span> { Cube } <span class="k">from</span> <span class="s">'rubic'</span>;
+
+<span class="k">const</span> cube = <span class="k">new</span> <span class="f">Cube</span>({ size: <span class="n">3</span>, theme: <span class="s">'mono'</span> });
+cube.<span class="f">scramble</span>();          <span class="c">// random state</span>
+cube.<span class="f">on</span>(<span class="s">'solve'</span>, ({ moves, ms }) =&gt; {
+  <span class="f">submit</span>({ moves, ms });   <span class="c">// 42 moves · 12.4s</span>
+});</pre>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-bar"><span class="mono">rubic · classic 3×3</span><span class="dots"><i></i><i></i><i></i></span></div>
+      <div class="panel-body">
+        <div class="net-wrap">
+          <div class="net"><i class="o"></i><i class="y"></i><i class="w"></i><i class="b"></i><i class="r"></i><i class="g"></i><i class="w"></i><i class="o"></i><i class="y"></i></div>
+          <div class="net"><i class="r"></i><i class="g"></i><i class="b"></i><i class="w"></i><i class="o"></i><i class="y"></i><i class="g"></i><i class="b"></i><i class="r"></i></div>
+          <div class="net"><i class="w"></i><i class="o"></i><i class="y"></i><i class="g"></i><i class="b"></i><i class="r"></i><i class="y"></i><i class="w"></i><i class="o"></i></div>
+          <div class="net"><i class="b"></i><i class="r"></i><i class="g"></i><i class="y"></i><i class="w"></i><i class="o"></i><i class="r"></i><i class="g"></i><i class="b"></i></div>
+        </div>
+        <div class="stat-row">
+          <div><div class="k">Timer</div><div class="v mono">00:12.4</div></div>
+          <div><div class="k">Moves</div><div class="v mono">42</div></div>
+          <div><div class="k">Best</div><div class="v mono">00:09.8</div></div>
+        </div>
+      </div>
+      <div class="panel-foot">
+        <span class="chip solid">Scramble</span><span class="chip">Hint</span><span class="chip">Reset</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Everything in your control</p>
+      <h2 class="serif">Small toolset. Nothing you have to learn.</h2>
+    </div>
+    <div class="grid3">
+      <div class="card"><div class="ic">⌘</div><h3>Keyboard &amp; touch</h3><p>Notation shortcuts for speedcubers, drag gestures for everyone else. Both, at once.</p></div>
+      <div class="card"><div class="ic">⏱</div><h3>Precision timer</h3><p>Millisecond timing that starts the instant you release the cube. WCA-style inspection built in.</p></div>
+      <div class="card"><div class="ic">◎</div><h3>Real physics feel</h3><p>Momentum, snap and weight, turns feel like a cube in your hands, not a slideshow.</p></div>
+      <div class="card"><div class="ic">◐</div><h3>Mono &amp; classic themes</h3><p>A restrained black cube or the full colour set. Switch without losing your state.</p></div>
+      <div class="card"><div class="ic">↺</div><h3>Every solve saved</h3><p>Full move history and replay. Rewind any solve to the exact turn you slipped.</p></div>
+      <div class="card"><div class="ic">⌂</div><h3>Works offline</h3><p>Install once, play anywhere. No account required, no network needed.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERBOARD -->
+<section id="leaderboard" style="padding-top:0">
+  <div class="wrap split">
+    <div class="lb">
+      <div class="row" style="color:var(--dim);font-size:11px;letter-spacing:.12em;text-transform:uppercase">
+        <span>#</span><span>Solver</span><span>Time</span>
+      </div>
+      <div class="row"><span class="rank mono">01</span><span class="who"><span class="av"></span>kaito_r</span><span class="time mono">00:06.21</span></div>
+      <div class="row"><span class="rank mono">02</span><span class="who"><span class="av"></span>mei.lin</span><span class="time mono">00:06.88</span></div>
+      <div class="row me"><span class="rank mono">03</span><span class="who"><span class="av"></span>you</span><span class="time mono">00:07.04</span></div>
+      <div class="row"><span class="rank mono">04</span><span class="who"><span class="av"></span>s.okafor</span><span class="time mono">00:07.51</span></div>
+      <div class="row"><span class="rank mono">05</span><span class="who"><span class="av"></span>dev.null</span><span class="time mono">00:08.02</span></div>
+    </div>
+    <div>
+      <p class="eyebrow">Race the clock</p>
+      <h2 class="serif">Every solve counts. Every second shows.</h2>
+      <p class="muted" style="margin-top:16px;max-width:46ch">Daily scrambles are the same for everyone. Solve, submit, and watch yourself climb. No gimmicks, just a fair, shared clock and a leaderboard that updates live.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTES -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2 class="serif">Beyond expectations</h2></div>
+    <div class="quotes">
+      <div class="quote"><p>"The turning feel is the closest anything on the web has come to a real cube. I stopped noticing it was a browser."</p><div class="who"><span class="av"></span>Kaito R., speedcuber</div></div>
+      <div class="quote"><p>"No sign-up, no pop-ups, opens in a second. It's just the cube, and that's exactly the point."</p><div class="who"><span class="av"></span>Mei Lin, designer</div></div>
+      <div class="quote"><p>"I teach with it. Project it, scramble it, let the class call out the moves. Nothing to install on 30 machines."</p><div class="who"><span class="av"></span>S. Okafor, teacher</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2 class="serif">Questions</h2></div>
+    <div class="faq">
+      <details open><summary>Is RUBIC really free?<span class="p">+</span></summary><p>Yes. Playing, timing, scrambles and the leaderboard are free and work offline. Nothing is locked behind an account.</p></details>
+      <details><summary>Do I need to install anything?<span class="p">+</span></summary><p>No. It runs in any modern browser. You can optionally install it to your home screen for a full-screen, offline experience.</p></details>
+      <details><summary>Which cube sizes are supported?<span class="p">+</span></summary><p>2×2 through 5×5 today, with 6×6 and 7×7 in progress. Classic 3×3 is the default.</p></details>
+      <details><summary>Does it work on my phone?<span class="p">+</span></summary><p>Yes, touch gestures, drag-to-turn and a layout that adapts to small screens. Performance is tuned to hold 60fps on recent devices.</p></details>
+      <details><summary>Can I use it without an internet connection?<span class="p">+</span></summary><p>After the first load, everything is cached. Scrambles and timing keep working offline; the shared leaderboard syncs when you reconnect.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="wrap">
+    <h2 class="serif">The cube is waiting.</h2>
+    <p>Open it in your browser and start turning. Free, offline, no account.</p>
+    <a href="#" class="pill" style="padding:12px 22px">Play now</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <div style="max-width:30ch">
+        <a href="#" class="brand" style="margin-bottom:14px">RUBIC</a>
+        <p style="margin:0;color:var(--dim)">A Rubik's cube you can play in the browser, built to feel like the real thing.</p>
+      </div>
+      <div class="f-cols">
+        <div><h4>Product</h4><a href="#play">Play</a><a href="#features">Features</a><a href="#leaderboard">Leaderboard</a></div>
+        <div><h4>Learn</h4><a href="#">Notation</a><a href="#">Beginner method</a><a href="#">CFOP</a></div>
+        <div><h4>Company</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Contact</a></div>
+        <div><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a></div>
+      </div>
+    </div>
+    <div class="f-bottom"><span>© 2026 RUBIC. All rights reserved.</span><span class="mono">rubic.app</span></div>
+  </div>
+</footer>
+
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const canvas = document.getElementById('cube');
+const stage = canvas.parentElement;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+camera.position.set(4.9, 3.0, 7.1);
+camera.lookAt(0, 0, 0);
+
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+} catch (e) { canvas.style.display = 'none'; }
+
+if (renderer) {
+  // soft studio environment for believable reflections
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const envScene = new THREE.Scene();
+  envScene.background = new THREE.Color(0x050505);
+  const room = new THREE.Mesh(
+    new THREE.BoxGeometry(30, 30, 30),
+    new THREE.MeshBasicMaterial({ color: 0x1a1a1a, side: THREE.BackSide })
+  );
+  envScene.add(room);
+  const softbox = new THREE.Mesh(
+    new THREE.PlaneGeometry(12, 12),
+    new THREE.MeshBasicMaterial({ color: 0xffffff })
+  );
+  softbox.position.set(0, 10, 0); softbox.rotation.x = Math.PI / 2;
+  envScene.add(softbox);
+  const envRT = pmrem.fromScene(envScene, 0.04);
+  scene.environment = envRT.texture;
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.18));
+  const key = new THREE.DirectionalLight(0xffffff, 1.5); key.position.set(6, 8, 7); scene.add(key);
+  const fill = new THREE.DirectionalLight(0x88a8ff, 0.35); fill.position.set(-8, -3, -6); scene.add(fill);
+  const rim = new THREE.DirectionalLight(0xffffff, 0.9); rim.position.set(-6, 4, -8); scene.add(rim);
+
+  // world = user-orbitable container; cube = the puzzle itself
+  const world = new THREE.Group();
+  world.rotation.set(-0.14, 0.6, 0);
+  world.position.set(0.25, 0.3, 0);
+  scene.add(world);
+  const cube = new THREE.Group();
+  world.add(cube);
+
+  const bodyMat = new THREE.MeshPhysicalMaterial({
+    color: 0x050505, roughness: 0.28, metalness: 0.55,
+    clearcoat: 1, clearcoatRoughness: 0.16, envMapIntensity: 0.9
+  });
+  const colors = {
+    px: 0x8f2f22, nx: 0xa85f22, py: 0xd8d5cd,
+    ny: 0xa89a2e, pz: 0x276b45, nz: 0x2a5480
+  };
+  const stickerGeo = new THREE.PlaneGeometry(0.76, 0.76);
+  const cubieGeo = new THREE.BoxGeometry(0.94, 0.94, 0.94);
+
+  const faceDefs = [
+    ['px', 1, 0, 0, [0, Math.PI/2, 0]],
+    ['nx', -1, 0, 0, [0, -Math.PI/2, 0]],
+    ['py', 0, 1, 0, [-Math.PI/2, 0, 0]],
+    ['ny', 0, -1, 0, [Math.PI/2, 0, 0]],
+    ['pz', 0, 0, 1, [0, 0, 0]],
+    ['nz', 0, 0, -1, [0, Math.PI, 0]],
+  ];
+
+  const cubies = [];
+  for (let x = -1; x <= 1; x++)
+  for (let y = -1; y <= 1; y++)
+  for (let z = -1; z <= 1; z++) {
+    const cubie = new THREE.Mesh(cubieGeo, bodyMat);
+    cubie.position.set(x, y, z);
+    cube.add(cubie);
+    cubie.userData.logical = new THREE.Vector3(x, y, z);
+
+    const on = { px: x === 1, nx: x === -1, py: y === 1, ny: y === -1, pz: z === 1, nz: z === -1 };
+    for (const [key, dx, dy, dz, rot] of faceDefs) {
+      if (!on[key]) continue;
+      const mat = new THREE.MeshPhysicalMaterial({
+        color: colors[key], roughness: 0.38, metalness: 0.1,
+        clearcoat: 0.85, clearcoatRoughness: 0.22, envMapIntensity: 0.75
+      });
+      const st = new THREE.Mesh(stickerGeo, mat);
+      st.position.set(dx * 0.478, dy * 0.478, dz * 0.478);
+      st.rotation.set(rot[0], rot[1], rot[2]);
+      cubie.add(st);
+    }
+    cubies.push(cubie);
+  }
+
+  const AXES = { x: new THREE.Vector3(1,0,0), y: new THREE.Vector3(0,1,0), z: new THREE.Vector3(0,0,1) };
+  const easeInOut = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+
+  // One quarter-turn of a layer. axis: 'x'|'y'|'z', layer: -1|0|1, dir: +1|-1
+  let animating = false;
+  function turn(axis, layer, dir, duration, onDone) {
+    animating = true;
+    const axisVec = AXES[axis];
+    const pivot = new THREE.Group();
+    cube.add(pivot);
+
+    const group = cubies.filter(c => Math.round(c.userData.logical[axis]) === layer);
+    group.forEach(c => pivot.attach(c));
+
+    const target = (Math.PI / 2) * dir;
+    const start = performance.now();
+    (function step(now) {
+      const p = Math.min(1, (now - start) / duration);
+      pivot.setRotationFromAxisAngle(axisVec, target * easeInOut(p));
+      if (p < 1) { requestAnimationFrame(step); return; }
+      pivot.setRotationFromAxisAngle(axisVec, target);
+      pivot.updateMatrixWorld(true);
+      group.forEach(c => {
+        cube.attach(c);
+        c.position.set(Math.round(c.position.x), Math.round(c.position.y), Math.round(c.position.z));
+        // snap quaternion to nearest 90° to avoid drift
+        const e = new THREE.Euler().setFromQuaternion(c.quaternion, 'XYZ');
+        const s = Math.PI / 2;
+        e.set(Math.round(e.x/s)*s, Math.round(e.y/s)*s, Math.round(e.z/s)*s);
+        c.quaternion.setFromEuler(e);
+        // rotate logical coords by ±90° about axis
+        const v = c.userData.logical;
+        const a = dir * Math.PI / 2, cos = Math.round(Math.cos(a)), sin = Math.round(Math.sin(a));
+        let nx = v.x, ny = v.y, nz = v.z;
+        if (axis === 'x') { ny = v.y*cos - v.z*sin; nz = v.y*sin + v.z*cos; }
+        if (axis === 'y') { nz = v.z*cos - v.x*sin; nx = v.z*sin + v.x*cos; }
+        if (axis === 'z') { nx = v.x*cos - v.y*sin; ny = v.x*sin + v.y*cos; }
+        v.set(Math.round(nx), Math.round(ny), Math.round(nz));
+      });
+      cube.remove(pivot);
+      animating = false;
+      onDone && onDone();
+    })(start);
+  }
+
+  // Auto-play: a random walk of quarter-turns, like someone idly solving
+  const AXIS_KEYS = ['x','y','z'];
+  let lastAxis = null;
+  function autoMove() {
+    if (animating) return;
+    let axis = AXIS_KEYS[(Math.random()*3)|0];
+    if (axis === lastAxis) axis = AXIS_KEYS[(AXIS_KEYS.indexOf(axis)+1)%3];
+    lastAxis = axis;
+    const layer = [-1,0,1][(Math.random()*3)|0];
+    const dir = Math.random() < 0.5 ? 1 : -1;
+    turn(axis, layer, dir, 260 + Math.random()*140, () => {
+      // occasional pause for a natural rhythm
+      const gap = Math.random() < 0.18 ? 520 + Math.random()*400 : 90 + Math.random()*140;
+      setTimeout(autoMove, gap);
+    });
+  }
+  // --- interaction state ---
+  let dragging = false, px = 0, py = 0;
+  let spinOffset = 0;      // user-applied yaw offset (added on top of auto-spin)
+  let spinVel = 0;         // inertia for the yaw offset
+  let tiltUser = 0;        // user-applied pitch offset
+  const AUTO_SPIN = 0.0042; // rad/frame, the steady turntable rotation
+  const BASE_TILT = -0.14;
+
+  const el = renderer.domElement;
+  el.style.cursor = 'grab';
+  el.addEventListener('pointerdown', e => {
+    dragging = true; px = e.clientX; py = e.clientY; spinVel = 0;
+    el.setPointerCapture(e.pointerId); el.style.cursor = 'grabbing';
+  });
+  el.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - px, dy = e.clientY - py;
+    px = e.clientX; py = e.clientY;
+    spinOffset += dx * 0.008;
+    tiltUser = Math.max(-0.7, Math.min(0.7, tiltUser + dy * 0.006));
+    spinVel = dx * 0.008;
+  });
+  const endDrag = e => {
+    if (!dragging) return;
+    dragging = false; el.style.cursor = 'grab';
+    try { el.releasePointerCapture(e.pointerId); } catch {}
+  };
+  el.addEventListener('pointerup', endDrag);
+  el.addEventListener('pointercancel', endDrag);
+
+  function resize() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const clock = new THREE.Clock();
+  let running = true;
+  document.addEventListener('visibilitychange', () => { running = !document.hidden; });
+
+  autoMove();
+  let bob = 0;
+  (function loop() {
+    requestAnimationFrame(loop);
+    if (!running) return;
+    bob += 0.012;
+
+    // turntable: the whole cube keeps rotating, always
+    spinOffset += AUTO_SPIN + spinVel;
+    spinVel *= 0.94;
+    world.rotation.y = spinOffset;
+
+    // gentle figure-8 tilt so it never looks static
+    world.rotation.x = BASE_TILT + tiltUser + Math.sin(bob * 0.6) * 0.06;
+    world.rotation.z = Math.sin(bob * 0.45) * 0.035;
+
+    // float
+    cube.position.y = Math.sin(bob) * 0.05;
+
+    renderer.render(scene, camera);
+  })();
+}
+</script>
+</body>
+</html>

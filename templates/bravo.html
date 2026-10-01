@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bravo | The all-in-one marketing platform</title>
+<meta name="description" content="One AI-powered platform for all your marketing and sales. Email, SMS, WhatsApp and beyond." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --hero:#ffd9a8;
+    --hero-deep:#ffc87e;
+    --accent:#b45309;
+    --accent-soft:#d97706;
+    --ink:#1c1410;
+    --ink-2:#4a3d33;
+    --muted:#6f6055;
+    --dim:#a3968a;
+    --line:rgba(28,20,16,.10);
+    --line-2:rgba(28,20,16,.06);
+    --paper:#ffffff;
+    --bg:#ffffff;
+    --panel:#faf6f1;
+    --ease:cubic-bezier(.4,0,.2,1);
+    --shadow-sm:0 1px 2px rgba(28,20,16,.05);
+    --shadow:0 2px 10px rgba(28,20,16,.06),0 22px 48px -26px rgba(28,20,16,.26);
+    --shadow-lg:0 30px 70px -34px rgba(28,20,16,.34);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  ::selection{background:var(--ink);color:var(--hero)}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  h1,h2,h3{margin:0;font-weight:800;line-height:1.06;letter-spacing:-.035em}
+  p{margin:0}
+  :focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+
+  /* ---------- NAV ---------- */
+  header{position:absolute;top:0;left:0;right:0;z-index:60}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.04em}
+  .brand__mark{width:26px;height:26px;border-radius:8px;background:var(--ink);display:grid;place-items:center}
+  .brand__mark::after{content:"";width:10px;height:10px;border-radius:3px;background:var(--hero-deep)}
+  .nav nav{display:flex;gap:4px;font-size:14.5px;font-weight:600}
+  .nav nav a{padding:8px 14px;border-radius:9px;transition:.2s}
+  .nav nav a:hover{background:rgba(28,20,16,.07)}
+  .nav-r{display:flex;align-items:center;gap:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:700;transition:.2s;white-space:nowrap}
+  .btn--dark{background:var(--ink);color:#fff}
+  .btn--dark:hover{background:#000;transform:translateY(-1px)}
+  .btn--outline{border:1.5px solid var(--ink)}
+  .btn--outline:hover{background:var(--ink);color:#fff}
+  .btn--accent{background:var(--accent);color:#fff}
+  .btn--accent:hover{background:var(--accent-soft)}
+  .btn--lg{padding:15px 28px;font-size:16px}
+
+  /* ---------- HERO ---------- */
+  .hero{background:var(--hero);border-radius:0 0 40px 40px;padding:132px 0 0;overflow:hidden;position:relative}
+  .hero__grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(34px,4.4vw,52px);line-height:1.08;letter-spacing:-.04em;max-width:14ch}
+  .hero .lede{margin:22px 0 0;max-width:42ch;color:var(--ink-2);font-size:17px}
+  .hero__cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+  .trust{margin-top:28px;display:flex;align-items:center;gap:14px}
+  .trust .stars{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(28,20,16,.2);border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:700}
+  .trust .stars svg{width:14px;height:14px}
+  .trust .cap{font-size:13.5px;font-weight:600;color:var(--ink-2)}
+
+  /* stacked product shots */
+  .shots{position:relative;height:460px}
+  .shot{position:absolute;background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid rgba(28,20,16,.06)}
+  .shot--main{top:0;left:0;width:78%;z-index:2}
+  .shot--side{top:52%;right:0;width:56%;z-index:3}
+  .sbar{display:flex;align-items:center;gap:6px;padding:11px 14px;border-bottom:1px solid var(--line-2)}
+  .sbar i{width:8px;height:8px;border-radius:50%;background:rgba(28,20,16,.12)}
+  .sbar span{margin-left:8px;font-family:'JetBrains Mono';font-size:10.5px;color:var(--dim)}
+  .sbody{padding:16px}
+  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .kpi div{background:var(--panel);border-radius:10px;padding:12px}
+  .kpi .k{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);font-weight:700}
+  .kpi .v{font-size:19px;font-weight:800;letter-spacing:-.03em;margin-top:4px}
+  .bars{display:flex;align-items:flex-end;gap:6px;height:64px;margin-top:14px}
+  .bars i{flex:1;background:var(--hero-deep);border-radius:5px 5px 2px 2px}
+  .rows{margin-top:14px}
+  .r{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line-2);font-size:12.5px}
+  .r .av{width:24px;height:24px;border-radius:7px;background:#f0e9e0;display:grid;place-items:center;font-size:10px;font-weight:800;flex:none}
+  .r .amt{margin-left:auto;font-family:'JetBrains Mono';font-weight:500}
+  .r .amt.pos{color:#b45309}
+  .chart{height:90px;display:flex;align-items:flex-end;gap:5px;padding:12px 0 0}
+  .chart i{flex:1;background:rgba(28,20,16,.1);border-radius:4px}
+  .chart i.hi{background:var(--ink)}
+
+  /* ---------- LOGOS ---------- */
+  .logos{padding:56px 0 0}
+  .logos .lbl{font-size:15px;font-weight:700;color:var(--muted);max-width:28ch;margin-bottom:26px}
+  .logos__in{display:flex;align-items:center;gap:48px;flex-wrap:wrap}
+  .logos__in span{font-weight:800;font-size:19px;letter-spacing:-.03em;color:#d3c7ba;transition:.25s}
+  .logos__in span:hover{color:var(--ink-2)}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:100px 0}
+  .head{max-width:640px;margin-bottom:48px}
+  .head.center{margin-inline:auto;text-align:center}
+  .eyebrow{display:inline-block;font-size:13px;font-weight:800;color:var(--accent);background:var(--hero);padding:6px 14px;border-radius:999px;margin-bottom:16px}
+  .head h2{font-size:clamp(28px,4vw,48px)}
+  .head p{margin-top:16px;color:var(--muted);font-size:17.5px}
+
+  /* feature cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .fc{border:1px solid var(--line);border-radius:20px;padding:28px;transition:.26s;background:#fff}
+  .fc:hover{border-color:var(--ink);transform:translateY(-4px);box-shadow:var(--shadow)}
+  .fc .ic{width:48px;height:48px;border-radius:14px;background:var(--hero);display:grid;place-items:center;font-size:21px;margin-bottom:20px}
+  .fc h3{font-size:18px;margin-bottom:9px}
+  .fc p{color:var(--muted);font-size:15px}
+
+  /* channels */
+  .channels{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .channels span{border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;color:var(--ink-2);background:#fff}
+
+  /* split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .split h2{font-size:clamp(26px,3.4vw,42px);margin-bottom:18px}
+  .split p{color:var(--muted);font-size:17px;margin-bottom:14px}
+  .checks{list-style:none;padding:0;margin:26px 0 0}
+  .checks li{display:flex;gap:13px;align-items:flex-start;margin-bottom:15px;font-size:16px;font-weight:600}
+  .checks .t{width:24px;height:24px;border-radius:50%;background:var(--hero);display:grid;place-items:center;font-size:12px;flex:none;margin-top:2px;font-weight:800}
+  .panel{background:var(--panel);border-radius:22px;padding:26px;border:1px solid var(--line-2)}
+  .panel .line{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+  .panel .line:last-child{border-bottom:none}
+  .panel .line .k{color:var(--muted);font-weight:600}
+  .panel .line .v{font-family:'JetBrains Mono';font-weight:500}
+
+  /* metrics */
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .metric{text-align:center;padding:28px 16px;border-radius:18px;background:var(--panel)}
+  .metric .v{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.04em}
+  .metric .l{color:var(--muted);font-size:14px;margin-top:8px;font-weight:600}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .step{border:1px solid var(--line);border-radius:20px;padding:28px}
+  .step__n{width:40px;height:40px;border-radius:12px;background:var(--ink);color:var(--hero);display:grid;place-items:center;font-weight:800;font-size:15px;margin-bottom:18px}
+  .step h3{font-size:18px;margin-bottom:9px}
+  .step p{color:var(--muted);font-size:15px}
+
+  /* pricing */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+  .plan{border:1px solid var(--line);border-radius:22px;padding:32px;background:#fff}
+  .plan.hi{background:var(--hero);border-color:var(--hero);box-shadow:var(--shadow);transform:translateY(-8px)}
+  .plan h3{font-size:17px;margin-bottom:6px}
+  .plan .sub{font-size:13.5px;color:var(--muted);margin-bottom:22px;font-weight:600}
+  .plan.hi .sub{color:rgba(28,20,16,.6)}
+  .plan .price{font-size:44px;font-weight:800;letter-spacing:-.045em;line-height:1}
+  .plan .price small{font-size:14px;font-weight:600;color:var(--muted)}
+  .plan.hi .price small{color:rgba(28,20,16,.6)}
+  .plan ul{list-style:none;padding:0;margin:24px 0 0}
+  .plan li{display:flex;gap:10px;font-size:14.5px;color:var(--muted);padding:9px 0}
+  .plan.hi li{color:var(--ink-2)}
+  .plan li b{color:var(--accent);font-weight:800}
+  .plan .btn{margin-top:24px;width:100%}
+
+  /* faq */
+  .faq{max-width:800px;margin-inline:auto}
+  details{border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden;transition:.2s;background:#fff}
+  details[open]{border-color:var(--ink)}
+  summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;padding:22px 26px;font-size:17px;font-weight:700}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--accent);font-weight:800;font-size:20px;line-height:1;transition:.25s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{padding:0 26px 24px;color:var(--muted);max-width:62ch}
+
+  /* cta */
+  .cta{padding:0 0 100px}
+  .cta__box{background:var(--ink);color:#fff;border-radius:32px;padding:76px 40px;text-align:center;position:relative;overflow:hidden}
+  .cta__box::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,200,126,.18),transparent 65%);top:-320px;left:50%;transform:translateX(-50%)}
+  .cta__box h2{position:relative;font-size:clamp(30px,4.6vw,54px)}
+  .cta__box p{position:relative;margin:18px auto 30px;max-width:44ch;color:rgba(255,255,255,.7);font-size:17.5px}
+
+  footer{border-top:1px solid var(--line-2);padding:48px 0 36px;color:var(--muted);font-size:14.5px}
+  .f-in{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .f-cols{display:flex;gap:60px;flex-wrap:wrap}
+  .f-cols h4{font-size:13.5px;color:var(--ink);font-weight:800;margin:0 0 14px}
+  .f-cols a{display:block;margin-bottom:10px;color:var(--muted);transition:.2s;font-weight:500}
+  .f-cols a:hover{color:var(--ink)}
+  .f-bot{margin-top:44px;padding-top:22px;border-top:1px solid var(--line-2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13.5px}
+
+  @media(max-width:900px){
+    .nav nav{display:none}
+    .hero{border-radius:0 0 28px 28px}
+    .hero__grid,.split{grid-template-columns:1fr;gap:36px}
+    .shots{height:360px;margin-top:20px}
+    .cards,.steps,.plans{grid-template-columns:1fr}
+    .plan.hi{transform:none}
+    .metrics{grid-template-columns:1fr 1fr}
+    section{padding:72px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand"><span class="brand__mark"></span>Bravo</a>
+    <nav>
+      <a href="#platform">Platform</a>
+      <a href="#solutions">Solutions</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#resources">Resources</a>
+    </nav>
+    <div class="nav-r">
+      <a href="#" style="font-weight:600">Log in</a>
+      <a href="#" class="btn btn--dark">Sign up free</a>
+      <a href="#" class="btn btn--outline">Get a demo</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div>
+      <h1>Turn every order into a lifetime customer.</h1>
+      <p class="lede">One platform for all your marketing and sales. Email, SMS, WhatsApp and beyond, in a single place your whole team can use.</p>
+      <div class="hero__cta">
+        <a href="#" class="btn btn--dark btn--lg">Sign up free</a>
+        <a href="#" class="btn btn--outline btn--lg">Get a demo</a>
+      </div>
+      <div class="trust">
+        <span class="stars">
+          <svg viewBox="0 0 24 24" fill="#1c1410"><path d="M12 2l3 6.5 7 .9-5 4.8 1.3 7-6.3-3.4L5.7 21 7 14.2 2 9.4l7-.9z"/></svg>
+          4.8 · 12,400 reviews
+        </span>
+        <span class="cap">Loved by marketers everywhere</span>
+      </div>
+    </div>
+
+    <div class="shots">
+      <div class="shot shot--main">
+        <div class="sbar"><i></i><i></i><i></i><span>bravo · dashboard</span></div>
+        <div class="sbody">
+          <div class="kpi">
+            <div><div class="k">Contacts</div><div class="v">48.2k</div></div>
+            <div><div class="k">Open rate</div><div class="v">62%</div></div>
+            <div><div class="k">Revenue</div><div class="v">$18.4k</div></div>
+          </div>
+          <div class="bars">
+            <i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:78%"></i><i style="height:56%"></i><i style="height:92%"></i><i style="height:70%"></i>
+          </div>
+          <div class="rows">
+            <div class="r"><span class="av">NW</span>Newsletter #42<span class="amt pos">62% open</span></div>
+            <div class="r"><span class="av">AC</span>Abandoned cart<span class="amt pos">+$4,120</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="shot shot--side">
+        <div class="sbar"><i></i><i></i><i></i><span>campaign</span></div>
+        <div class="sbody">
+          <div style="font-size:11px;color:#a3968a;font-weight:700;text-transform:uppercase;letter-spacing:.06em">Automation</div>
+          <div style="font-size:24px;font-weight:800;letter-spacing:-.03em;margin-top:6px">Welcome flow</div>
+          <div style="font-size:12px;color:#b45309;font-weight:700;margin-top:4px">4 steps · live</div>
+          <div class="chart"><i style="height:30%"></i><i style="height:50%"></i><i class="hi" style="height:78%"></i><i style="height:60%"></i><i style="height:40%"></i><i class="hi" style="height:92%"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos">
+  <div class="wrap">
+    <p class="lbl">Join 600,000+ businesses growing with Bravo</p>
+    <div class="logos__in"><span>Shopify</span><span>WordPress</span><span>Stripe</span><span>Zapier</span><span>WooCommerce</span><span>Webflow</span></div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="platform">
+  <div class="wrap">
+    <div class="head center">
+      <span class="eyebrow">Platform</span>
+      <h2>Everything you need to reach your customers. Nothing you have to stitch together.</h2>
+      <p>Marketing, sales and data in one place, so your team stops switching tabs.</p>
+    </div>
+    <div class="cards">
+      <article class="fc"><div class="ic">◈</div><h3>Campaigns &amp; automation</h3><p>Build multichannel journeys that react to what customers actually do.</p></article>
+      <article class="fc"><div class="ic">⇄</div><h3>Transactional messaging</h3><p>Send real-time email, SMS and WhatsApp through one API and SMTP relay.</p></article>
+      <article class="fc"><div class="ic">▤</div><h3>Sales management</h3><p>Custom pipelines, automation and chat that move deals forward.</p></article>
+      <article class="fc"><div class="ic">◑</div><h3>Customer data platform</h3><p>Unify every touchpoint into one profile you can actually act on.</p></article>
+      <article class="fc"><div class="ic">♥</div><h3>Customer loyalty</h3><p>Turn one-time buyers into repeat customers with a built-in rewards program.</p></article>
+      <article class="fc"><div class="ic">⌗</div><h3>Integrations</h3><p>Connect Bravo to 150+ tools, from Shopify and WordPress to Stripe and Zapier.</p></article>
+    </div>
+
+    <div class="channels">
+      <span>Email</span><span>SMS</span><span>WhatsApp</span><span>Web push</span><span>Mobile push</span><span>Live chat</span><span>Chatbot</span><span>Wallet</span>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT -->
+<section id="solutions" style="padding-top:0">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Why Bravo</span>
+      <h2>Built for teams that grow fast and hate busywork.</h2>
+      <p>Most tools make you choose between power and simplicity. Bravo gives you both, so a two-person team can run campaigns that used to need an agency.</p>
+      <ul class="checks">
+        <li><span class="t">✓</span> Every channel in one inbox</li>
+        <li><span class="t">✓</span> Automation that reacts in real time</li>
+        <li><span class="t">✓</span> Data unified across every touchpoint</li>
+        <li><span class="t">✓</span> Reports your whole team understands</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="line"><span class="k">Contact</span><span class="v">maria@acme.co</span></div>
+      <div class="line"><span class="k">Segment</span><span class="v">Loyal · 30d</span></div>
+      <div class="line"><span class="k">Last order</span><span class="v">$184.00</span></div>
+      <div class="line"><span class="k">Channels</span><span class="v">Email · SMS</span></div>
+      <div class="line"><span class="k">Lifetime value</span><span class="v">$1,240.00</span></div>
+      <div class="line"><span class="k">Next best action</span><span class="v">Win-back flow</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="metrics">
+      <div class="metric"><div class="v">12B+</div><div class="l">emails sent monthly</div></div>
+      <div class="metric"><div class="v">99.99%</div><div class="l">delivery uptime</div></div>
+      <div class="metric"><div class="v">600k+</div><div class="l">businesses</div></div>
+      <div class="metric"><div class="v">150+</div><div class="l">integrations</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="resources" style="padding-top:0">
+  <div class="wrap">
+    <div class="head center">
+      <span class="eyebrow">How it works</span>
+      <h2>From sign-up to first campaign in an afternoon.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step__n">1</div><h3>Import your contacts</h3><p>Bring your list from anywhere, or sync it live from your store or CRM.</p></div>
+      <div class="step"><div class="step__n">2</div><h3>Build your first journey</h3><p>Pick a template, set the triggers, and let the automation run.</p></div>
+      <div class="step"><div class="step__n">3</div><h3>Watch it convert</h3><p>Track opens, clicks and revenue per campaign in one dashboard.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="padding-top:0">
+  <div class="wrap">
+    <div class="head center">
+      <span class="eyebrow">Pricing</span>
+      <h2>Start free. Grow when it works.</h2>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="sub">For getting started</div>
+        <div class="price">$0<small>/mo</small></div>
+        <ul>
+          <li><b>+</b> 300 emails a day</li>
+          <li><b>+</b> Unlimited contacts</li>
+          <li><b>+</b> Email campaigns</li>
+        </ul>
+        <a href="#" class="btn btn--outline">Sign up free</a>
+      </div>
+      <div class="plan hi">
+        <h3>Starter</h3>
+        <div class="sub">For growing teams</div>
+        <div class="price">$29<small>/mo</small></div>
+        <ul>
+          <li><b>+</b> No daily sending limit</li>
+          <li><b>+</b> Marketing automation</li>
+          <li><b>+</b> SMS &amp; WhatsApp</li>
+          <li><b>+</b> A/B testing</li>
+        </ul>
+        <a href="#" class="btn btn--dark">Start free trial</a>
+      </div>
+      <div class="plan">
+        <h3>Business</h3>
+        <div class="sub">For scale</div>
+        <div class="price">$69<small>/mo</small></div>
+        <ul>
+          <li><b>+</b> Send-time optimization</li>
+          <li><b>+</b> Advanced segmentation</li>
+          <li><b>+</b> Priority support</li>
+        </ul>
+        <a href="#" class="btn btn--outline">Get a demo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="head center"><h2>Questions</h2></div>
+    <div class="faq">
+      <details open><summary>Do I need a credit card to start?</summary><p>No. The Free plan is free forever, and every paid plan comes with a 14-day trial you can cancel any time.</p></details>
+      <details><summary>Can I send SMS and WhatsApp too?</summary><p>Yes. Email, SMS and WhatsApp all live in the same platform, so you can reach customers on the channel they actually read.</p></details>
+      <details><summary>How does the automation work?</summary><p>You set a trigger, choose what happens next, and Bravo runs the journey. It reacts to opens, clicks, purchases and custom events in real time.</p></details>
+      <details><summary>Will it connect to my store?</summary><p>Bravo connects to 150+ tools including Shopify, WooCommerce, WordPress and Stripe, so your data stays in sync automatically.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap">
+    <div class="cta__box">
+      <h2>Start growing with Bravo today.</h2>
+      <p>Free to start, no card required. Set up your first campaign in minutes.</p>
+      <a href="#" class="btn btn--accent btn--lg">Sign up free</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-in">
+      <div style="max-width:30ch">
+        <a href="#" class="brand" style="margin-bottom:14px"><span class="brand__mark"></span>Bravo</a>
+        <p style="color:var(--muted)">The all-in-one platform for marketing and sales.</p>
+      </div>
+      <div class="f-cols">
+        <div><h4>Platform</h4><a href="#">Campaigns</a><a href="#">Automation</a><a href="#">Channels</a></div>
+        <div><h4>Solutions</h4><a href="#">Ecommerce</a><a href="#">Enterprise</a><a href="#">Developers</a></div>
+        <div><h4>Company</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Contact</a></div>
+      </div>
+    </div>
+    <div class="f-bot"><span>© 2026 Bravo Technologies</span><span>bravo.app</span></div>
+  </div>
+</footer>
+
+</body>
+</html>

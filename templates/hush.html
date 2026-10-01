@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hush | Write without the noise</title>
+<meta name="description" content="A calm, friendly writing app. No clutter, no streaks, just the page." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f7fb;
+    --bg-2:#eef0f8;
+    --surface:#ffffff;
+    --fg:#1b1b2b;
+    --fg-muted:#5f5f75;
+    --fg-dim:#9a9ab0;
+    --line:#e6e6f0;
+    --line-2:#eef0f6;
+    --violet:#6c5ce7;
+    --violet-soft:#a29bfe;
+    --violet-tint:#efedff;
+    --mint:#00cec9;
+    --pink:#fd79a8;
+    --amber:#fdcb6e;
+    --ease:cubic-bezier(.4,0,.2,1);
+    --shadow-sm:0 1px 2px rgba(27,27,43,.05);
+    --shadow:0 4px 12px rgba(27,27,43,.06),0 20px 40px -20px rgba(108,92,231,.28);
+    --shadow-lg:0 8px 24px rgba(27,27,43,.08),0 40px 80px -40px rgba(108,92,231,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--fg);
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  ::selection{background:var(--violet);color:#fff}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  h1,h2,h3{margin:0;font-weight:800;line-height:1.08;letter-spacing:-.03em}
+  p{margin:0}
+  :focus-visible{outline:3px solid var(--violet-soft);outline-offset:2px;border-radius:8px}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+
+  /* ---------- NAV ---------- */
+  header{position:sticky;top:0;z-index:60;background:rgba(247,247,251,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line-2)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.03em}
+  .mark{width:30px;height:30px;border-radius:10px;background:linear-gradient(140deg,var(--violet-soft),var(--violet));display:grid;place-items:center;box-shadow:0 6px 16px -4px rgba(108,92,231,.5)}
+  .mark::after{content:"";width:11px;height:11px;border-radius:50%;background:#fff;opacity:.9}
+  .nav nav{display:flex;gap:2px;font-size:15px;font-weight:600}
+  .nav nav a{padding:9px 14px;border-radius:11px;color:var(--fg-muted);transition:.2s}
+  .nav nav a:hover{color:var(--fg);background:var(--surface)}
+  .nav-r{display:flex;align-items:center;gap:14px;font-size:15px;font-weight:600}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:13px;font-size:15px;font-weight:700;transition:.22s;white-space:nowrap}
+  .btn--primary{background:var(--violet);color:#fff;box-shadow:0 8px 20px -6px rgba(108,92,231,.6)}
+  .btn--primary:hover{background:#5b4bd6;transform:translateY(-1px)}
+  .btn--soft{background:var(--surface);color:var(--fg);border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+  .btn--soft:hover{border-color:var(--violet-soft);transform:translateY(-1px)}
+  .btn--lg{padding:15px 28px;font-size:16px;border-radius:15px}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:88px 0 0;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;z-index:0}
+  .b1{width:520px;height:520px;background:radial-gradient(circle,#c9c2ff,transparent 70%);top:-160px;left:-120px}
+  .b2{width:460px;height:460px;background:radial-gradient(circle,#a8f0ec,transparent 70%);top:-80px;right:-140px;opacity:.5}
+  .b3{width:420px;height:420px;background:radial-gradient(circle,#ffd9e8,transparent 70%);top:280px;right:20%;opacity:.4}
+  .hero__in{position:relative;z-index:1;text-align:center}
+  .pill{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--fg-muted);box-shadow:var(--shadow-sm)}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px rgba(0,206,201,.16)}
+  .hero h1{margin:26px 0 0;font-size:clamp(40px,6.4vw,80px);line-height:1.02}
+  .hero h1 .hl{position:relative;display:inline-block}
+  .hero h1 .hl::after{content:"";position:absolute;left:-2%;right:-2%;bottom:8%;height:34%;background:var(--violet-tint);border-radius:8px;z-index:-1;transform:rotate(-1deg)}
+  .hero .lede{margin:24px auto 0;max-width:50ch;color:var(--fg-muted);font-size:19px}
+  .hero__cta{margin-top:34px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+  .hero__meta{margin-top:18px;font-size:14px;color:var(--fg-dim);font-weight:500}
+
+  /* ---------- APP MOCK ---------- */
+  .mock{position:relative;z-index:1;margin:60px auto 0;max-width:1000px;padding:0 28px}
+  .mock__frame{background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow-lg)}
+  .mock__bar{display:flex;align-items:center;gap:8px;padding:15px 20px;border-bottom:1px solid var(--line-2)}
+  .mock__bar i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+  .mock__bar i:nth-child(1){background:#ff9aa2}.mock__bar i:nth-child(2){background:#ffd59e}.mock__bar i:nth-child(3){background:#b5ead7}
+  .mock__bar span{margin-left:12px;font-size:13px;color:var(--fg-dim);font-weight:600}
+  .mock__body{display:grid;grid-template-columns:216px 1fr;min-height:380px}
+  .mock__side{border-right:1px solid var(--line-2);padding:18px;background:#fbfbfe}
+  .mock__side .s{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:10px;font-size:14px;font-weight:600;color:var(--fg-muted);margin-bottom:4px}
+  .mock__side .s.on{background:var(--violet-tint);color:var(--violet)}
+  .mock__side .s .d{width:9px;height:9px;border-radius:3px;background:currentColor;opacity:.7}
+  .mock__side .cap{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-dim);padding:16px 11px 8px}
+  .mock__main{padding:36px 44px}
+  .mock__main h3{font-size:26px;margin-bottom:16px}
+  .ln{height:11px;border-radius:999px;background:var(--line-2);margin-bottom:12px}
+  .ln.w1{width:94%}.ln.w2{width:82%}.ln.w3{width:88%}.ln.w4{width:56%}
+  .quote{border-left:3px solid var(--violet-soft);padding:4px 0 4px 18px;margin:22px 0;color:var(--fg-muted);font-style:italic;font-weight:500}
+
+  /* ---------- LOGOS ---------- */
+  .logos{padding:64px 0 0;text-align:center}
+  .logos p{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-dim);margin-bottom:26px}
+  .logos__in{display:flex;align-items:center;justify-content:center;gap:46px;flex-wrap:wrap;color:var(--fg-dim);font-weight:800;font-size:18px;letter-spacing:-.02em}
+  .logos__in span{opacity:.65;transition:.25s}.logos__in span:hover{opacity:1;color:var(--fg-muted)}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:104px 0}
+  .head{max-width:640px;margin-bottom:48px}
+  .head.center{margin-inline:auto;text-align:center}
+  .eyebrow{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--violet);background:var(--violet-tint);padding:6px 14px;border-radius:999px;margin-bottom:18px}
+  .head h2{font-size:clamp(28px,4vw,46px)}
+  .head p{margin-top:16px;color:var(--fg-muted);font-size:18px}
+
+  /* cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;transition:.26s;box-shadow:var(--shadow-sm)}
+  .card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--violet-soft)}
+  .card .ic{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;font-size:22px;margin-bottom:20px}
+  .ic--v{background:var(--violet-tint);color:var(--violet)}
+  .ic--m{background:#e0fbf9;color:#00a8a3}
+  .ic--p{background:#ffe9f2;color:#e8437f}
+  .ic--a{background:#fff4dd;color:#d99400}
+  .card h3{font-size:19px;margin-bottom:9px}
+  .card p{color:var(--fg-muted);font-size:15px}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:var(--shadow-sm)}
+  .step__n{width:40px;height:40px;border-radius:12px;background:var(--violet);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px;margin-bottom:18px;box-shadow:0 8px 18px -6px rgba(108,92,231,.6)}
+  .step h3{font-size:19px;margin-bottom:9px}
+  .step p{color:var(--fg-muted);font-size:15px}
+
+  /* big panel */
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .panel .txt h2{font-size:clamp(26px,3.6vw,42px);margin-bottom:18px}
+  .panel .txt p{color:var(--fg-muted);font-size:17px;margin-bottom:16px}
+  .checks{list-style:none;padding:0;margin:24px 0 0}
+  .checks li{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;font-size:16px;font-weight:500}
+  .checks .tick{width:24px;height:24px;border-radius:8px;background:var(--violet-tint);color:var(--violet);display:grid;place-items:center;font-size:13px;flex:none;margin-top:2px;font-weight:800}
+  .panel__art{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:var(--shadow)}
+  .panel__art .row{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;margin-bottom:10px;background:#fbfbfe;border:1px solid var(--line-2)}
+  .panel__art .row.hi{background:var(--violet-tint);border-color:#ddd8ff}
+  .panel__art .av{width:36px;height:36px;border-radius:11px;flex:none}
+  .panel__art .t{font-size:14px;font-weight:700}
+  .panel__art .s{font-size:12.5px;color:var(--fg-dim)}
+
+  /* faq */
+  .faq{max-width:760px;margin-inline:auto}
+  details{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow-sm);transition:.22s}
+  details[open]{border-color:var(--violet-soft);box-shadow:var(--shadow)}
+  summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;padding:22px 26px;font-size:17px;font-weight:700}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--violet);font-weight:800;font-size:20px;line-height:1;transition:.25s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{padding:0 26px 24px;color:var(--fg-muted);max-width:62ch}
+
+  /* cta */
+  .cta{position:relative;overflow:hidden}
+  .cta__box{position:relative;z-index:1;background:linear-gradient(150deg,#6c5ce7,#8b7cf0 55%,#a29bfe);border-radius:28px;padding:72px 40px;text-align:center;color:#fff;box-shadow:var(--shadow-lg);overflow:hidden}
+  .cta__box::before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.28),transparent 65%);top:-240px;right:-120px}
+  .cta__box::after{content:"";position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,206,201,.35),transparent 65%);bottom:-220px;left:-80px}
+  .cta__box h2{position:relative;font-size:clamp(30px,4.4vw,52px);color:#fff}
+  .cta__box p{position:relative;margin:18px auto 30px;max-width:44ch;color:rgba(255,255,255,.86);font-size:18px}
+  .cta__box .btn{position:relative;background:#fff;color:var(--violet)}
+  .cta__box .btn:hover{background:#f0eeff}
+
+  footer{border-top:1px solid var(--line);padding:52px 0 36px;color:var(--fg-dim);font-size:15px;margin-top:20px}
+  .f-in{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .f-cols{display:flex;gap:64px;flex-wrap:wrap}
+  .f-cols h4{font-size:14px;color:var(--fg);font-weight:800;margin:0 0 14px}
+  .f-cols a{display:block;margin-bottom:10px;color:var(--fg-dim);transition:.2s;font-weight:500}
+  .f-cols a:hover{color:var(--violet)}
+  .f-bot{margin-top:44px;padding-top:22px;border-top:1px solid var(--line-2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @media(max-width:900px){
+    .nav nav{display:none}
+    .cards,.steps{grid-template-columns:1fr}
+    .panel{grid-template-columns:1fr;gap:32px}
+    .mock__body{grid-template-columns:1fr}.mock__side{display:none}
+    .mock__main{padding:28px}
+    section{padding:76px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand"><span class="mark"></span>Hush</a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#">Pricing</a>
+      <a href="#">Journal</a>
+    </nav>
+    <div class="nav-r">
+      <a href="#" style="color:var(--fg-muted)">Log in</a>
+      <a href="#" class="btn btn--primary">Get Hush</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="wrap hero__in">
+    <span class="pill"><span class="dot"></span>Hush 2.0 is here</span>
+    <h1>Write without<br>the <span class="hl">noise.</span></h1>
+    <p class="lede">A calm place to think on the page. No toolbars, no notifications, no streak you're afraid to break, just you and the words.</p>
+    <div class="hero__cta">
+      <a href="#" class="btn btn--primary btn--lg">Start writing free</a>
+      <a href="#" class="btn btn--soft btn--lg">See how it works</a>
+    </div>
+    <p class="hero__meta">Free forever · Mac, iPad &amp; web · No account needed</p>
+  </div>
+
+  <div class="mock">
+    <div class="mock__frame">
+      <div class="mock__bar"><i></i><i></i><i></i><span>Morning pages · draft 04</span></div>
+      <div class="mock__body">
+        <div class="mock__side">
+          <div class="s on"><span class="d"></span>Morning pages</div>
+          <div class="s"><span class="d"></span>On slowness</div>
+          <div class="s"><span class="d"></span>Letters</div>
+          <div class="cap">Archive</div>
+          <div class="s"><span class="d"></span>Notes to self</div>
+          <div class="s"><span class="d"></span>Ideas</div>
+        </div>
+        <div class="mock__main">
+          <h3>The quiet room</h3>
+          <div class="ln w1"></div><div class="ln w2"></div><div class="ln w3"></div>
+          <p class="quote">“The words come back when the noise goes.”</p>
+          <div class="ln w1"></div><div class="ln w4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos wrap">
+  <p>Loved by writers at</p>
+  <div class="logos__in"><span>Medium</span><span>Substack</span><span>Ghost</span><span>Notion</span><span>The Verge</span></div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="head center">
+      <span class="eyebrow">Features</span>
+      <h2>Everything you need. Nothing that nags.</h2>
+      <p>Hush does a handful of things, and does them quietly. No dashboards, no engagement tricks.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><div class="ic ic--v">◍</div><h3>Focus mode</h3><p>One keystroke and the page fills the screen. Everything else fades out: toolbars, tabs, the world.</p></article>
+      <article class="card"><div class="ic ic--m">◔</div><h3>Writes offline</h3><p>Your words live on your device. Write on a plane, in a tunnel, anywhere. It syncs when you're back.</p></article>
+      <article class="card"><div class="ic ic--p">◑</div><h3>Gentle history</h3><p>Every draft is kept, without a timeline to obsess over. Restore any version in a click.</p></article>
+      <article class="card"><div class="ic ic--a">✎</div><h3>Quiet suggestions</h3><p>Highlight a sentence and ask for a tighter one. It offers, never overwrites. Your voice stays yours.</p></article>
+      <article class="card"><div class="ic ic--v">⌘</div><h3>Plain Markdown</h3><p>Every note is a file you own. Take the whole folder anywhere. No lock-in, ever.</p></article>
+      <article class="card"><div class="ic ic--m">☾</div><h3>Kind by default</h3><p>No streaks, no badges, no “you haven't written today.” Hush would rather you close it and live.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how" style="padding-top:0">
+  <div class="wrap">
+    <div class="head center">
+      <span class="eyebrow">How it works</span>
+      <h2>Open. Write. Done.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step__n">1</div><h3>Open a page</h3><p>Hit the shortcut and Hush takes the screen. A blank page, centered, waiting.</p></div>
+      <div class="step"><div class="step__n">2</div><h3>Just write</h3><p>It saves every keystroke as you go. There's no save button, because there's nothing to lose.</p></div>
+      <div class="step"><div class="step__n">3</div><h3>Close and go</h3><p>Your draft is already safe. Come back whenever. It'll be exactly where you left it.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL -->
+<section style="padding-top:0">
+  <div class="wrap panel">
+    <div class="txt">
+      <span class="eyebrow">Made for focus</span>
+      <h2>A writing app that gets out of the way.</h2>
+      <p>Most tools compete for your attention. Hush gives it back. The interface disappears the moment you start typing, and reappears only when you ask.</p>
+      <ul class="checks">
+        <li><span class="tick">✓</span> Distraction-free full-screen mode</li>
+        <li><span class="tick">✓</span> Typewriter scrolling keeps your line centered</li>
+        <li><span class="tick">✓</span> No notifications, ever. By design</li>
+        <li><span class="tick">✓</span> Your files stay yours, in plain Markdown</li>
+      </ul>
+    </div>
+    <div class="panel__art">
+      <div class="row hi"><span class="av" style="background:linear-gradient(140deg,#a29bfe,#6c5ce7)"></span><div><div class="t">Morning pages</div><div class="s">edited just now · 214 words</div></div></div>
+      <div class="row"><span class="av" style="background:linear-gradient(140deg,#a8f0ec,#00cec9)"></span><div><div class="t">On slowness</div><div class="s">yesterday · 88 words</div></div></div>
+      <div class="row"><span class="av" style="background:linear-gradient(140deg,#ffd9e8,#fd79a8)"></span><div><div class="t">Letters</div><div class="s">last week · 31 words</div></div></div>
+      <div class="row"><span class="av" style="background:linear-gradient(140deg,#ffe9b8,#fdcb6e)"></span><div><div class="t">Notes to self</div><div class="s">12 words</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="head center"><h2>Questions</h2></div>
+    <div class="faq">
+      <details open><summary>Is Hush really free?</summary><p>Writing, focus mode and export are free forever, and work offline. An optional assistant for rewriting is included with a free monthly allowance.</p></details>
+      <details><summary>Where are my notes stored?</summary><p>In a folder you choose, as plain Markdown files. Nothing is locked in a proprietary format, and you can open them in any editor.</p></details>
+      <details><summary>Does it work without internet?</summary><p>Yes. Hush is built offline-first. Everything works without a connection and syncs when you're back online.</p></details>
+      <details><summary>Do I need an account?</summary><p>No. Download it and write. An account is only needed if you want to sync across devices.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap">
+    <div class="cta__box">
+      <h2>Next time, just write.</h2>
+      <p>Free for Mac, iPad and the web. No account, no card, no clutter.</p>
+      <a href="#" class="btn btn--lg">Start writing free</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-in">
+      <div style="max-width:30ch">
+        <a href="#" class="brand" style="margin-bottom:14px"><span class="mark"></span>Hush</a>
+        <p>A quiet place to write, made by a small studio that would rather you were outside.</p>
+      </div>
+      <div class="f-cols">
+        <div><h4>Product</h4><a href="#features">Features</a><a href="#">Pricing</a><a href="#">Download</a></div>
+        <div><h4>Company</h4><a href="#">About</a><a href="#">Journal</a><a href="#">Contact</a></div>
+        <div><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a></div>
+      </div>
+    </div>
+    <div class="f-bot"><span>© 2026 Hush Software.</span><span>hush.app</span></div>
+  </div>
+</footer>
+
+</body>
+</html>

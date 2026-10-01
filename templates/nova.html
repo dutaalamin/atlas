@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nova | The AI that ships with you</title>
+<meta name="description" content="An AI pair that reads your codebase, runs the tests, and opens the PR." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000;
+    --fg:#ffffff;
+    --muted:#9b9ba3;
+    --dim:#5f5f68;
+    --line:rgba(255,255,255,.10);
+    --line-soft:rgba(255,255,255,.06);
+    --surface:#0a0a0c;
+    --violet:#7c5cff;
+    --blue:#3d7bff;
+    --pink:#ff5c8a;
+    --cyan:#3ddbff;
+    --ease:cubic-bezier(.4,0,.2,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--fg);
+    font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  ::selection{background:var(--violet);color:#fff}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  h1,h2,h3{margin:0;font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.02;letter-spacing:-.035em}
+  p{margin:0}
+  :focus-visible{outline:2px solid var(--violet);outline-offset:3px;border-radius:4px}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+
+  /* ---------- NAV ---------- */
+  header{position:sticky;top:0;z-index:60;background:rgba(0,0,0,.6);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line-soft)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:24px}
+  .brand{display:flex;align-items:center;gap:9px;font-family:'Space Grotesk';font-weight:700;font-size:18px;letter-spacing:-.02em}
+  .mark{width:20px;height:20px;border-radius:6px;background:conic-gradient(from 140deg,var(--violet),var(--blue),var(--cyan),var(--pink),var(--violet));box-shadow:0 0 20px rgba(124,92,255,.55)}
+  .nav nav{display:flex;gap:4px;font-size:14px;font-weight:500}
+  .nav nav a{padding:8px 12px;border-radius:9px;color:var(--muted);transition:.2s}
+  .nav nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
+  .nav-r{display:flex;align-items:center;gap:16px;font-size:14px;font-weight:500}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:11px;font-size:14px;font-weight:600;transition:.22s;white-space:nowrap}
+  .btn--white{background:#fff;color:#000}
+  .btn--white:hover{background:#e6e6e6}
+  .btn--glass{border:1px solid var(--line);color:#fff;background:rgba(255,255,255,.03)}
+  .btn--glass:hover{background:rgba(255,255,255,.09)}
+  .btn--glow{background:linear-gradient(180deg,#8b6dff,#6b4bf0);color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.14) inset,0 10px 40px -10px rgba(124,92,255,.9)}
+  .btn--glow:hover{filter:brightness(1.1)}
+  .btn--lg{padding:14px 26px;font-size:15px;border-radius:13px}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;text-align:center;padding:96px 0 0;overflow:hidden}
+  .glowwrap{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .streak{position:absolute;width:150%;height:340px;left:-25%;filter:blur(46px);opacity:.55;border-radius:50%}
+  .s1{top:6%;background:linear-gradient(90deg,transparent,var(--violet),var(--blue),transparent);transform:rotate(-16deg)}
+  .s2{top:20%;background:linear-gradient(90deg,transparent,var(--pink),var(--violet),transparent);transform:rotate(-13deg);opacity:.45}
+  .s3{top:34%;background:linear-gradient(90deg,transparent,var(--cyan),var(--blue),transparent);transform:rotate(-11deg);opacity:.35}
+  .spot{position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:900px;height:520px;background:radial-gradient(50% 50% at 50% 50%,rgba(124,92,255,.35),transparent 70%)}
+  .hero__inner{position:relative;z-index:1}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.03)}
+  .pill b{color:#fff;font-weight:600}
+  .hero h1{margin:26px 0 0;font-size:clamp(40px,7vw,88px);line-height:1.0}
+  .hero h1 .grad{background:linear-gradient(100deg,#a78bff,#5c8cff 40%,#3ddbff 75%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .lede{margin:24px auto 0;max-width:52ch;color:var(--muted);font-size:18px}
+  .hero__cta{margin-top:32px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+  .hero__meta{margin-top:18px;font-size:13px;color:var(--dim)}
+
+  /* ---------- APP MOCK ---------- */
+  .mock{position:relative;z-index:1;margin:64px auto 0;max-width:1060px;padding:0 28px}
+  .mock__frame{
+    border:1px solid var(--line);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg,#0d0d10,#08080a);
+    box-shadow:0 40px 120px -30px rgba(124,92,255,.45),0 0 0 1px rgba(255,255,255,.03);
+  }
+  .mock__bar{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--line-soft)}
+  .mock__bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.14)}
+  .mock__bar span{margin-left:12px;font-family:'JetBrains Mono';font-size:12px;color:var(--dim)}
+  .mock__body{display:grid;grid-template-columns:200px 1fr;min-height:360px}
+  .mock__side{border-right:1px solid var(--line-soft);padding:16px}
+  .mock__side div{height:28px;border-radius:8px;background:rgba(255,255,255,.045);margin-bottom:8px}
+  .mock__side div:first-child{background:rgba(124,92,255,.18);border:1px solid rgba(124,92,255,.4)}
+  .mock__main{padding:22px 24px}
+  .row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .dot{width:7px;height:7px;border-radius:50%;flex:none}
+  .line{height:10px;border-radius:999px;background:rgba(255,255,255,.07)}
+  .term{margin-top:16px;background:#050506;border:1px solid var(--line-soft);border-radius:10px;padding:14px 16px;font-family:'JetBrains Mono';font-size:12.5px;line-height:2}
+  .term .k{color:var(--cyan)}.term .s{color:#7fd18a}.term .c{color:var(--dim)}.term .f{color:#c9a86a}
+
+  /* ---------- LOGOS ---------- */
+  .logos{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);margin-top:80px}
+  .logos__in{display:flex;align-items:center;justify-content:center;gap:52px;flex-wrap:wrap;padding:26px;color:var(--dim);font-family:'Space Grotesk';font-weight:600;font-size:17px;letter-spacing:-.01em}
+  .logos__in span{opacity:.7;transition:.25s}.logos__in span:hover{opacity:1;color:var(--muted)}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:110px 0}
+  .head{max-width:660px;margin-bottom:52px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--violet);font-weight:600;margin-bottom:16px}
+  .head h2{font-size:clamp(28px,4vw,48px)}
+  .head p{margin-top:18px;color:var(--muted);font-size:17px}
+
+  /* feature grid */
+  .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:18px;overflow:hidden}
+  .feat article{background:#000;padding:30px;transition:.25s}
+  .feat article:hover{background:var(--surface)}
+  .feat .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;margin-bottom:20px;background:linear-gradient(140deg,rgba(124,92,255,.25),rgba(61,123,255,.12));border:1px solid rgba(124,92,255,.3);color:#b9a6ff}
+  .feat h3{font-size:18px;margin-bottom:8px;letter-spacing:-.01em}
+  .feat p{color:var(--muted);font-size:14.5px}
+
+  /* steps */
+  .steps{border-top:1px solid var(--line-soft)}
+  .step{display:grid;grid-template-columns:96px 1fr;gap:28px;padding:36px 0;border-bottom:1px solid var(--line-soft)}
+  .step__n{font-family:'JetBrains Mono';font-size:13px;color:var(--violet)}
+  .step h3{font-size:22px;margin-bottom:8px}
+  .step p{color:var(--muted);max-width:60ch}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .stats>div{padding:36px;border-right:1px solid var(--line-soft)}
+  .stats>div:last-child{border-right:none}
+  .stats .v{font-family:'Space Grotesk';font-size:40px;letter-spacing:-.03em;background:linear-gradient(180deg,#fff,#8a8a96);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stats .l{color:var(--muted);font-size:14px;margin-top:6px}
+
+  /* faq */
+  .faq{max-width:780px}
+  details{border-bottom:1px solid var(--line-soft)}
+  summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;padding:24px 0;font-size:17px;font-weight:500}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:'+';font-family:'JetBrains Mono';color:var(--violet);transition:.25s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{padding-bottom:24px;color:var(--muted);max-width:64ch}
+
+  /* cta */
+  .cta{position:relative;text-align:center;overflow:hidden;border-top:1px solid var(--line-soft)}
+  .cta .spot2{position:absolute;bottom:-40%;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(50% 50% at 50% 50%,rgba(124,92,255,.4),transparent 70%);pointer-events:none}
+  .cta .wrap{position:relative;z-index:1}
+  .cta h2{font-size:clamp(30px,4.6vw,56px)}
+  .cta p{margin:18px auto 30px;max-width:46ch;color:var(--muted)}
+
+  footer{border-top:1px solid var(--line-soft);padding:48px 0 36px;color:var(--dim);font-size:14px}
+  .f-in{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .f-cols{display:flex;gap:64px;flex-wrap:wrap}
+  .f-cols h4{font-size:13px;color:#fff;font-weight:600;margin:0 0 14px}
+  .f-cols a{display:block;margin-bottom:9px;color:var(--dim);transition:.2s}
+  .f-cols a:hover{color:#fff}
+  .f-bot{margin-top:44px;padding-top:22px;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @media(max-width:900px){
+    .nav nav{display:none}
+    .feat,.stats{grid-template-columns:1fr}
+    .stats>div{border-right:none;border-bottom:1px solid var(--line-soft)}
+    .step{grid-template-columns:1fr;gap:10px}
+    .mock__body{grid-template-columns:1fr}.mock__side{display:none}
+    section{padding:80px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand"><span class="mark"></span>Nova</a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#">Pricing</a>
+      <a href="#">Docs</a>
+      <a href="#">Changelog</a>
+    </nav>
+    <div class="nav-r">
+      <a href="#" style="color:var(--muted)">Log in</a>
+      <a href="#" class="btn btn--white">Download</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" style="padding-bottom:0">
+  <div class="glowwrap">
+    <div class="spot"></div>
+    <div class="streak s1"></div>
+    <div class="streak s2"></div>
+    <div class="streak s3"></div>
+  </div>
+  <div class="wrap hero__inner">
+    <span class="pill"><b>New</b> · Nova 2.0, now with repo-wide context</span>
+    <h1>The AI that<br>ships <span class="grad">with you.</span></h1>
+    <p class="lede">Nova reads your codebase, runs the tests, and opens the pull request. You stay in flow, it handles the rest.</p>
+    <div class="hero__cta">
+      <a href="#" class="btn btn--glow btn--lg">Start for free</a>
+      <a href="#" class="btn btn--glass btn--lg">Book a demo</a>
+    </div>
+    <p class="hero__meta">Free for solo devs · No card required · Works in VS Code &amp; JetBrains</p>
+  </div>
+
+  <!-- MOCK -->
+  <div class="mock">
+    <div class="mock__frame">
+      <div class="mock__bar"><i></i><i></i><i></i><span>nova · checkout-service</span></div>
+      <div class="mock__body">
+        <div class="mock__side"><div></div><div></div><div></div><div></div><div></div></div>
+        <div class="mock__main">
+          <div class="row"><span class="dot" style="background:#7fd18a"></span><span class="line" style="width:38%"></span></div>
+          <div class="row"><span class="dot" style="background:#7c5cff"></span><span class="line" style="width:62%"></span></div>
+          <div class="row"><span class="dot" style="background:#3ddbff"></span><span class="line" style="width:50%"></span></div>
+          <div class="term">
+<span class="c">$ nova run "fix the failing auth test"</span><br>
+<span class="k">→</span> reading 42 files · building context<br>
+<span class="k">→</span> found: <span class="f">session.ts:88</span>, token not refreshed<br>
+<span class="k">→</span> patch applied · <span class="s">3 tests passing</span><br>
+<span class="k">→</span> opened PR <span class="s">#482</span> <span class="c">· ready for review</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos">
+  <div class="wrap logos__in">
+    <span>Vercel</span><span>Linear</span><span>Stripe</span><span>Supabase</span><span>Railway</span><span>Neon</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Capabilities</p>
+      <h2>Everything an agent needs. Nothing it doesn't.</h2>
+      <p>Nova is built for real repositories: messy history, failing CI, opinions included.</p>
+    </div>
+    <div class="feat">
+      <article><div class="ic">◇</div><h3>Repo-wide context</h3><p>Indexes your whole project, not just the open file. It knows how your services talk to each other.</p></article>
+      <article><div class="ic">▷</div><h3>Runs the tests</h3><p>Executes your suite in a sandbox and only opens a PR once the checks go green.</p></article>
+      <article><div class="ic">⌥</div><h3>Opens the PR</h3><p>Writes the branch, the commit, the description and the diff summary, ready for review.</p></article>
+      <article><div class="ic">◈</div><h3>Reviews too</h3><p>Point it at a pull request and it leaves the comments a senior engineer would.</p></article>
+      <article><div class="ic">◐</div><h3>Any model</h3><p>Bring your own key. Route between frontier and fast models per task, automatically.</p></article>
+      <article><div class="ic">◒</div><h3>Stays private</h3><p>Your code never trains a model. Self-host the runner on your own infrastructure.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">How it works</p>
+      <h2>Three steps from issue to pull request.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step__n">01</div><div><h3>Point it at a task</h3><p>Describe the change in plain language, or link the issue. Nova pulls the context it needs.</p></div></div>
+      <div class="step"><div class="step__n">02</div><div><h3>Watch it work</h3><p>It plans, edits, runs your tests and iterates, showing every step in the editor as it goes.</p></div></div>
+      <div class="step"><div class="step__n">03</div><div><h3>Review and merge</h3><p>You get a clean pull request with a summary and a passing CI run. Approve when you're happy.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="stats">
+      <div><div class="v">42%</div><div class="l">faster merge times</div></div>
+      <div><div class="v">1.2M</div><div class="l">PRs opened</div></div>
+      <div><div class="v">99.9%</div><div class="l">sandbox uptime</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><h2>Questions</h2></div>
+    <div class="faq">
+      <details open><summary>Which languages does Nova support?</summary><p>First-class support for TypeScript, Python, Go, Rust and Java, with solid coverage across the rest. It works on any repo with a test command.</p></details>
+      <details><summary>Can I bring my own model?</summary><p>Yes. Connect an API key from any supported provider, or run a local model. Nova routes each task to the model you choose.</p></details>
+      <details><summary>Where does my code go?</summary><p>Nowhere it shouldn't. Code is processed in an isolated sandbox, never used for training, and you can self-host the runner.</p></details>
+      <details><summary>Is there a free plan?</summary><p>Yes, solo developers get a generous free tier. Teams start on a per-seat plan with shared context and audit logs.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="spot2"></div>
+  <div class="wrap">
+    <h2>Ship the next one with Nova.</h2>
+    <p>Free to start. No card, no lock-in. Install in under a minute.</p>
+    <a href="#" class="btn btn--glow btn--lg">Start for free</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-in">
+      <div style="max-width:30ch">
+        <a href="#" class="brand" style="margin-bottom:14px"><span class="mark"></span>Nova</a>
+        <p>An AI agent that reads your repo and ships the change.</p>
+      </div>
+      <div class="f-cols">
+        <div><h4>Product</h4><a href="#features">Features</a><a href="#">Pricing</a><a href="#">Docs</a></div>
+        <div><h4>Company</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a></div>
+        <div><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a></div>
+      </div>
+    </div>
+    <div class="f-bot"><span>© 2026 Nova Labs, Inc.</span><span class="mono">nova.dev</span></div>
+  </div>
+</footer>
+
+</body>
+</html>
