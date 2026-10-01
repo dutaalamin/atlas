@@ -10,14 +10,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --green:#4338CA;
-    --green-hover:#312E81;
-    --mint:#C7D2FE;
-    --mint-light:#EEF2FF;
-    --dark:#312E81;
+    --green:#6F4E37;
+    --green-hover:#2C1A10;
+    --mint:#EADCC8;
+    --mint-light:#F7F1E8;
+    --dark:#2C1A10;
     --body:#1B1B1B;
     --muted:#6B6C72;
-    --line:rgba(67,56,202,.12);
+    --line:rgba(111,78,55,.12);
     --serif:'Source Serif 4',Georgia,serif;
     --sans:'Inter',system-ui,sans-serif;
     --ease:cubic-bezier(.4,0,.2,1);
@@ -38,7 +38,7 @@
   .btn-dark{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--dark);color:#fff;font-weight:600;font-size:16px;padding:12px 32px;border-radius:6px;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.08)}
   .btn-dark:hover{background:var(--green)}
   .btn-outline{display:inline-flex;align-items:center;justify-content:center;gap:8px;color:var(--dark);font-weight:600;font-size:16px;padding:12px 32px;border-radius:6px;border:1px solid var(--dark);transition:.2s}
-  .btn-outline:hover{background:rgba(67,56,202,.05)}
+  .btn-outline:hover{background:rgba(111,78,55,.05)}
 
   /* ---------- SCROLL REVEAL ---------- */
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
@@ -59,7 +59,7 @@
   .nav__right{display:flex;align-items:center;gap:12px}
   .nav__login{display:flex;align-items:center;gap:6px}
   .nav__login .globe{width:22px;height:22px;color:var(--dark)}
-  .nav__login .div{width:1px;height:16px;background:rgba(67,56,202,.3)}
+  .nav__login .div{width:1px;height:16px;background:rgba(111,78,55,.3)}
   .nav__login a{font-size:15px;font-weight:600;color:var(--dark);padding:8px 6px}
   .nav__login a:hover{color:var(--green)}
   .nav .btn-dark,.nav .btn-outline{font-size:14px;padding:10px 20px;border-radius:8px}
@@ -104,10 +104,10 @@
   .win__bar i{width:12px;height:12px;border-radius:50%;background:#e5e7eb}
   .win__body{display:flex;gap:24px}
   .win__side{width:112px;display:grid;gap:16px}
-  .win__side div{height:24px;border-radius:6px;background:rgba(255,255,255,.5);display:flex;align-items:center;padding:0 8px;font-size:10px;font-weight:500;color:rgba(67,56,202,.7)}
+  .win__side div{height:24px;border-radius:6px;background:rgba(255,255,255,.5);display:flex;align-items:center;padding:0 8px;font-size:10px;font-weight:500;color:rgba(111,78,55,.7)}
   .win__side div.on{background:var(--green);color:#fff}
   .win__main{flex:1;display:flex;flex-direction:column;gap:16px}
-  .win__main h3{font-family:var(--serif);font-size:20px;color:rgba(67,56,202,.9)}
+  .win__main h3{font-family:var(--serif);font-size:20px;color:rgba(111,78,55,.9)}
   .cal{flex:1;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.4);border-radius:12px;padding:12px}
   .cal .m{display:inline-block;font-size:11px;font-weight:700;color:var(--dark);background:rgba(255,255,255,.5);padding:2px 8px;border-radius:4px;margin-bottom:8px}
   .cal .d{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:9px;text-align:center;color:var(--muted);margin-bottom:4px}
@@ -116,7 +116,7 @@
   .cal .n .off{color:#d1d5db}
   .stat{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.4);border-radius:12px;padding:12px}
   .stat .ic{width:32px;height:32px;border-radius:8px;background:#dbeafe;display:grid;place-items:center}
-  .stat .v{font-size:18px;font-weight:700;color:rgba(67,56,202,.9);line-height:1.1}
+  .stat .v{font-size:18px;font-weight:700;color:rgba(111,78,55,.9);line-height:1.1}
   .stat .l{font-size:9px;color:var(--muted)}
   .list{background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.4);border-radius:12px;padding:12px;flex:1}
   .list .row{display:flex;justify-content:space-between;font-size:10px;padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid rgba(229,231,235,.5)}
@@ -142,14 +142,14 @@
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
   .grid2 .k{font-size:10px;color:var(--muted);margin-bottom:4px}
   .grid2 .v{font-size:14px;font-weight:700;color:var(--dark)}
-  .bar-box{background:rgba(199,210,254,.5);padding:8px;border-radius:8px}
+  .bar-box{background:rgba(234,220,200,.5);padding:8px;border-radius:8px}
   .bar-box .lb{font-size:10px;font-weight:600;color:var(--dark);margin-bottom:8px}
   .bars{display:flex;gap:4px;height:48px;align-items:flex-end}
-  .bars i{flex:1;border-radius:4px 4px 0 0;background:rgba(67,56,202,.3)}
+  .bars i{flex:1;border-radius:4px 4px 0 0;background:rgba(111,78,55,.3)}
   .bars i.hi{background:var(--green)}
   .card--rev .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
   .card--rev .top b{font-size:12px;font-weight:700;color:var(--dark)}
-  .pill-up{font-size:10px;background:#E0E7FF;color:#4338CA;padding:2px 8px;border-radius:999px;font-weight:600}
+  .pill-up{font-size:10px;background:#EFE2CF;color:#6F4E37;padding:2px 8px;border-radius:999px;font-weight:600}
   .card--rev .big{font-size:24px;font-weight:900;color:var(--dark);margin-bottom:12px}
 
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
@@ -190,7 +190,7 @@
   .phone .in .s{font-family:var(--serif);color:#111;font-size:15px;line-height:1.3}
   .phone .in .off{background:#111;color:#fff;font-size:8px;font-weight:700;padding:4px 10px;border-radius:4px;margin-top:10px;display:inline-block}
   .chip{position:absolute;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:6px 12px;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:#374151;box-shadow:0 2px 8px rgba(0,0,0,.06);z-index:20}
-  .chip .ic{width:20px;height:20px;background:#E0E7FF;border-radius:4px;display:grid;place-items:center;font-size:10px}
+  .chip .ic{width:20px;height:20px;background:#EFE2CF;border-radius:4px;display:grid;place-items:center;font-size:10px}
   .line{position:absolute;width:50%;height:50%;z-index:0;pointer-events:none}
   .line.tl{top:25%;left:25%;border-top:1px solid #d1d5db;border-left:1px solid #d1d5db;border-top-left-radius:24px}
   .line.tr{top:25%;right:25%;border-top:1px solid #d1d5db;border-right:1px solid #d1d5db;border-top-right-radius:24px}
@@ -211,11 +211,11 @@
   .ecard .v{flex:1;position:relative;display:grid;place-items:center}
   .sq{width:80px;height:80px;border-radius:24px;display:grid;place-items:center;font-size:34px}
   .sq.purple{background:#e8e2f4;border:2px solid #d0c6e1}
-  .sq.wa{background:#4F46E5;border-radius:28px}
+  .sq.wa{background:#B07D4F;border-radius:28px}
   .mini{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:8px;width:160px;display:flex;gap:8px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
   .mini .b{width:32px;height:32px;border-radius:6px;background:#e8e2f4;display:grid;place-items:center;font-weight:700;color:#6d28d9;font-size:14px}
   .mini .ln{height:6px;border-radius:4px;background:#f3f4f6;margin-bottom:4px}
-  .bell{position:absolute;width:32px;height:32px;background:#C7D2FE;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;box-shadow:0 4px 10px rgba(0,0,0,.12);color:var(--dark)}
+  .bell{position:absolute;width:32px;height:32px;background:#EADCC8;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;box-shadow:0 4px 10px rgba(0,0,0,.12);color:var(--dark)}
 
   /* ai agents */
   .agents{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
@@ -245,7 +245,7 @@
   .tabs{display:flex;justify-content:center;margin-bottom:64px}
   .tabs__in{display:inline-flex;background:#f9fafb;border:1px solid #f3f4f6;border-radius:999px;padding:4px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
   .tabs button{padding:10px 24px;border-radius:999px;font-size:14px;font-weight:600;color:var(--dark);transition:.3s}
-  .tabs button.on{background:#C7D2FE;color:#312E81;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+  .tabs button.on{background:#EADCC8;color:#2C1A10;box-shadow:0 1px 2px rgba(0,0,0,.06)}
   .biz{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
   .biz .badge{color:var(--green);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:24px}
   .biz h3{font-size:clamp(28px,2.5rem,40px);margin-bottom:16px}
@@ -273,18 +273,18 @@
   .story .img .ov{position:absolute;inset:0;background:rgba(0,0,0,.35);display:grid;place-items:center;padding:24px}
   .story .img .lg{color:#fff;font-weight:800;font-size:20px;letter-spacing:.02em}
   .story .bd{padding:32px;display:flex;flex-direction:column;flex:1;gap:16px}
-  .story .badge{background:#C7D2FE;color:#312E81;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.05em;border-radius:999px;padding:4px 12px;width:fit-content}
+  .story .badge{background:#EADCC8;color:#2C1A10;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.05em;border-radius:999px;padding:4px 12px;width:fit-content}
   .story h3{font-size:20px;line-height:1.3}
   .story p{color:var(--body);font-size:14px;line-height:1.7;flex:1}
 
   /* integrations */
-  .integrations{background:#EEF2FF;border-radius:40px 40px 0 0;padding:64px 0 48px;overflow:hidden;text-align:center}
+  .integrations{background:#F7F1E8;border-radius:40px 40px 0 0;padding:64px 0 48px;overflow:hidden;text-align:center}
   .integrations h2{font-size:clamp(28px,2.5rem,40px);margin-bottom:16px}
   .integrations .sub{color:var(--body);font-size:16px;margin-bottom:48px}
   .int-ticker{position:relative;padding:16px 0;margin-bottom:40px}
   .int-ticker::before,.int-ticker::after{content:"";position:absolute;top:0;bottom:0;width:128px;z-index:10;pointer-events:none}
-  .int-ticker::before{left:0;background:linear-gradient(90deg,#EEF2FF,transparent)}
-  .int-ticker::after{right:0;background:linear-gradient(270deg,#EEF2FF,transparent)}
+  .int-ticker::before{left:0;background:linear-gradient(90deg,#F7F1E8,transparent)}
+  .int-ticker::after{right:0;background:linear-gradient(270deg,#F7F1E8,transparent)}
   .int-ticker .in{display:flex;gap:80px;width:max-content;animation:tick 30s linear infinite;align-items:center}
   .int-ticker .lg{font-weight:800;font-size:18px;color:#4b5563;opacity:.7;white-space:nowrap}
   .integrations .lnk{color:var(--green);font-weight:600;font-size:16px}
@@ -448,14 +448,14 @@
       <div class="rate">
         <p>Loved by users everywhere</p>
         <div class="stars">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="#4F46E5"><circle cx="12" cy="12" r="10"/><path d="M9 12l2.5 2.5L16 9.5" fill="none" stroke="#fff" stroke-width="2"/></svg>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="#B07D4F"><circle cx="12" cy="12" r="10"/><path d="M9 12l2.5 2.5L16 9.5" fill="none" stroke="#fff" stroke-width="2"/></svg>
           <b>4.5</b>
           <span class="s">
             <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg viewBox="0 0 24 24" fill="none" stroke="#312E81" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2C1A10" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </span>
         </div>
       </div>
@@ -511,8 +511,8 @@
         <div class="top"><b>Revenue</b><span class="pill-up">↑ 30%</span></div>
         <div class="big">$190.00</div>
         <svg viewBox="0 0 100 30" style="width:100%;height:48px;overflow:visible">
-          <path d="M0 30 Q 20 10, 40 25 T 70 15 T 100 5" fill="none" stroke="#312E81" stroke-width="2" stroke-linecap="round"/>
-          <path d="M0 30 Q 20 10, 40 25 T 70 15 T 100 5 L 100 30 L 0 30 Z" fill="rgba(49,46,129,0.1)"/>
+          <path d="M0 30 Q 20 10, 40 25 T 70 15 T 100 5" fill="none" stroke="#2C1A10" stroke-width="2" stroke-linecap="round"/>
+          <path d="M0 30 Q 20 10, 40 25 T 70 15 T 100 5 L 100 30 L 0 30 Z" fill="rgba(44,26,16,0.1)"/>
         </svg>
       </div>
     </div>
@@ -637,9 +637,9 @@ notifications</h3><div class="v" style="flex-direction:column;gap:12px"><div cla
       <div class="ecard"><h3>Mobile Wallet</h3><div class="v"><div style="width:160px;height:112px;background:#e8e2f4;border:2px solid #d0c6e1;border-radius:16px;padding:12px"><div style="font-size:10px;font-weight:700;margin-bottom:8px">Your loyalty card</div><div style="height:8px;width:66%;background:#d0c6e1;border-radius:4px;margin-bottom:4px"></div><div style="height:8px;width:50%;background:#d0c6e1;border-radius:4px"></div></div></div></div>
       <div class="ecard"><h3>Transactional
 messaging</h3><div class="v" style="gap:12px"><div class="sq purple" style="width:56px;height:48px;border-radius:8px;font-size:20px">✉</div><div class="sq purple" style="width:56px;height:48px;border-radius:8px;font-size:20px">💬</div></div></div>
-      <div class="ecard"><h3>VoIP Phone</h3><div class="v"><div style="width:112px;height:160px;background:#fff;border:2px solid #e5e7eb;border-radius:16px;padding:12px"><div style="height:24px;border:1px solid #C7D2FE;background:#EEF2FF;border-radius:999px;display:grid;place-items:center;font-size:9px;color:var(--green);font-weight:700;margin-bottom:12px">+15128373772</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:10px;color:#6b7280;text-align:center"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div></div></div></div>
-      <div class="ecard"><h3>Live chat</h3><div class="v" style="flex-direction:column;gap:10px"><div class="mini" style="width:144px"><span class="b" style="background:#C7D2FE;color:var(--green)">B</span><span style="flex:1"><span class="ln" style="display:block"></span><span class="ln" style="display:block;width:66%"></span></span></div><div class="mini" style="width:128px"><span class="b" style="background:#f3e8ff;color:#7c3aed;border-radius:50%">👤</span><span style="flex:1"><span class="ln" style="display:block"></span><span class="ln" style="display:block;width:50%"></span></span></div></div></div>
-      <div class="ecard"><h3>Chatbot</h3><div class="v"><div style="width:160px;background:#fff;border:2px solid #e5e7eb;border-radius:16px;overflow:hidden"><div style="height:24px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 12px;gap:6px"><i style="width:8px;height:8px;border-radius:50%;background:#d1d5db"></i></div><div style="padding:12px;display:flex;gap:8px"><span class="b" style="background:#C7D2FE;color:var(--green)">B</span><span style="flex:1"><span style="display:block;font-size:9px;font-weight:500;margin-bottom:6px">How can I help you?</span><span class="ln" style="display:block"></span><span class="ln" style="display:block;width:66%"></span></span></div></div></div></div>
+      <div class="ecard"><h3>VoIP Phone</h3><div class="v"><div style="width:112px;height:160px;background:#fff;border:2px solid #e5e7eb;border-radius:16px;padding:12px"><div style="height:24px;border:1px solid #EADCC8;background:#F7F1E8;border-radius:999px;display:grid;place-items:center;font-size:9px;color:var(--green);font-weight:700;margin-bottom:12px">+15128373772</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:10px;color:#6b7280;text-align:center"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div></div></div></div>
+      <div class="ecard"><h3>Live chat</h3><div class="v" style="flex-direction:column;gap:10px"><div class="mini" style="width:144px"><span class="b" style="background:#EADCC8;color:var(--green)">B</span><span style="flex:1"><span class="ln" style="display:block"></span><span class="ln" style="display:block;width:66%"></span></span></div><div class="mini" style="width:128px"><span class="b" style="background:#f3e8ff;color:#7c3aed;border-radius:50%">👤</span><span style="flex:1"><span class="ln" style="display:block"></span><span class="ln" style="display:block;width:50%"></span></span></div></div></div>
+      <div class="ecard"><h3>Chatbot</h3><div class="v"><div style="width:160px;background:#fff;border:2px solid #e5e7eb;border-radius:16px;overflow:hidden"><div style="height:24px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 12px;gap:6px"><i style="width:8px;height:8px;border-radius:50%;background:#d1d5db"></i></div><div style="padding:12px;display:flex;gap:8px"><span class="b" style="background:#EADCC8;color:var(--green)">B</span><span style="flex:1"><span style="display:block;font-size:9px;font-weight:500;margin-bottom:6px">How can I help you?</span><span class="ln" style="display:block"></span><span class="ln" style="display:block;width:66%"></span></span></div></div></div></div>
       <div class="ecard"><h3>Meetings</h3><div class="v"><div style="width:128px;height:128px;background:#e6cfb8;border:2px solid #fed7aa;border-radius:16px;display:grid;place-items:center;font-size:56px">👩🏽‍🦱</div></div></div>
     </div>
   </div>
@@ -677,7 +677,7 @@ messaging</h3><div class="v" style="gap:12px"><div class="sq purple" style="widt
         <div class="v">
           <div class="chatwin">
             <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#4F46E5"><circle cx="12" cy="12" r="10"/><path d="M9 12l2.5 2.5L16 9.5" fill="none" stroke="#fff" stroke-width="2"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#B07D4F"><circle cx="12" cy="12" r="10"/><path d="M9 12l2.5 2.5L16 9.5" fill="none" stroke="#fff" stroke-width="2"/></svg>
               <span style="font-size:12px;font-weight:500;color:var(--dark)">Your contact data has been enriched</span>
             </div>
             <div style="font-size:10px;color:var(--muted);margin-bottom:8px">◆ I found the following details:</div>
