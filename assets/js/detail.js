@@ -23,7 +23,7 @@
       '<div class="container notfound">' +
         '<h2>Template not found</h2>' +
         '<p>That template doesn\'t exist, or the link is broken.</p>' +
-        '<a href="index.html" class="btn btn--primary">Back to all templates</a>' +
+        '<a href="/" class="btn btn--primary">Back to all templates</a>' +
       '</div>';
   }
 
@@ -32,7 +32,7 @@
     main.innerHTML =
       '<div class="container detail">' +
         '<div class="detail__bar">' +
-          '<a href="index.html" class="back">← All templates</a>' +
+          '<a href="/" class="back">← All templates</a>' +
           '<div>' +
             '<div class="detail__title">' + escapeHtml(t.name) + '</div>' +
           '</div>' +
