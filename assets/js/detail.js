@@ -35,7 +35,6 @@
           '<a href="index.html" class="back">← All templates</a>' +
           '<div>' +
             '<div class="detail__title">' + escapeHtml(t.name) + '</div>' +
-            '<div class="detail__cat">' + escapeHtml(t.category || '') + '</div>' +
           '</div>' +
           '<div class="detail__actions">' +
             '<a href="' + escapeHtml(t.url) + '" target="_blank" rel="noopener" class="btn btn--primary">Live preview ↗</a>' +
