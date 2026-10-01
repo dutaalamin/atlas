@@ -3,447 +3,853 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bravo | The all-in-one marketing platform</title>
-<meta name="description" content="One AI-powered platform for all your marketing and sales. Email, SMS, WhatsApp and beyond." />
+<title>Bravo | The all-in-one customer platform</title>
+<meta name="description" content="One AI-powered customer platform for all your marketing and sales needs. Email, SMS, WhatsApp and beyond." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --hero:#ffd9a8;
-    --hero-deep:#ffc87e;
-    --accent:#b45309;
-    --accent-soft:#d97706;
-    --ink:#1c1410;
-    --ink-2:#4a3d33;
-    --muted:#6f6055;
-    --dim:#a3968a;
-    --line:rgba(28,20,16,.10);
-    --line-2:rgba(28,20,16,.06);
-    --paper:#ffffff;
-    --bg:#ffffff;
-    --panel:#faf6f1;
+    --green:#4338CA;
+    --green-hover:#312E81;
+    --mint:#C7D2FE;
+    --mint-light:#EEF2FF;
+    --dark:#312E81;
+    --body:#1B1B1B;
+    --muted:#6B6C72;
+    --line:rgba(67,56,202,.12);
+    --serif:'Source Serif 4',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
     --ease:cubic-bezier(.4,0,.2,1);
-    --shadow-sm:0 1px 2px rgba(28,20,16,.05);
-    --shadow:0 2px 10px rgba(28,20,16,.06),0 22px 48px -26px rgba(28,20,16,.26);
-    --shadow-lg:0 30px 70px -34px rgba(28,20,16,.34);
+    --shadow-sm:0 4px 20px rgba(0,0,0,.03);
+    --shadow:0 10px 40px -10px rgba(0,0,0,.12);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  body{
-    margin:0;background:var(--bg);color:var(--ink);
-    font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;
-    -webkit-font-smoothing:antialiased;overflow-x:hidden;
-  }
-  ::selection{background:var(--ink);color:var(--hero)}
+  body{margin:0;background:#fff;color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--green);color:#fff}
   a{color:inherit;text-decoration:none}
-  img{display:block;max-width:100%}
   button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
-  h1,h2,h3{margin:0;font-weight:800;line-height:1.06;letter-spacing:-.035em}
+  h1,h2,h3{margin:0;font-family:var(--serif);font-weight:600;line-height:1.15;color:var(--dark)}
   p{margin:0}
-  :focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
-  .mono{font-family:'JetBrains Mono',monospace}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  :focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+
+  .btn-dark{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--dark);color:#fff;font-weight:600;font-size:16px;padding:12px 32px;border-radius:6px;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .btn-dark:hover{background:var(--green)}
+  .btn-outline{display:inline-flex;align-items:center;justify-content:center;gap:8px;color:var(--dark);font-weight:600;font-size:16px;padding:12px 32px;border-radius:6px;border:1px solid var(--dark);transition:.2s}
+  .btn-outline:hover{background:rgba(67,56,202,.05)}
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+  .reveal.visible{opacity:1;transform:none}
 
   /* ---------- NAV ---------- */
-  header{position:absolute;top:0;left:0;right:0;z-index:60}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.04em}
-  .brand__mark{width:26px;height:26px;border-radius:8px;background:var(--ink);display:grid;place-items:center}
-  .brand__mark::after{content:"";width:10px;height:10px;border-radius:3px;background:var(--hero-deep)}
-  .nav nav{display:flex;gap:4px;font-size:14.5px;font-weight:600}
-  .nav nav a{padding:8px 14px;border-radius:9px;transition:.2s}
-  .nav nav a:hover{background:rgba(28,20,16,.07)}
-  .nav-r{display:flex;align-items:center;gap:10px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:700;transition:.2s;white-space:nowrap}
-  .btn--dark{background:var(--ink);color:#fff}
-  .btn--dark:hover{background:#000;transform:translateY(-1px)}
-  .btn--outline{border:1.5px solid var(--ink)}
-  .btn--outline:hover{background:var(--ink);color:#fff}
-  .btn--accent{background:var(--accent);color:#fff}
-  .btn--accent:hover{background:var(--accent-soft)}
-  .btn--lg{padding:15px 28px;font-size:16px}
+  header{position:sticky;top:0;z-index:50;background:var(--mint);transition:box-shadow .3s}
+  header.scrolled{box-shadow:0 1px 12px rgba(0,0,0,.06)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:96px;gap:24px;padding:0 48px}
+  .nav__left{display:flex;align-items:center;gap:32px}
+  .logo{font-family:var(--serif);font-size:32px;font-weight:700;color:var(--green);letter-spacing:-.02em}
+  .nav__menu{display:flex;align-items:center;gap:4px;height:100%}
+  .nav__item{position:relative;height:100%;display:flex;align-items:center}
+  .nav__item > a{display:flex;align-items:center;gap:6px;padding:10px 16px;font-size:17px;font-weight:500;color:var(--dark);border-radius:12px 12px 0 0;transition:.2s}
+  .nav__item:hover > a{background:#fff;color:var(--green)}
+  .nav__item svg{width:12px;height:12px;opacity:.7;transition:transform .3s}
+  .nav__item:hover svg{transform:rotate(180deg)}
+  .nav__right{display:flex;align-items:center;gap:12px}
+  .nav__login{display:flex;align-items:center;gap:6px}
+  .nav__login .globe{width:22px;height:22px;color:var(--dark)}
+  .nav__login .div{width:1px;height:16px;background:rgba(67,56,202,.3)}
+  .nav__login a{font-size:15px;font-weight:600;color:var(--dark);padding:8px 6px}
+  .nav__login a:hover{color:var(--green)}
+  .nav .btn-dark,.nav .btn-outline{font-size:14px;padding:10px 20px;border-radius:8px}
+
+  /* mega menu */
+  .mega{position:absolute;top:100%;left:0;display:none;background:#fff;border:1px solid #f1f1f1;border-radius:0 12px 12px 12px;box-shadow:0 10px 40px -10px rgba(0,0,0,.12);padding:32px;z-index:10;min-width:520px}
+  .nav__item:hover .mega{display:flex}
+  .mega--wide{min-width:820px}
+  .mega__cols{display:flex;gap:40px}
+  .mega__col{display:flex;gap:40px}
+  .mega__col + .mega__col{padding-left:40px;border-left:1px solid #f1f1f1}
+  .mega h4{font-family:var(--sans);font-size:15px;font-weight:600;color:#9ca3af;margin-bottom:22px}
+  .mega__list{display:grid;gap:22px}
+  .mega__list--tight{gap:18px}
+  .mega a.item{display:flex;gap:14px;align-items:flex-start}
+  .mega .ico{width:40px;height:40px;flex:none;border:1px solid #f1f1f1;background:#fafafa;border-radius:6px;display:grid;place-items:center;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:.2s}
+  .mega a.item:hover .ico{border-color:#d1d5db}
+  .mega .ico svg{width:20px;height:20px;stroke:var(--green)}
+  .mega .ttl{display:block;font-size:15px;font-weight:600;color:#1f2937;line-height:1.2;margin-bottom:4px}
+  .mega a.item:hover .ttl{color:var(--green)}
+  .mega .desc{display:block;font-size:13px;color:#6b7280;line-height:1.5;padding-right:8px}
+  .mega .simple{padding-top:10px}
 
   /* ---------- HERO ---------- */
-  .hero{background:var(--hero);border-radius:0 0 40px 40px;padding:132px 0 0;overflow:hidden;position:relative}
-  .hero__grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:48px;align-items:center}
-  .hero h1{font-size:clamp(34px,4.4vw,52px);line-height:1.08;letter-spacing:-.04em;max-width:14ch}
-  .hero .lede{margin:22px 0 0;max-width:42ch;color:var(--ink-2);font-size:17px}
-  .hero__cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
-  .trust{margin-top:28px;display:flex;align-items:center;gap:14px}
-  .trust .stars{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(28,20,16,.2);border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:700}
-  .trust .stars svg{width:14px;height:14px}
-  .trust .cap{font-size:13.5px;font-weight:600;color:var(--ink-2)}
+  .hero{background:var(--mint);position:relative;overflow:hidden}
+  .hero__in{max-width:1440px;margin:0 auto;padding:32px 48px 0;display:grid;grid-template-columns:1.02fr .98fr;gap:16px;align-items:center;overflow:hidden}
+  .hero__text{position:relative;z-index:2}
+  .hero h1{font-size:clamp(32px,3.4vw,51px);line-height:1.15;margin-bottom:24px}
+  .hero .lede{color:var(--body);font-size:17px;line-height:1.7;max-width:600px;margin-bottom:32px}
+  .hero .rate{margin-top:24px}
+  .hero .rate p{font-size:14px;color:var(--muted);margin-bottom:8px}
+  .stars{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #e5e7eb;border-radius:999px;padding:8px 16px}
+  .stars b{font-size:14px;font-weight:600;color:var(--dark)}
+  .stars .s{display:flex;gap:2px}
+  .stars .s svg{width:14px;height:14px;fill:var(--dark)}
 
-  /* stacked product shots */
-  .shots{position:relative;height:460px}
-  .shot{position:absolute;background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid rgba(28,20,16,.06)}
-  .shot--main{top:0;left:0;width:78%;z-index:2}
-  .shot--side{top:52%;right:0;width:56%;z-index:3}
-  .sbar{display:flex;align-items:center;gap:6px;padding:11px 14px;border-bottom:1px solid var(--line-2)}
-  .sbar i{width:8px;height:8px;border-radius:50%;background:rgba(28,20,16,.12)}
-  .sbar span{margin-left:8px;font-family:'JetBrains Mono';font-size:10.5px;color:var(--dim)}
-  .sbody{padding:16px}
-  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .kpi div{background:var(--panel);border-radius:10px;padding:12px}
-  .kpi .k{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);font-weight:700}
-  .kpi .v{font-size:19px;font-weight:800;letter-spacing:-.03em;margin-top:4px}
-  .bars{display:flex;align-items:flex-end;gap:6px;height:64px;margin-top:14px}
-  .bars i{flex:1;background:var(--hero-deep);border-radius:5px 5px 2px 2px}
-  .rows{margin-top:14px}
-  .r{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line-2);font-size:12.5px}
-  .r .av{width:24px;height:24px;border-radius:7px;background:#f0e9e0;display:grid;place-items:center;font-size:10px;font-weight:800;flex:none}
-  .r .amt{margin-left:auto;font-family:'JetBrains Mono';font-weight:500}
-  .r .amt.pos{color:#b45309}
-  .chart{height:90px;display:flex;align-items:flex-end;gap:5px;padding:12px 0 0}
-  .chart i{flex:1;background:rgba(28,20,16,.1);border-radius:4px}
-  .chart i.hi{background:var(--ink)}
+  /* floating dashboard mock */
+  .shots{position:relative;height:480px;transform:translateX(6%) scale(1.04);transform-origin:bottom right;z-index:1}
+  .win{position:absolute;background:rgba(255,255,255,.4);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.6);border-radius:24px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);padding:20px;overflow:hidden}
+  .win--bg{top:16px;bottom:0;left:8px;right:-24px;animation:floatSlow 9s ease-in-out infinite}
+  .win__bar{display:flex;gap:8px;align-items:center;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.5);margin-bottom:24px}
+  .win__bar i{width:12px;height:12px;border-radius:50%;background:#e5e7eb}
+  .win__body{display:flex;gap:24px}
+  .win__side{width:112px;display:grid;gap:16px}
+  .win__side div{height:24px;border-radius:6px;background:rgba(255,255,255,.5);display:flex;align-items:center;padding:0 8px;font-size:10px;font-weight:500;color:rgba(67,56,202,.7)}
+  .win__side div.on{background:var(--green);color:#fff}
+  .win__main{flex:1;display:flex;flex-direction:column;gap:16px}
+  .win__main h3{font-family:var(--serif);font-size:20px;color:rgba(67,56,202,.9)}
+  .cal{flex:1;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.4);border-radius:12px;padding:12px}
+  .cal .m{display:inline-block;font-size:11px;font-weight:700;color:var(--dark);background:rgba(255,255,255,.5);padding:2px 8px;border-radius:4px;margin-bottom:8px}
+  .cal .d{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:9px;text-align:center;color:var(--muted);margin-bottom:4px}
+  .cal .n{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:9px;font-weight:500;text-align:center}
+  .cal .n .today{background:#5B6BF9;color:#fff;border-radius:4px}
+  .cal .n .off{color:#d1d5db}
+  .stat{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.4);border-radius:12px;padding:12px}
+  .stat .ic{width:32px;height:32px;border-radius:8px;background:#dbeafe;display:grid;place-items:center}
+  .stat .v{font-size:18px;font-weight:700;color:rgba(67,56,202,.9);line-height:1.1}
+  .stat .l{font-size:9px;color:var(--muted)}
+  .list{background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.4);border-radius:12px;padding:12px;flex:1}
+  .list .row{display:flex;justify-content:space-between;font-size:10px;padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid rgba(229,231,235,.5)}
+  .list .row:last-child{border:none;margin:0;padding:0}
+  .list .row span:first-child{color:var(--muted);font-weight:500}
+  .list .row span:last-child{color:var(--dark);font-weight:700}
 
-  /* ---------- LOGOS ---------- */
-  .logos{padding:56px 0 0}
-  .logos .lbl{font-size:15px;font-weight:700;color:var(--muted);max-width:28ch;margin-bottom:26px}
-  .logos__in{display:flex;align-items:center;gap:48px;flex-wrap:wrap}
-  .logos__in span{font-weight:800;font-size:19px;letter-spacing:-.03em;color:#d3c7ba;transition:.25s}
-  .logos__in span:hover{color:var(--ink-2)}
+  .card{position:absolute;background:#fff;border:1px solid #f3f4f6;border-radius:16px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1);padding:20px}
+  .card--cust{top:0;right:0;width:280px;animation:float 6s ease-in-out infinite;z-index:10}
+  .card--camp{bottom:16px;left:0;width:240px;animation:float 6s ease-in-out infinite;z-index:20}
+  .card--rev{bottom:48px;right:-16px;width:220px;animation:floatSlow 9s ease-in-out infinite;z-index:30}
+  .card .head{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:16px;border-bottom:1px solid #f3f4f6}
+  .card .av{width:40px;height:40px;border-radius:50%;background:#ffedd5;color:#ea580c;display:grid;place-items:center;font-weight:700;font-size:14px}
+  .card .nm{font-size:14px;font-weight:700;color:var(--dark)}
+  .card .sub{font-size:12px;color:var(--muted)}
+  .card .li{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .card .li .l{display:flex;align-items:center;gap:8px}
+  .card .li .a2{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700;color:#fff}
+  .card .li .n2{font-size:12px;font-weight:500;color:var(--dark)}
+  .tag{font-size:10px;background:#f3f4f6;padding:4px 8px;border-radius:999px;color:#6b7280}
+  .card--camp .t{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px}
+  .card--camp .d{font-size:10px;color:var(--muted);border-bottom:1px solid #f3f4f6;padding-bottom:8px;margin-bottom:16px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .grid2 .k{font-size:10px;color:var(--muted);margin-bottom:4px}
+  .grid2 .v{font-size:14px;font-weight:700;color:var(--dark)}
+  .bar-box{background:rgba(199,210,254,.5);padding:8px;border-radius:8px}
+  .bar-box .lb{font-size:10px;font-weight:600;color:var(--dark);margin-bottom:8px}
+  .bars{display:flex;gap:4px;height:48px;align-items:flex-end}
+  .bars i{flex:1;border-radius:4px 4px 0 0;background:rgba(67,56,202,.3)}
+  .bars i.hi{background:var(--green)}
+  .card--rev .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+  .card--rev .top b{font-size:12px;font-weight:700;color:var(--dark)}
+  .pill-up{font-size:10px;background:#E0E7FF;color:#4338CA;padding:2px 8px;border-radius:999px;font-weight:600}
+  .card--rev .big{font-size:24px;font-weight:900;color:var(--dark);margin-bottom:12px}
+
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes floatSlow{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+
+  /* ---------- TRUSTED ---------- */
+  .trusted{background:#fff;border-bottom:1px solid #f3f4f6;padding:28px 0;text-align:center;overflow:hidden}
+  .trusted p{font-size:15px;color:var(--dark);font-weight:500;max-width:560px;margin:0 auto 20px}
+  .ticker-wrap{position:relative;max-width:900px;margin:0 auto;overflow:hidden}
+  .ticker-wrap::before,.ticker-wrap::after{content:"";position:absolute;top:0;bottom:0;width:80px;z-index:10;pointer-events:none}
+  .ticker-wrap::before{left:0;background:linear-gradient(90deg,#fff,transparent)}
+  .ticker-wrap::after{right:0;background:linear-gradient(270deg,#fff,transparent)}
+  .ticker{display:flex;gap:64px;width:max-content;animation:tick 30s linear infinite}
+  .ticker span{font-size:18px;font-weight:700;color:rgba(107,108,114,.5);white-space:nowrap;letter-spacing:-.01em}
+  @keyframes tick{to{transform:translateX(-50%)}}
 
   /* ---------- SECTIONS ---------- */
-  section{padding:100px 0}
-  .head{max-width:640px;margin-bottom:48px}
-  .head.center{margin-inline:auto;text-align:center}
-  .eyebrow{display:inline-block;font-size:13px;font-weight:800;color:var(--accent);background:var(--hero);padding:6px 14px;border-radius:999px;margin-bottom:16px}
-  .head h2{font-size:clamp(28px,4vw,48px)}
-  .head p{margin-top:16px;color:var(--muted);font-size:17.5px}
+  section{padding:80px 0}
+  .sec-title{font-size:clamp(28px,3.4vw,40px);text-align:center;margin-bottom:64px}
 
-  /* feature cards */
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .fc{border:1px solid var(--line);border-radius:20px;padding:28px;transition:.26s;background:#fff}
-  .fc:hover{border-color:var(--ink);transform:translateY(-4px);box-shadow:var(--shadow)}
-  .fc .ic{width:48px;height:48px;border-radius:14px;background:var(--hero);display:grid;place-items:center;font-size:21px;margin-bottom:20px}
-  .fc h3{font-size:18px;margin-bottom:9px}
-  .fc p{color:var(--muted);font-size:15px}
+  /* sticky features */
+  .sticky{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+  .sticky__visual{position:sticky;top:112px;height:480px;display:grid;place-items:center}
+  .sticky__panel{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transform:translateY(32px) scale(.95);transition:all .5s var(--ease);pointer-events:none}
+  .sticky__panel.on{opacity:1;transform:none;pointer-events:auto}
+  .sticky__texts{padding-right:48px;padding-top:16px}
+  .feat{padding:32px 0;min-height:40vh;display:flex;flex-direction:column;justify-content:flex-start;opacity:.3;transition:opacity .5s}
+  .feat.on{opacity:1}
+  .feat .lbl{color:var(--green);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.15em;margin-bottom:16px}
+  .feat h2{font-size:clamp(28px,2.5rem,40px);line-height:1.15;margin-bottom:24px}
+  .feat p{color:var(--body);font-size:16px;line-height:1.7;margin-bottom:24px;max-width:440px}
+  .feat .lnk{display:inline-flex;align-items:center;gap:8px;color:var(--green);font-weight:600;font-size:14px}
+  .feat .lnk svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5}
 
-  /* channels */
-  .channels{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-  .channels span{border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;color:var(--ink-2);background:#fff}
+  .vis-box{width:100%;height:100%;position:relative;display:grid;place-items:center}
+  .phone{width:224px;height:288px;border-radius:16px;overflow:hidden;box-shadow:0 20px 25px -5px rgba(0,0,0,.1);border:1px solid #f3f4f6;background:linear-gradient(160deg,#f0e6e0,#e8ddd5);display:flex;align-items:center;justify-content:center}
+  .phone .in{text-align:center;padding:24px}
+  .phone .in .s{font-family:var(--serif);color:#111;font-size:15px;line-height:1.3}
+  .phone .in .off{background:#111;color:#fff;font-size:8px;font-weight:700;padding:4px 10px;border-radius:4px;margin-top:10px;display:inline-block}
+  .chip{position:absolute;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:6px 12px;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:#374151;box-shadow:0 2px 8px rgba(0,0,0,.06);z-index:20}
+  .chip .ic{width:20px;height:20px;background:#E0E7FF;border-radius:4px;display:grid;place-items:center;font-size:10px}
+  .line{position:absolute;width:50%;height:50%;z-index:0;pointer-events:none}
+  .line.tl{top:25%;left:25%;border-top:1px solid #d1d5db;border-left:1px solid #d1d5db;border-top-left-radius:24px}
+  .line.tr{top:25%;right:25%;border-top:1px solid #d1d5db;border-right:1px solid #d1d5db;border-top-right-radius:24px}
+  .photo{position:relative;width:224px;height:288px;border-radius:16px;overflow:hidden;box-shadow:0 10px 15px -3px rgba(0,0,0,.1);border:1px solid #f3f4f6;z-index:10}
+  .photo img{width:100%;height:100%;object-fit:cover}
+  .phone2{position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);width:150px;height:200px;background:#fff;border:5px solid #111827;border-bottom:0;border-radius:24px 24px 0 0;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);z-index:30;overflow:hidden;display:flex;flex-direction:column}
+  .phone2 .notch{width:40px;height:8px;background:#111827;border-radius:999px;margin:8px auto 4px}
+  .phone2 .scr{flex:1;background:#f0e6e0;padding:12px;text-align:center}
+  .phone2 .scr p{font-family:var(--serif);color:#111827;font-size:14px;line-height:1.3;margin-top:8px}
+  .phone2 .scr span{display:inline-block;margin-top:8px;background:#111827;color:#fff;font-size:7px;font-weight:700;padding:4px 8px;border-radius:4px}
 
-  /* split */
-  .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-  .split h2{font-size:clamp(26px,3.4vw,42px);margin-bottom:18px}
-  .split p{color:var(--muted);font-size:17px;margin-bottom:14px}
-  .checks{list-style:none;padding:0;margin:26px 0 0}
-  .checks li{display:flex;gap:13px;align-items:flex-start;margin-bottom:15px;font-size:16px;font-weight:600}
-  .checks .t{width:24px;height:24px;border-radius:50%;background:var(--hero);display:grid;place-items:center;font-size:12px;flex:none;margin-top:2px;font-weight:800}
-  .panel{background:var(--panel);border-radius:22px;padding:26px;border:1px solid var(--line-2)}
-  .panel .line{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:14.5px}
-  .panel .line:last-child{border-bottom:none}
-  .panel .line .k{color:var(--muted);font-weight:600}
-  .panel .line .v{font-family:'JetBrains Mono';font-weight:500}
+  /* engage cards */
+  .engage-scroll{display:flex;gap:16px;overflow-x:auto;padding:8px 8px 32px;scrollbar-width:none}
+  .engage-scroll::-webkit-scrollbar{display:none}
+  .ecard{flex:none;width:240px;height:340px;background:#fff;border:1px solid #f3f4f6;border-radius:16px;padding:24px;display:flex;flex-direction:column;box-shadow:0 4px 20px rgba(0,0,0,.03);transition:.3s}
+  .ecard:hover{box-shadow:0 10px 30px rgba(0,0,0,.08);transform:translateY(-4px)}
+  .ecard h3{font-family:var(--sans);font-size:19px;font-weight:500;color:var(--dark);margin-bottom:16px;white-space:pre-line;line-height:1.3}
+  .ecard .v{flex:1;position:relative;display:grid;place-items:center}
+  .sq{width:80px;height:80px;border-radius:24px;display:grid;place-items:center;font-size:34px}
+  .sq.purple{background:#e8e2f4;border:2px solid #d0c6e1}
+  .sq.wa{background:#4F46E5;border-radius:28px}
+  .mini{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:8px;width:160px;display:flex;gap:8px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+  .mini .b{width:32px;height:32px;border-radius:6px;background:#e8e2f4;display:grid;place-items:center;font-weight:700;color:#6d28d9;font-size:14px}
+  .mini .ln{height:6px;border-radius:4px;background:#f3f4f6;margin-bottom:4px}
+  .bell{position:absolute;width:32px;height:32px;background:#C7D2FE;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;box-shadow:0 4px 10px rgba(0,0,0,.12);color:var(--dark)}
 
-  /* metrics */
-  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-  .metric{text-align:center;padding:28px 16px;border-radius:18px;background:var(--panel)}
-  .metric .v{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.04em}
-  .metric .l{color:var(--muted);font-size:14px;margin-top:8px;font-weight:600}
+  /* ai agents */
+  .agents{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+  .agents .badge{display:inline-flex;align-items:center;gap:6px;background:var(--mint-light);border:1px solid var(--mint);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:500;color:var(--green);margin-bottom:24px}
+  .agents h2{font-size:clamp(28px,2.5rem,40px);margin-bottom:16px}
+  .agents .p{color:var(--body);font-size:16px;line-height:1.7;max-width:440px;margin-bottom:32px}
+  .arrows{display:flex;gap:12px}
+  .arrows button{width:40px;height:40px;border-radius:50%;background:var(--dark);color:#fff;display:grid;place-items:center;transition:.2s}
+  .arrows button:hover{background:var(--green)}
+  .agent-cards{display:flex;gap:16px}
+  .acard{flex:1;border-radius:16px;border:1px solid #e5e7eb;transition:.5s;cursor:pointer;opacity:.6;overflow:hidden}
+  .acard.on{border:2px solid var(--green);box-shadow:0 10px 30px rgba(0,0,0,.08);opacity:1}
+  .acard .v{background:var(--mint-light);height:260px;display:grid;place-items:center;padding:20px}
+  .acard.gray .v{background:#f9fafb}
+  .acard .bd{padding:20px}
+  .acard h3{font-family:var(--sans);font-size:16px;font-weight:700;color:var(--dark);margin-bottom:8px}
+  .acard p{font-size:12px;color:var(--body);line-height:1.6;margin-bottom:16px}
+  .acard .btn-dark{font-size:12px;padding:8px 16px;border-radius:8px}
+  .chatwin{background:#fff;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.1);padding:16px;width:240px}
+  .chatwin .dots{display:flex;gap:6px;margin-bottom:8px}
+  .chatwin .dots i{width:8px;height:8px;border-radius:50%}
+  .chatwin .msg{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);margin-bottom:12px}
+  .chatwin .q{font-size:12px;font-weight:500;color:var(--dark)}
+  .chatwin .sale{margin-top:12px;background:var(--mint);border-radius:8px;padding:8px;text-align:center;font-size:14px;font-weight:700;color:var(--green)}
 
-  /* steps */
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .step{border:1px solid var(--line);border-radius:20px;padding:28px}
-  .step__n{width:40px;height:40px;border-radius:12px;background:var(--ink);color:var(--hero);display:grid;place-items:center;font-weight:800;font-size:15px;margin-bottom:18px}
-  .step h3{font-size:18px;margin-bottom:9px}
-  .step p{color:var(--muted);font-size:15px}
+  /* tabs */
+  .tabs{display:flex;justify-content:center;margin-bottom:64px}
+  .tabs__in{display:inline-flex;background:#f9fafb;border:1px solid #f3f4f6;border-radius:999px;padding:4px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .tabs button{padding:10px 24px;border-radius:999px;font-size:14px;font-weight:600;color:var(--dark);transition:.3s}
+  .tabs button.on{background:#C7D2FE;color:#312E81;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+  .biz{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .biz .badge{color:var(--green);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:24px}
+  .biz h3{font-size:clamp(28px,2.5rem,40px);margin-bottom:16px}
+  .biz .p{color:var(--body);font-size:16px;line-height:1.7;max-width:440px;margin-bottom:8px}
+  .biz ul{list-style:none;padding:16px 0 0;margin:0}
+  .biz li{display:flex;gap:12px;font-size:14px;font-weight:500;color:var(--dark);margin-bottom:14px}
+  .biz li span{color:var(--green);font-weight:700}
+  .testi{background:#f9fafb;border:1px solid #f3f4f6;border-radius:24px;padding:40px;display:flex;gap:24px;position:relative;min-height:300px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .testi .left{width:33%;display:flex;flex-direction:column;justify-content:space-between}
+  .testi .pic{width:160px;height:192px;border-radius:16px;overflow:hidden;border:4px solid #fff;box-shadow:0 10px 25px rgba(0,0,0,.15);margin-top:16px}
+  .testi .pic img{width:100%;height:100%;object-fit:cover}
+  .testi .quote{color:var(--green);font-family:var(--serif);font-size:64px;line-height:1;height:16px}
+  .testi .txt{color:var(--dark);font-size:16px;font-weight:500;font-style:italic;line-height:1.7}
+  .testi .who{margin-top:16px}
+  .testi .who b{display:block;font-size:14px;color:var(--dark)}
+  .testi .who span{font-size:12px;color:var(--muted);font-weight:600}
 
-  /* pricing */
-  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
-  .plan{border:1px solid var(--line);border-radius:22px;padding:32px;background:#fff}
-  .plan.hi{background:var(--hero);border-color:var(--hero);box-shadow:var(--shadow);transform:translateY(-8px)}
-  .plan h3{font-size:17px;margin-bottom:6px}
-  .plan .sub{font-size:13.5px;color:var(--muted);margin-bottom:22px;font-weight:600}
-  .plan.hi .sub{color:rgba(28,20,16,.6)}
-  .plan .price{font-size:44px;font-weight:800;letter-spacing:-.045em;line-height:1}
-  .plan .price small{font-size:14px;font-weight:600;color:var(--muted)}
-  .plan.hi .price small{color:rgba(28,20,16,.6)}
-  .plan ul{list-style:none;padding:0;margin:24px 0 0}
-  .plan li{display:flex;gap:10px;font-size:14.5px;color:var(--muted);padding:9px 0}
-  .plan.hi li{color:var(--ink-2)}
-  .plan li b{color:var(--accent);font-weight:800}
-  .plan .btn{margin-top:24px;width:100%}
+  /* stories */
+  .stories{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+  .story{border:1px solid #f3f4f6;border-radius:32px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:.3s;display:flex;flex-direction:column}
+  .story:hover{box-shadow:0 10px 30px rgba(0,0,0,.08)}
+  .story .img{height:224px;position:relative;overflow:hidden;background:#f3f4f6}
+  .story .img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .story:hover .img img{transform:scale(1.05)}
+  .story .img .ov{position:absolute;inset:0;background:rgba(0,0,0,.35);display:grid;place-items:center;padding:24px}
+  .story .img .lg{color:#fff;font-weight:800;font-size:20px;letter-spacing:.02em}
+  .story .bd{padding:32px;display:flex;flex-direction:column;flex:1;gap:16px}
+  .story .badge{background:#C7D2FE;color:#312E81;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.05em;border-radius:999px;padding:4px 12px;width:fit-content}
+  .story h3{font-size:20px;line-height:1.3}
+  .story p{color:var(--body);font-size:14px;line-height:1.7;flex:1}
 
-  /* faq */
-  .faq{max-width:800px;margin-inline:auto}
-  details{border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden;transition:.2s;background:#fff}
-  details[open]{border-color:var(--ink)}
-  summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;padding:22px 26px;font-size:17px;font-weight:700}
-  summary::-webkit-details-marker{display:none}
-  summary::after{content:"+";color:var(--accent);font-weight:800;font-size:20px;line-height:1;transition:.25s}
-  details[open] summary::after{transform:rotate(45deg)}
-  details p{padding:0 26px 24px;color:var(--muted);max-width:62ch}
+  /* integrations */
+  .integrations{background:#EEF2FF;border-radius:40px 40px 0 0;padding:64px 0 48px;overflow:hidden;text-align:center}
+  .integrations h2{font-size:clamp(28px,2.5rem,40px);margin-bottom:16px}
+  .integrations .sub{color:var(--body);font-size:16px;margin-bottom:48px}
+  .int-ticker{position:relative;padding:16px 0;margin-bottom:40px}
+  .int-ticker::before,.int-ticker::after{content:"";position:absolute;top:0;bottom:0;width:128px;z-index:10;pointer-events:none}
+  .int-ticker::before{left:0;background:linear-gradient(90deg,#EEF2FF,transparent)}
+  .int-ticker::after{right:0;background:linear-gradient(270deg,#EEF2FF,transparent)}
+  .int-ticker .in{display:flex;gap:80px;width:max-content;animation:tick 30s linear infinite;align-items:center}
+  .int-ticker .lg{font-weight:800;font-size:18px;color:#4b5563;opacity:.7;white-space:nowrap}
+  .integrations .lnk{color:var(--green);font-weight:600;font-size:16px}
 
   /* cta */
-  .cta{padding:0 0 100px}
-  .cta__box{background:var(--ink);color:#fff;border-radius:32px;padding:76px 40px;text-align:center;position:relative;overflow:hidden}
-  .cta__box::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,200,126,.18),transparent 65%);top:-320px;left:50%;transform:translateX(-50%)}
-  .cta__box h2{position:relative;font-size:clamp(30px,4.6vw,54px)}
-  .cta__box p{position:relative;margin:18px auto 30px;max-width:44ch;color:rgba(255,255,255,.7);font-size:17.5px}
+  .cta{background:var(--mint);border-radius:40px 40px 0 0;padding:48px 0;text-align:center}
+  .cta h2{font-size:clamp(28px,2.5rem,40px);margin-bottom:16px}
+  .cta p{color:var(--body);font-size:16px;max-width:440px;margin:0 auto 32px;line-height:1.7}
+  .cta .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+  .cta .note{font-size:12px;color:var(--muted)}
 
-  footer{border-top:1px solid var(--line-2);padding:48px 0 36px;color:var(--muted);font-size:14.5px}
-  .f-in{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
-  .f-cols{display:flex;gap:60px;flex-wrap:wrap}
-  .f-cols h4{font-size:13.5px;color:var(--ink);font-weight:800;margin:0 0 14px}
-  .f-cols a{display:block;margin-bottom:10px;color:var(--muted);transition:.2s;font-weight:500}
-  .f-cols a:hover{color:var(--ink)}
-  .f-bot{margin-top:44px;padding-top:22px;border-top:1px solid var(--line-2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13.5px}
+  /* footer */
+  footer{background:#fff;border-top:1px solid #f3f4f6;padding:64px 0}
+  .f-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap;gap:16px}
+  .f-logo{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--green)}
+  .f-social{display:flex;gap:16px}
+  .f-social a{width:36px;height:36px;border-radius:50%;background:#f3f4f6;display:grid;place-items:center;font-size:14px;color:var(--dark);transition:.2s}
+  .f-social a:hover{background:var(--green);color:#fff}
+  .f-cols{display:grid;grid-template-columns:repeat(5,1fr);gap:32px;margin-bottom:48px}
+  .f-cols h4{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px}
+  .f-cols a{display:block;font-size:14px;color:var(--body);margin-bottom:10px;transition:.2s}
+  .f-cols a:hover{color:var(--green)}
+  .f-bot{border-top:1px solid #f3f4f6;padding-top:32px;text-align:center;font-size:12px;color:var(--muted)}
 
-  @media(max-width:900px){
-    .nav nav{display:none}
-    .hero{border-radius:0 0 28px 28px}
-    .hero__grid,.split{grid-template-columns:1fr;gap:36px}
-    .shots{height:360px;margin-top:20px}
-    .cards,.steps,.plans{grid-template-columns:1fr}
-    .plan.hi{transform:none}
-    .metrics{grid-template-columns:1fr 1fr}
-    section{padding:72px 0}
+  @media(max-width:1024px){
+    .nav{padding:0 24px;height:80px}
+    .nav__menu,.nav__right{display:none}
+    .hero__in{grid-template-columns:1fr;padding:24px 24px 40px}
+    .shots{display:none}
+    .sticky,.agents,.biz{grid-template-columns:1fr;gap:40px}
+    .sticky__visual{display:none}
+    .stories,.f-cols{grid-template-columns:1fr}
+    .testi{flex-direction:column}
+    .testi .left{width:100%}
+    .feat{opacity:1;min-height:0}
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap nav">
-    <a href="#" class="brand"><span class="brand__mark"></span>Bravo</a>
-    <nav>
-      <a href="#platform">Platform</a>
-      <a href="#solutions">Solutions</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#resources">Resources</a>
-    </nav>
-    <div class="nav-r">
-      <a href="#" style="font-weight:600">Log in</a>
-      <a href="#" class="btn btn--dark">Sign up free</a>
-      <a href="#" class="btn btn--outline">Get a demo</a>
+<!-- NAV -->
+<header id="hdr">
+  <div class="nav">
+    <div class="nav__left">
+      <a href="#" class="logo">Bravo</a>
+      <div class="nav__menu">
+        <div class="nav__item">
+          <a href="#platform">Platform <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <div class="mega">
+            <div class="mega__cols">
+              <div class="mega__col">
+                <div style="width:380px">
+                  <h4>Capabilities</h4>
+                  <div class="mega__list">
+                    <a href="#" class="item"><span class="ico">📣</span><span><span class="ttl">Campaigns &amp; automation</span><span class="desc">Boost conversions with automated multichannel customer journeys.</span></span></a>
+                    <a href="#" class="item"><span class="ico">⚙</span><span><span class="ttl">Transactional messaging</span><span class="desc">Send real-time email, SMS &amp; WhatsApp via SMTP relay and API.</span></span></a>
+                    <a href="#" class="item"><span class="ico">▽</span><span><span class="ttl">Sales management</span><span class="desc">Accelerate revenue with custom pipelines and sales automation.</span></span></a>
+                    <a href="#" class="item"><span class="ico">▤</span><span><span class="ttl">Bravo Data Platform</span><span class="desc">Unify and activate customer data for smarter marketing.</span></span></a>
+                    <a href="#" class="item"><span class="ico">♥</span><span><span class="ttl">Customer loyalty</span><span class="desc">Turn customers into loyal fans with a rewards program.</span></span></a>
+                    <a href="#" class="item"><span class="ico">🔗</span><span><span class="ttl">Integrations</span><span class="desc">Connect Bravo with 150+ digital tools.</span></span></a>
+                  </div>
+                </div>
+              </div>
+              <div class="mega__col">
+                <div style="width:220px">
+                  <h4>Channels</h4>
+                  <div class="mega__list mega__list--tight">
+                    <a href="#" class="item simple"><span class="ico">✉</span><span class="ttl">Email</span></a>
+                    <a href="#" class="item simple"><span class="ico">☎</span><span class="ttl">SMS</span></a>
+                    <a href="#" class="item simple"><span class="ico">💬</span><span class="ttl">WhatsApp</span></a>
+                    <a href="#" class="item simple"><span class="ico">🔔</span><span class="ttl">Web &amp; mobile push</span></a>
+                    <a href="#" class="item simple"><span class="ico">💬</span><span class="ttl">Live chat</span></a>
+                    <a href="#" class="item simple"><span class="ico">🤖</span><span class="ttl">Chatbot</span></a>
+                    <a href="#" class="item simple"><span class="ico">💳</span><span class="ttl">Wallet</span></a>
+                    <a href="#" class="item simple"><span class="ico">☎</span><span class="ttl">Phone</span></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav__item">
+          <a href="#solutions">Solutions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <div class="mega">
+            <div style="width:380px">
+              <h4>Solutions</h4>
+              <div class="mega__list">
+                <a href="#" class="item"><span class="ico">🛍</span><span><span class="ttl">Entrepreneurs &amp; small business</span><span class="desc">Run campaigns, automate marketing and manage contacts.</span></span></a>
+                <a href="#" class="item"><span class="ico">💼</span><span><span class="ttl">Mid-market &amp; enterprise</span><span class="desc">Custom solutions, tailored onboarding and full data control.</span></span></a>
+                <a href="#" class="item"><span class="ico">🛒</span><span><span class="ttl">Ecommerce &amp; retail</span><span class="desc">Recover abandoned carts and personalize recommendations.</span></span></a>
+                <a href="#" class="item"><span class="ico">⌘</span><span><span class="ttl">Developers</span><span class="desc">Build with Bravo's developer guides, open API and SDKs.</span></span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav__item"><a href="#pricing">Pricing</a></div>
+        <div class="nav__item">
+          <a href="#resources">Resources <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <div class="mega mega--wide">
+            <div class="mega__cols">
+              <div class="mega__col">
+                <div style="width:220px">
+                  <h4>Resource center</h4>
+                  <div class="mega__list mega__list--tight">
+                    <a href="#" class="item simple"><span class="ico">✎</span><span class="ttl">Blog</span></a>
+                    <a href="#" class="item simple"><span class="ico">📖</span><span class="ttl">Ebooks</span></a>
+                    <a href="#" class="item simple"><span class="ico">🔍</span><span class="ttl">Case studies</span></a>
+                    <a href="#" class="item simple"><span class="ico">▦</span><span class="ttl">Email templates</span></a>
+                    <a href="#" class="item simple"><span class="ico">📈</span><span class="ttl">Email marketing platforms</span></a>
+                    <a href="#" class="item simple"><span class="ico">🔗</span><span class="ttl">Mailchimp alternatives</span></a>
+                  </div>
+                </div>
+              </div>
+              <div class="mega__col">
+                <div style="width:220px">
+                  <h4>Ecosystem</h4>
+                  <div class="mega__list mega__list--tight">
+                    <a href="#" class="item simple"><span class="ico">🔗</span><span class="ttl">Integrations</span></a>
+                    <a href="#" class="item simple"><span class="ico">✦</span><span class="ttl">Product updates</span></a>
+                    <a href="#" class="item simple"><span class="ico">👥</span><span class="ttl">Community</span></a>
+                    <a href="#" class="item simple"><span class="ico">📅</span><span class="ttl">Events</span></a>
+                    <a href="#" class="item simple"><span class="ico">🤝</span><span class="ttl">Partner programs</span></a>
+                  </div>
+                </div>
+              </div>
+              <div class="mega__col">
+                <div style="width:200px">
+                  <h4>Support</h4>
+                  <div class="mega__list mega__list--tight">
+                    <a href="#" class="item simple"><span class="ico">?</span><span class="ttl">Help center</span></a>
+                    <a href="#" class="item simple"><span class="ico">☎</span><span class="ttl">Contact us</span></a>
+                    <a href="#" class="item simple"><span class="ico">⌘</span><span class="ttl">API docs</span></a>
+                    <a href="#" class="item simple"><span class="ico">📊</span><span class="ttl">Platform status</span></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav__right">
+      <div class="nav__login">
+        <svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span class="div"></span>
+        <a href="#">Log in</a>
+      </div>
+      <a href="#" class="btn-dark">Sign Up Free</a>
+      <a href="#" class="btn-outline">Get a demo</a>
     </div>
   </div>
 </header>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="wrap hero__grid">
-    <div>
-      <h1>Turn every order into a lifetime customer.</h1>
-      <p class="lede">One platform for all your marketing and sales. Email, SMS, WhatsApp and beyond, in a single place your whole team can use.</p>
-      <div class="hero__cta">
-        <a href="#" class="btn btn--dark btn--lg">Sign up free</a>
-        <a href="#" class="btn btn--outline btn--lg">Get a demo</a>
-      </div>
-      <div class="trust">
-        <span class="stars">
-          <svg viewBox="0 0 24 24" fill="#1c1410"><path d="M12 2l3 6.5 7 .9-5 4.8 1.3 7-6.3-3.4L5.7 21 7 14.2 2 9.4l7-.9z"/></svg>
-          4.8 · 12,400 reviews
-        </span>
-        <span class="cap">Loved by marketers everywhere</span>
+<section class="hero" id="platform" style="padding:0">
+  <div class="hero__in">
+    <div class="hero__text reveal">
+      <h1>Turn Every Order<br>into a Lifetime Customer</h1>
+      <p class="lede">One AI-powered customer platform for all your marketing and sales needs. From email marketing, SMS, WhatsApp, and beyond, drive business growth and lasting loyalty.</p>
+      <a href="#" class="btn-dark">Sign up free</a>
+      <div class="rate">
+        <p>Loved by users everywhere</p>
+        <div class="stars">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="#4F46E5"><circle cx="12" cy="12" r="10"/><path d="M9 12l2.5 2.5L16 9.5" fill="none" stroke="#fff" stroke-width="2"/></svg>
+          <b>4.5</b>
+          <span class="s">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#312E81" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </span>
+        </div>
       </div>
     </div>
 
     <div class="shots">
-      <div class="shot shot--main">
-        <div class="sbar"><i></i><i></i><i></i><span>bravo · dashboard</span></div>
-        <div class="sbody">
-          <div class="kpi">
-            <div><div class="k">Contacts</div><div class="v">48.2k</div></div>
-            <div><div class="k">Open rate</div><div class="v">62%</div></div>
-            <div><div class="k">Revenue</div><div class="v">$18.4k</div></div>
+      <div class="win win--bg">
+        <div class="win__bar"><i></i><i></i></div>
+        <div class="win__body">
+          <div class="win__side">
+            <div class="on">Home</div><div>CRM</div><div>Campaigns</div><div>Automations</div><div>Conversations</div>
           </div>
+          <div class="win__main">
+            <h3>Hello Adrian</h3>
+            <div style="display:flex;gap:16px">
+              <div class="cal">
+                <span class="m">June</span>
+                <div class="d"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+                <div class="n"><span class="off">27</span><span class="off">28</span><span class="off">29</span><span class="off">30</span><span class="off">31</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span class="today">10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span></div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+                <div class="stat"><span class="ic">✉</span><span><span class="v">5,200</span><span class="l">New contacts added</span></span></div>
+                <div class="list">
+                  <div class="row"><span>Loyal Customers</span><span>3,321</span></div>
+                  <div class="row"><span>New Customers</span><span>2,905</span></div>
+                  <div class="row"><span>Win-back</span><span>1,678</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--cust">
+        <div class="head"><span class="av">AH</span><span><span class="nm">Anna Howard</span><br><span class="sub">Very loyal</span></span></div>
+        <div class="li"><span class="l"><span class="a2" style="background:#60a5fa">LM</span><span class="n2">Laura Manning</span></span><span class="tag">Very loyal</span></div>
+        <div class="li" style="margin:0"><span class="l"><span class="a2" style="background:#a78bfa">CG</span><span class="n2">Courtney Grant</span></span><span class="tag">Potentially loyal</span></div>
+      </div>
+
+      <div class="card card--camp">
+        <div class="t">Summer Collection</div>
+        <div class="d">Sent on June 27, 2025</div>
+        <div class="grid2"><div><div class="k">Delivered</div><div class="v">22,490</div></div><div><div class="k">Orders</div><div class="v">30</div></div></div>
+        <div class="bar-box">
+          <div class="lb">Clicks by hour</div>
           <div class="bars">
-            <i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:78%"></i><i style="height:56%"></i><i style="height:92%"></i><i style="height:70%"></i>
-          </div>
-          <div class="rows">
-            <div class="r"><span class="av">NW</span>Newsletter #42<span class="amt pos">62% open</span></div>
-            <div class="r"><span class="av">AC</span>Abandoned cart<span class="amt pos">+$4,120</span></div>
+            <i style="height:40%"></i><i style="height:55%"></i><i style="height:35%"></i><i style="height:70%"></i><i class="hi" style="height:100%"></i><i style="height:60%"></i><i style="height:80%"></i><i style="height:50%"></i><i style="height:65%"></i><i style="height:75%"></i>
           </div>
         </div>
       </div>
 
-      <div class="shot shot--side">
-        <div class="sbar"><i></i><i></i><i></i><span>campaign</span></div>
-        <div class="sbody">
-          <div style="font-size:11px;color:#a3968a;font-weight:700;text-transform:uppercase;letter-spacing:.06em">Automation</div>
-          <div style="font-size:24px;font-weight:800;letter-spacing:-.03em;margin-top:6px">Welcome flow</div>
-          <div style="font-size:12px;color:#b45309;font-weight:700;margin-top:4px">4 steps · live</div>
-          <div class="chart"><i style="height:30%"></i><i style="height:50%"></i><i class="hi" style="height:78%"></i><i style="height:60%"></i><i style="height:40%"></i><i class="hi" style="height:92%"></i></div>
+      <div class="card card--rev">
+        <div class="top"><b>Revenue</b><span class="pill-up">↑ 30%</span></div>
+        <div class="big">$190.00</div>
+        <svg viewBox="0 0 100 30" style="width:100%;height:48px;overflow:visible">
+          <path d="M0 30 Q 20 10, 40 25 T 70 15 T 100 5" fill="none" stroke="#312E81" stroke-width="2" stroke-linecap="round"/>
+          <path d="M0 30 Q 20 10, 40 25 T 70 15 T 100 5 L 100 30 L 0 30 Z" fill="rgba(49,46,129,0.1)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUSTED -->
+<section class="trusted" style="padding:28px 0">
+  <div class="wrap reveal">
+    <p>Join <b>600,000+</b> customers around the world who trust Bravo</p>
+  </div>
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>GoNoodle</span><span>Volkswagen</span><span>Dynata</span><span>BrandWatch</span><span>Michelin</span><span>Carrefour</span><span>Louis Vuitton</span><span>Sodexo</span>
+      <span>GoNoodle</span><span>Volkswagen</span><span>Dynata</span><span>BrandWatch</span><span>Michelin</span><span>Carrefour</span><span>Louis Vuitton</span><span>Sodexo</span>
+    </div>
+  </div>
+</section>
+
+<!-- STICKY FEATURES -->
+<section>
+  <div class="wrap sticky">
+    <div class="sticky__visual">
+      <div class="sticky__panel on" data-panel="0">
+        <div class="vis-box">
+          <div class="line tl"></div>
+          <div class="line tr"></div>
+          <div class="photo"><img src="bravo-assets/woman_mirror.png" alt="Woman doing skincare"></div>
+          <div class="chip" style="top:32px;left:50%;transform:translateX(-50%)"><span class="ic">✉</span>Email</div>
+          <div class="chip" style="top:64px;left:24px"><span class="ic">📱</span>Mobile Push</div>
+          <div class="chip" style="top:128px;left:16px"><span class="ic">💬</span>SMS</div>
+          <div class="chip" style="top:192px;left:40px"><span class="ic">📞</span>WhatsApp</div>
+          <div class="chip" style="top:224px;left:16px"><span class="ic">💳</span>Wallet</div>
+          <div class="chip" style="top:64px;right:24px"><span class="ic">💬</span>Live chat</div>
+          <div class="chip" style="top:144px;right:40px"><span class="ic">🔔</span>Web Push</div>
+          <div class="chip" style="top:224px;right:24px"><span class="ic">🤖</span>Chatbot</div>
+          <div class="phone2"><div class="notch"></div><div class="scr"><p>New this<br>winter season</p><span>GET 15% OFF</span></div></div>
+        </div>
+      </div>
+      <div class="sticky__panel" data-panel="1">
+        <div class="vis-box">
+          <div class="mini" style="position:absolute;top:16px;left:50%;transform:translateX(-50%);width:300px;display:block;padding:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f3f4f6;padding-bottom:8px;margin-bottom:12px">
+              <span style="font-size:11px;font-weight:700">Sales Pipeline · 7 Deals</span>
+              <span style="font-size:9px;background:#111;color:#fff;padding:2px 8px;border-radius:999px">Create deals</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:left">
+              <div><div style="font-size:10px;font-weight:700">New</div><div style="font-size:8px;color:#6b7280;margin-bottom:6px">$200.00</div><div style="background:#f3e8ff;border:1px solid #e9d5ff;border-radius:6px;padding:6px;font-size:8px">Art &amp; Co</div></div>
+              <div><div style="font-size:10px;font-weight:700">Qualifying</div><div style="font-size:8px;color:#6b7280;margin-bottom:6px">$116.25</div><div style="background:#f3e8ff;border:1px solid #e9d5ff;border-radius:6px;padding:6px;font-size:8px">iCapital</div></div>
+              <div><div style="font-size:10px;font-weight:700">Demo</div><div style="font-size:8px;color:#6b7280;margin-bottom:6px">$1,300.00</div><div style="background:#f3e8ff;border:1px solid #e9d5ff;border-radius:6px;padding:6px;font-size:8px">Cascade</div></div>
+            </div>
+          </div>
+          <div class="mini" style="position:absolute;top:160px;left:0;width:170px;display:block;padding:12px">
+            <div style="font-size:10px;font-weight:700;margin-bottom:10px">Managed Campaigns</div>
+            <div style="font-size:8px;color:#374151">Summer Campaign</div>
+            <div style="height:4px;background:#e5e7eb;border-radius:4px;margin:4px 0"></div>
+            <div style="font-size:8px;color:#374151;margin-top:8px">New arrivals</div>
+            <div style="height:4px;background:#e5e7eb;border-radius:4px;margin-top:4px"></div>
+          </div>
+          <div class="mini" style="position:absolute;top:160px;right:0;width:160px;display:block;padding:12px">
+            <div style="font-size:10px;font-weight:700;margin-bottom:10px">Customer Data</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:9px;margin-bottom:6px"><span style="width:18px;height:18px;border-radius:50%;background:#e5e7eb"></span>Maria S.</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:9px;margin-bottom:6px"><span style="width:18px;height:18px;border-radius:50%;background:#e5e7eb"></span>Anna H.</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:9px"><span style="width:18px;height:18px;border-radius:50%;background:#e5e7eb"></span>Laura M.</div>
+          </div>
+        </div>
+      </div>
+      <div class="sticky__panel" data-panel="2">
+        <div class="vis-box">
+          <div class="mini" style="position:absolute;top:24px;left:24px;width:auto;padding:8px 12px"><span style="font-size:9px">04.10.25 · <b>Sara bought goggles</b></span></div>
+          <div class="mini" style="position:absolute;top:80px;left:50%;transform:translateX(-50%);width:auto;padding:6px 12px;border-color:#e9d5ff;background:#faf5ff"><span style="font-size:9px;color:#7c3aed">✦ AURA AI</span></div>
+          <div class="mini" style="position:absolute;top:140px;right:16px;width:auto;padding:8px 12px"><span style="font-size:9px">AI optimized send time</span></div>
+          <div class="mini" style="position:absolute;bottom:40px;width:300px;display:block;padding:16px">
+            <div style="display:flex;gap:4px;margin-bottom:12px"><i style="width:8px;height:8px;border-radius:50%;background:#e5e7eb"></i><i style="width:8px;height:8px;border-radius:50%;background:#e5e7eb"></i></div>
+            <div style="border:1px dashed #d8b4fe;background:#faf5ff;border-radius:8px;padding:10px;text-align:center;font-family:var(--serif);color:#7c3aed;font-size:13px;margin-bottom:12px">We think you might like these!</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="border:1px solid #f3f4f6;border-radius:8px;padding:8px"><div style="height:60px;background:#f3f4f6;border-radius:6px;margin-bottom:6px"></div><div style="font-size:9px;font-weight:700">Wool Beanie</div><div style="font-size:8px;color:#6b7280">$35</div></div>
+              <div style="border:1px solid #f3f4f6;border-radius:8px;padding:8px"><div style="height:60px;background:#f3f4f6;border-radius:6px;margin-bottom:6px"></div><div style="font-size:9px;font-weight:700">Snow Jacket</div><div style="font-size:8px;color:#6b7280">$160</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sticky__texts">
+      <div class="feat on" data-feat="0">
+        <div class="lbl">Multichannel marketing &amp; automation</div>
+        <h2>Grow your business easily</h2>
+        <p>Launch marketing campaigns in minutes and drive more revenue. Skip the learning curve with ready-made templates, guided automation and intuitive tools anyone can master.</p>
+        <a href="#" class="lnk">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="feat" data-feat="1">
+        <div class="lbl">All-in-one solution</div>
+        <h2>Built to scale with you</h2>
+        <p>As your business expands, send more, automate more and engage across new channels. Manage the entire customer journey from one powerful platform, for marketing, sales, CRM and loyalty.</p>
+        <a href="#" class="lnk">Sign up free <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="feat" data-feat="2">
+        <div class="lbl">AI-first platform</div>
+        <h2>Accelerate with AI</h2>
+        <p>Work smarter and faster with Bravo AI. Optimize every campaign with personalized product recommendations, ideal send times, and clear insights into what drives results.</p>
+        <a href="#" class="lnk">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGAGE -->
+<section style="padding-top:0" id="solutions">
+  <div class="wrap">
+    <h2 class="sec-title reveal">Engage your audience your way</h2>
+    <div class="engage-scroll">
+      <div class="ecard"><h3>Email
+marketing</h3><div class="v"><div class="sq purple">✉</div><span class="bell" style="top:20%;right:20%">🔔</span></div></div>
+      <div class="ecard"><h3>SMS
+marketing</h3><div class="v"><div style="width:128px;height:160px;background:#fff8ef;border:2px solid #e5e7eb;border-radius:32px 32px 0 0;padding-top:12px;text-align:center"><div style="width:40px;height:6px;background:#d1d5db;border-radius:999px;margin:0 auto 12px"></div><div style="font-weight:700;color:#1f2937;font-size:18px">07:23</div><div style="font-size:7px;color:#6b7280">Monday, July 23</div></div></div></div>
+      <div class="ecard"><h3>WhatsApp
+campaigns</h3><div class="v"><div class="sq wa" style="color:#fff;font-size:40px">✆</div><span class="bell" style="top:20%;right:20%">🔔</span></div></div>
+      <div class="ecard"><h3>Push
+notifications</h3><div class="v" style="flex-direction:column;gap:12px"><div class="mini"><span class="b">B</span><span style="flex:1"><span style="display:block;font-size:8px;font-weight:700;margin-bottom:4px">Your special offer</span><span class="ln" style="display:block"></span><span class="ln" style="display:block;width:66%"></span></span></div><div class="mini"><span class="b">B</span><span style="flex:1"><span style="display:block;font-size:8px;font-weight:700;margin-bottom:4px">We miss you! Come back!</span><span class="ln" style="display:block"></span></span></div></div></div>
+      <div class="ecard"><h3>Loyalty</h3><div class="v" style="flex-direction:column;gap:12px"><div class="mini"><span style="font-size:16px">👩🏽</span><span style="flex:1"><span style="display:block;font-size:9px;font-weight:700">Maria Shepherd</span><span style="font-size:7px;color:#6b7280">Very Loyal</span><span style="font-size:6px">⭐⭐⭐⭐⭐</span></span></div><div class="mini"><span style="font-size:16px">👨🏻</span><span style="flex:1"><span style="display:block;font-size:9px;font-weight:700">Luis Martinez</span><span style="font-size:7px;color:#6b7280">Potentially Loyal</span><span style="font-size:6px">⭐⭐⭐⭐</span></span></div></div></div>
+      <div class="ecard"><h3>Mobile Wallet</h3><div class="v"><div style="width:160px;height:112px;background:#e8e2f4;border:2px solid #d0c6e1;border-radius:16px;padding:12px"><div style="font-size:10px;font-weight:700;margin-bottom:8px">Your loyalty card</div><div style="height:8px;width:66%;background:#d0c6e1;border-radius:4px;margin-bottom:4px"></div><div style="height:8px;width:50%;background:#d0c6e1;border-radius:4px"></div></div></div></div>
+      <div class="ecard"><h3>Transactional
+messaging</h3><div class="v" style="gap:12px"><div class="sq purple" style="width:56px;height:48px;border-radius:8px;font-size:20px">✉</div><div class="sq purple" style="width:56px;height:48px;border-radius:8px;font-size:20px">💬</div></div></div>
+      <div class="ecard"><h3>VoIP Phone</h3><div class="v"><div style="width:112px;height:160px;background:#fff;border:2px solid #e5e7eb;border-radius:16px;padding:12px"><div style="height:24px;border:1px solid #C7D2FE;background:#EEF2FF;border-radius:999px;display:grid;place-items:center;font-size:9px;color:var(--green);font-weight:700;margin-bottom:12px">+15128373772</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:10px;color:#6b7280;text-align:center"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div></div></div></div>
+      <div class="ecard"><h3>Live chat</h3><div class="v" style="flex-direction:column;gap:10px"><div class="mini" style="width:144px"><span class="b" style="background:#C7D2FE;color:var(--green)">B</span><span style="flex:1"><span class="ln" style="display:block"></span><span class="ln" style="display:block;width:66%"></span></span></div><div class="mini" style="width:128px"><span class="b" style="background:#f3e8ff;color:#7c3aed;border-radius:50%">👤</span><span style="flex:1"><span class="ln" style="display:block"></span><span class="ln" style="display:block;width:50%"></span></span></div></div></div>
+      <div class="ecard"><h3>Chatbot</h3><div class="v"><div style="width:160px;background:#fff;border:2px solid #e5e7eb;border-radius:16px;overflow:hidden"><div style="height:24px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 12px;gap:6px"><i style="width:8px;height:8px;border-radius:50%;background:#d1d5db"></i></div><div style="padding:12px;display:flex;gap:8px"><span class="b" style="background:#C7D2FE;color:var(--green)">B</span><span style="flex:1"><span style="display:block;font-size:9px;font-weight:500;margin-bottom:6px">How can I help you?</span><span class="ln" style="display:block"></span><span class="ln" style="display:block;width:66%"></span></span></div></div></div></div>
+      <div class="ecard"><h3>Meetings</h3><div class="v"><div style="width:128px;height:128px;background:#e6cfb8;border:2px solid #fed7aa;border-radius:16px;display:grid;place-items:center;font-size:56px">👩🏽‍🦱</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AI AGENTS -->
+<section style="padding-top:0">
+  <div class="wrap agents">
+    <div class="reveal">
+      <span class="badge">◆ Powered by Aura</span>
+      <h2>AI agents that work with you,<br>and for you</h2>
+      <p class="p">Meet Aura, your always-on marketing, sales, and support team. Aura Agents eliminate the busywork so you can focus on strategy.</p>
+      <div class="arrows">
+        <button id="agentPrev" aria-label="Previous"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <button id="agentNext" aria-label="Next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+    </div>
+    <div class="agent-cards reveal" id="agentCards">
+      <div class="acard on">
+        <div class="v">
+          <div class="chatwin">
+            <div class="dots"><i style="background:#f87171"></i><i style="background:#fbbf24"></i><i style="background:#4ade80"></i></div>
+            <div class="msg"><span style="color:var(--green)">◆</span>I'm here to help you with your writing.</div>
+            <div class="q">What is your favourite item?</div>
+            <div class="sale">Sale!</div>
+          </div>
+        </div>
+        <div class="bd">
+          <h3>Marketing Agent</h3>
+          <p>Create high-converting campaigns effortlessly: generate copy, auto-segment audiences, optimize send times, and deliver dynamic product recommendations.</p>
+          <a href="#" class="btn-dark">Discover Aura AI</a>
+        </div>
+      </div>
+      <div class="acard gray">
+        <div class="v">
+          <div class="chatwin">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#4F46E5"><circle cx="12" cy="12" r="10"/><path d="M9 12l2.5 2.5L16 9.5" fill="none" stroke="#fff" stroke-width="2"/></svg>
+              <span style="font-size:12px;font-weight:500;color:var(--dark)">Your contact data has been enriched</span>
+            </div>
+            <div style="font-size:10px;color:var(--muted);margin-bottom:8px">◆ I found the following details:</div>
+            <div style="background:#f9fafb;border-radius:6px;padding:8px;font-size:10px">History<br>Purchases</div>
+            <button class="btn-dark" style="margin-top:12px;font-size:10px;padding:6px 12px;border-radius:8px">Find more</button>
+          </div>
+        </div>
+        <div class="bd">
+          <h3>Sales Assistant</h3>
+          <p>Instantly enrich contacts and accounts, automate deal creation, and send sales emails in seconds, keeping your pipeline moving.</p>
+          <a href="#" class="btn-dark">Discover Aura AI</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- LOGOS -->
-<div class="logos">
+<!-- BUILT FOR BUSINESS -->
+<section style="padding-top:0" id="pricing">
   <div class="wrap">
-    <p class="lbl">Join 600,000+ businesses growing with Bravo</p>
-    <div class="logos__in"><span>Shopify</span><span>WordPress</span><span>Stripe</span><span>Zapier</span><span>WooCommerce</span><span>Webflow</span></div>
-  </div>
-</div>
-
-<!-- FEATURES -->
-<section id="platform">
-  <div class="wrap">
-    <div class="head center">
-      <span class="eyebrow">Platform</span>
-      <h2>Everything you need to reach your customers. Nothing you have to stitch together.</h2>
-      <p>Marketing, sales and data in one place, so your team stops switching tabs.</p>
+    <h2 class="sec-title reveal">Built for every business, from the first send to enterprise</h2>
+    <div class="tabs reveal">
+      <div class="tabs__in">
+        <button class="on" data-tab="0">Small Business</button>
+        <button data-tab="1">Enterprise</button>
+        <button data-tab="2">Developers</button>
+      </div>
     </div>
-    <div class="cards">
-      <article class="fc"><div class="ic">◈</div><h3>Campaigns &amp; automation</h3><p>Build multichannel journeys that react to what customers actually do.</p></article>
-      <article class="fc"><div class="ic">⇄</div><h3>Transactional messaging</h3><p>Send real-time email, SMS and WhatsApp through one API and SMTP relay.</p></article>
-      <article class="fc"><div class="ic">▤</div><h3>Sales management</h3><p>Custom pipelines, automation and chat that move deals forward.</p></article>
-      <article class="fc"><div class="ic">◑</div><h3>Customer data platform</h3><p>Unify every touchpoint into one profile you can actually act on.</p></article>
-      <article class="fc"><div class="ic">♥</div><h3>Customer loyalty</h3><p>Turn one-time buyers into repeat customers with a built-in rewards program.</p></article>
-      <article class="fc"><div class="ic">⌗</div><h3>Integrations</h3><p>Connect Bravo to 150+ tools, from Shopify and WordPress to Stripe and Zapier.</p></article>
-    </div>
-
-    <div class="channels">
-      <span>Email</span><span>SMS</span><span>WhatsApp</span><span>Web push</span><span>Mobile push</span><span>Live chat</span><span>Chatbot</span><span>Wallet</span>
+    <div class="biz">
+      <div class="reveal" id="bizLeft"></div>
+      <div class="reveal"><div class="testi" id="bizRight"></div></div>
     </div>
   </div>
 </section>
 
-<!-- SPLIT -->
-<section id="solutions" style="padding-top:0">
-  <div class="wrap split">
-    <div>
-      <span class="eyebrow">Why Bravo</span>
-      <h2>Built for teams that grow fast and hate busywork.</h2>
-      <p>Most tools make you choose between power and simplicity. Bravo gives you both, so a two-person team can run campaigns that used to need an agency.</p>
-      <ul class="checks">
-        <li><span class="t">✓</span> Every channel in one inbox</li>
-        <li><span class="t">✓</span> Automation that reacts in real time</li>
-        <li><span class="t">✓</span> Data unified across every touchpoint</li>
-        <li><span class="t">✓</span> Reports your whole team understands</li>
-      </ul>
-    </div>
-    <div class="panel">
-      <div class="line"><span class="k">Contact</span><span class="v">maria@acme.co</span></div>
-      <div class="line"><span class="k">Segment</span><span class="v">Loyal · 30d</span></div>
-      <div class="line"><span class="k">Last order</span><span class="v">$184.00</span></div>
-      <div class="line"><span class="k">Channels</span><span class="v">Email · SMS</span></div>
-      <div class="line"><span class="k">Lifetime value</span><span class="v">$1,240.00</span></div>
-      <div class="line"><span class="k">Next best action</span><span class="v">Win-back flow</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- METRICS -->
+<!-- SUCCESS STORIES -->
 <section style="padding-top:0">
   <div class="wrap">
-    <div class="metrics">
-      <div class="metric"><div class="v">12B+</div><div class="l">emails sent monthly</div></div>
-      <div class="metric"><div class="v">99.99%</div><div class="l">delivery uptime</div></div>
-      <div class="metric"><div class="v">600k+</div><div class="l">businesses</div></div>
-      <div class="metric"><div class="v">150+</div><div class="l">integrations</div></div>
+    <h2 class="sec-title reveal">Real stories, real success</h2>
+    <div class="stories">
+      <article class="story reveal">
+        <div class="img"><img src="bravo-assets/adbloom.png" alt="Adbloom"><div class="ov"><span class="lg">adbloom</span></div></div>
+        <div class="bd">
+          <span class="badge">Success Story</span>
+          <h3>Adbloom grows revenue by $1M/year</h3>
+          <p>Discover how this marketing agency used Bravo's all-in-one platform to turn their Ed-Tech business into a major growth engine.</p>
+        </div>
+      </article>
+      <article class="story reveal">
+        <div class="img"><img src="bravo-assets/buffalo-grill.png" alt="Buffalo Grill"><div class="ov"><span class="lg">BUFFALO GRILL</span></div></div>
+        <div class="bd">
+          <span class="badge">Success Story</span>
+          <h3>Buffalo Grill achieves 47% repeat restaurant visits</h3>
+          <p>After digitizing their loyalty program with Bravo, this popular restaurant chain activated 500K loyalty cards in just 6 months.</p>
+        </div>
+      </article>
+      <article class="story reveal">
+        <div class="img"><img src="bravo-assets/suntransfers.png" alt="Suntransfers"><div class="ov"><span class="lg">Suntransfers</span></div></div>
+        <div class="bd">
+          <span class="badge">Success Story</span>
+          <h3>Suntransfers drives 40% revenue growth with Bravo</h3>
+          <p>By personalizing the entire traveler journey with advanced segmentation, this airline boosted both revenue and open rates.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- HOW -->
-<section id="resources" style="padding-top:0">
-  <div class="wrap">
-    <div class="head center">
-      <span class="eyebrow">How it works</span>
-      <h2>From sign-up to first campaign in an afternoon.</h2>
-    </div>
-    <div class="steps">
-      <div class="step"><div class="step__n">1</div><h3>Import your contacts</h3><p>Bring your list from anywhere, or sync it live from your store or CRM.</p></div>
-      <div class="step"><div class="step__n">2</div><h3>Build your first journey</h3><p>Pick a template, set the triggers, and let the automation run.</p></div>
-      <div class="step"><div class="step__n">3</div><h3>Watch it convert</h3><p>Track opens, clicks and revenue per campaign in one dashboard.</p></div>
+<!-- INTEGRATIONS -->
+<section class="integrations">
+  <div class="wrap reveal">
+    <h2>Bravo connects to the tools you already use</h2>
+    <p class="sub">Bravo runs alongside more than 150 leading digital tools, from CRM to CMS, ecommerce, and more.</p>
+  </div>
+  <div class="int-ticker">
+    <div class="in">
+      <span class="lg" style="color:#003087">PayPal</span><span class="lg">Google Analytics</span><span class="lg" style="color:#FF4F00">zapier</span><span class="lg">OpenAI</span><span class="lg" style="color:#5B6BF9">/// make</span><span class="lg">Typeform</span><span class="lg" style="color:#0078d4">Outlook</span><span class="lg" style="color:#ef4444">elementor</span>
+      <span class="lg" style="color:#003087">PayPal</span><span class="lg">Google Analytics</span><span class="lg" style="color:#FF4F00">zapier</span><span class="lg">OpenAI</span><span class="lg" style="color:#5B6BF9">/// make</span><span class="lg">Typeform</span><span class="lg" style="color:#0078d4">Outlook</span><span class="lg" style="color:#ef4444">elementor</span>
     </div>
   </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing" style="padding-top:0">
-  <div class="wrap">
-    <div class="head center">
-      <span class="eyebrow">Pricing</span>
-      <h2>Start free. Grow when it works.</h2>
-    </div>
-    <div class="plans">
-      <div class="plan">
-        <h3>Free</h3>
-        <div class="sub">For getting started</div>
-        <div class="price">$0<small>/mo</small></div>
-        <ul>
-          <li><b>+</b> 300 emails a day</li>
-          <li><b>+</b> Unlimited contacts</li>
-          <li><b>+</b> Email campaigns</li>
-        </ul>
-        <a href="#" class="btn btn--outline">Sign up free</a>
-      </div>
-      <div class="plan hi">
-        <h3>Starter</h3>
-        <div class="sub">For growing teams</div>
-        <div class="price">$29<small>/mo</small></div>
-        <ul>
-          <li><b>+</b> No daily sending limit</li>
-          <li><b>+</b> Marketing automation</li>
-          <li><b>+</b> SMS &amp; WhatsApp</li>
-          <li><b>+</b> A/B testing</li>
-        </ul>
-        <a href="#" class="btn btn--dark">Start free trial</a>
-      </div>
-      <div class="plan">
-        <h3>Business</h3>
-        <div class="sub">For scale</div>
-        <div class="price">$69<small>/mo</small></div>
-        <ul>
-          <li><b>+</b> Send-time optimization</li>
-          <li><b>+</b> Advanced segmentation</li>
-          <li><b>+</b> Priority support</li>
-        </ul>
-        <a href="#" class="btn btn--outline">Get a demo</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="head center"><h2>Questions</h2></div>
-    <div class="faq">
-      <details open><summary>Do I need a credit card to start?</summary><p>No. The Free plan is free forever, and every paid plan comes with a 14-day trial you can cancel any time.</p></details>
-      <details><summary>Can I send SMS and WhatsApp too?</summary><p>Yes. Email, SMS and WhatsApp all live in the same platform, so you can reach customers on the channel they actually read.</p></details>
-      <details><summary>How does the automation work?</summary><p>You set a trigger, choose what happens next, and Bravo runs the journey. It reacts to opens, clicks, purchases and custom events in real time.</p></details>
-      <details><summary>Will it connect to my store?</summary><p>Bravo connects to 150+ tools including Shopify, WooCommerce, WordPress and Stripe, so your data stays in sync automatically.</p></details>
-    </div>
-  </div>
+  <div class="wrap reveal"><a href="#" class="lnk">See integrations</a></div>
 </section>
 
 <!-- CTA -->
-<section class="cta">
-  <div class="wrap">
-    <div class="cta__box">
-      <h2>Start growing with Bravo today.</h2>
-      <p>Free to start, no card required. Set up your first campaign in minutes.</p>
-      <a href="#" class="btn btn--accent btn--lg">Sign up free</a>
+<section class="cta" id="resources" style="padding:48px 0">
+  <div class="wrap reveal">
+    <h2>Ready to grow with Bravo?</h2>
+    <p>Connect with customers, convert more leads, and drive repeat business, all from one platform.</p>
+    <div class="row">
+      <a href="#" class="btn-dark">Sign up free</a>
+      <a href="#" class="btn-outline">Get a demo</a>
     </div>
+    <p class="note">No credit card required.</p>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div class="wrap">
-    <div class="f-in">
-      <div style="max-width:30ch">
-        <a href="#" class="brand" style="margin-bottom:14px"><span class="brand__mark"></span>Bravo</a>
-        <p style="color:var(--muted)">The all-in-one platform for marketing and sales.</p>
-      </div>
-      <div class="f-cols">
-        <div><h4>Platform</h4><a href="#">Campaigns</a><a href="#">Automation</a><a href="#">Channels</a></div>
-        <div><h4>Solutions</h4><a href="#">Ecommerce</a><a href="#">Enterprise</a><a href="#">Developers</a></div>
-        <div><h4>Company</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Contact</a></div>
-      </div>
+    <div class="f-top">
+      <a href="#" class="f-logo">Bravo</a>
+      <div class="f-social"><a href="#">𝕏</a><a href="#">in</a><a href="#">📷</a><a href="#">▶</a><a href="#">f</a><a href="#">♪</a></div>
     </div>
-    <div class="f-bot"><span>© 2026 Bravo Technologies</span><span>bravo.app</span></div>
+    <div class="f-cols">
+      <div><h4>Product</h4><a href="#">Email marketing</a><a href="#">Transactional email</a><a href="#">Wallet</a><a href="#">Enterprise solution</a><a href="#">Marketing automation</a></div>
+      <div><h4>Compare</h4><a href="#">Bulk email service</a><a href="#">Email marketing platforms</a><a href="#">Bravo vs Mailchimp</a><a href="#">Bravo vs HubSpot</a><a href="#">Bravo vs Klaviyo</a></div>
+      <div><h4>Resources</h4><a href="#">Help center</a><a href="#">Platform status</a><a href="#">Community</a><a href="#">Blog</a><a href="#">Templates</a></div>
+      <div><h4>Partners</h4><a href="#">All partner programs</a><a href="#">Affiliates</a><a href="#">Agency partners</a><a href="#">Startups &amp; VCs</a></div>
+      <div><h4>Company</h4><a href="#">About us</a><a href="#">Contact us</a><a href="#">Leadership</a><a href="#">Careers</a><a href="#">Press</a></div>
+    </div>
+    <div class="f-bot">© 2026 Bravo, Inc. All rights reserved.</div>
   </div>
 </footer>
 
+<script>
+(function(){
+  // nav shadow
+  var hdr = document.getElementById('hdr');
+  window.addEventListener('scroll', function(){ hdr.classList.toggle('scrolled', window.scrollY > 10); });
+
+  // scroll reveal
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold:.1, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){ io.observe(el); });
+
+  // sticky features scroll
+  var feats = document.querySelectorAll('.feat');
+  var panels = document.querySelectorAll('.sticky__panel');
+  function onScroll(){
+    var line = window.innerHeight * 0.45, active = 0;
+    feats.forEach(function(el, i){ if(el.getBoundingClientRect().top <= line) active = i; });
+    feats.forEach(function(el,i){ el.classList.toggle('on', i===active); });
+    panels.forEach(function(el,i){ el.classList.toggle('on', i===active); });
+  }
+  window.addEventListener('scroll', onScroll); onScroll();
+
+  // agents carousel
+  var cards = document.querySelectorAll('.acard');
+  var ai = 0;
+  function setAgent(i){ ai = (i + cards.length) % cards.length; cards.forEach(function(c,k){ c.classList.toggle('on', k===ai); }); }
+  document.getElementById('agentPrev').addEventListener('click', function(){ setAgent(ai-1); });
+  document.getElementById('agentNext').addEventListener('click', function(){ setAgent(ai+1); });
+  cards.forEach(function(c,k){ c.addEventListener('click', function(){ setAgent(k); }); });
+
+  // built for business tabs
+  var biz = [
+    { badge:'For entrepreneurs & small businesses', title:'Powerful tools, simple setup', desc:'Start fast. Grow confidently. Launch polished campaigns without complexity.',
+      feats:['Drag-and-drop campaign editor','Ready-to-use templates','No-code marketing automation','Advanced segmentation including web tracking'],
+      btn:'Explore Bravo for SMBs', logo:'Vintage Camper Trailers', img:'bravo-assets/vintage-camper.png', quote:'Bravo gives me all the tools I need to stay connected with my audience in one place, without spending hours learning how to use them.', author:'Paul Lacitinola', role:'Vintage Camper Trailers' },
+    { badge:'For large & mid-market companies', title:'Custom solutions for your scale', desc:'Power your growth with dedicated infrastructure, enterprise stability, and expert support.',
+      feats:['Custom integration & custom API limits','SSO (SAML) & advanced role permissions','Dedicated IP addresses & warm-up guidance','Enterprise-grade security and SOC2 compliance'],
+      btn:'Explore Bravo for Enterprise', logo:'Suntransfers', img:'bravo-assets/suntransfers.png', quote:'Bravo has transformed how we engage with customers at scale, giving us the perfect mix of speed, reliability, and security.', author:'Sarah Jenkins', role:'Head of Marketing, Suntransfers' },
+    { badge:'For developers & tech teams', title:'Built by developers, for developers', desc:'Integrate in minutes using our RESTful APIs, SDKs, or high-performance SMTP relay.',
+      feats:['99.9% reliable transactional SMTP relay','Robust RESTful APIs with multi-language SDKs','Real-time webhooks for delivery, opens, & clicks','Detailed documentation and error monitoring'],
+      btn:'Explore developer tools', logo:'TechFlow', img:'bravo-assets/adbloom.png', quote:"Bravo's API documentation and reliability made integration seamless. The SMTP relay runs incredibly fast and securely.", author:'David Chen', role:'Lead Engineer, TechFlow' }
+  ];
+  var bizLeft = document.getElementById('bizLeft'), bizRight = document.getElementById('bizRight');
+  function setTab(i){
+    var b = biz[i];
+    bizLeft.innerHTML = '<p class="badge">'+b.badge+'</p><h3>'+b.title+'</h3><p class="p">'+b.desc+'</p><ul>'+b.feats.map(function(f){return '<li><span>•</span><span>'+f+'</span></li>';}).join('')+'</ul><div style="padding-top:16px"><a href="#" class="btn-dark">'+b.btn+'</a></div>';
+    bizRight.innerHTML = '<div class="left"><div style="height:40px;display:flex;align-items:center;font-weight:800;color:var(--dark)">'+b.logo+'</div><div class="pic"><img src="'+b.img+'" alt="'+b.author+'"></div></div><div style="flex:1"><div class="quote">"</div><p class="txt">'+b.quote+'</p><div class="who"><b>'+b.author+',</b><span>'+b.role+'</span></div></div>';
+  }
+  document.querySelectorAll('.tabs button').forEach(function(btn, i){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tabs button').forEach(function(x){ x.classList.remove('on'); });
+      btn.classList.add('on'); setTab(i);
+    });
+  });
+  setTab(0);
+})();
+</script>
 </body>
 </html>
