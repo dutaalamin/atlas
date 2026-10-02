@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bravo Hero — Section template</title>
+<meta name="description" content="A warm hero section with floating dashboard cards." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#6F4E37;--dark:#2C1A10;--mint:#EADCC8;--mint-light:#F7F1E8;
+    --body:#1B1B1B;--muted:#6B6C72;
+    --serif:'Source Serif 4',Georgia,serif;--sans:'Inter',system-ui,sans-serif;
+    --ease:cubic-bezier(.4,0,.2,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--green);color:#fff}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{margin:0;font-family:var(--serif);font-weight:600;line-height:1.15;color:var(--dark)}
+  p{margin:0}
+  :focus-visible{outline:2px solid var(--green);outline-offset:2px}
+
+  .btn-dark{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--dark);color:#fff;font-weight:600;font-size:16px;padding:12px 32px;border-radius:6px;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .btn-dark:hover{background:var(--green)}
+
+  .hero{background:var(--mint);position:relative;overflow:hidden}
+  .hero__in{max-width:1440px;margin:0 auto;padding:32px 48px 0;display:grid;grid-template-columns:1.02fr .98fr;gap:16px;align-items:center;overflow:hidden}
+  .hero__text{position:relative;z-index:2}
+  .hero h1{font-size:clamp(32px,3.4vw,51px);line-height:1.15;margin-bottom:24px}
+  .hero .lede{color:var(--body);font-size:17px;line-height:1.7;max-width:600px;margin-bottom:32px}
+  .hero .rate{margin-top:24px}
+  .hero .rate p{font-size:14px;color:var(--muted);margin-bottom:8px}
+  .stars{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #e5e7eb;border-radius:999px;padding:8px 16px}
+  .stars b{font-size:14px;font-weight:600;color:var(--dark)}
+  .stars .s{display:flex;gap:2px}
+  .stars .s svg{width:14px;height:14px;fill:var(--dark)}
+
+  .shots{position:relative;height:480px;transform:translateX(6%) scale(1.04);transform-origin:bottom right;z-index:1}
+  .win{position:absolute;background:rgba(255,255,255,.4);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.6);border-radius:24px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);padding:20px;overflow:hidden}
+  .win--bg{top:16px;bottom:0;left:8px;right:-24px;animation:floatSlow 9s ease-in-out infinite}
+  .win__bar{display:flex;gap:8px;align-items:center;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.5);margin-bottom:24px}
+  .win__bar i{width:12px;height:12px;border-radius:50%;background:#e5e7eb}
+  .win__body{display:flex;gap:24px}
+  .win__side{width:112px;display:grid;gap:16px}
+  .win__side div{height:24px;border-radius:6px;background:rgba(255,255,255,.5);display:flex;align-items:center;padding:0 8px;font-size:10px;font-weight:500;color:rgba(111,78,55,.7)}
+  .win__side div.on{background:var(--green);color:#fff}
+  .win__main{flex:1;display:flex;flex-direction:column;gap:16px}
+  .win__main h3{font-family:var(--serif);font-size:20px;color:rgba(111,78,55,.9)}
+  .cal{flex:1;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.4);border-radius:12px;padding:12px}
+  .cal .m{display:inline-block;font-size:11px;font-weight:700;color:var(--dark);background:rgba(255,255,255,.5);padding:2px 8px;border-radius:4px;margin-bottom:8px}
+  .cal .d{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:9px;text-align:center;color:var(--muted);margin-bottom:4px}
+  .cal .n{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:9px;font-weight:500;text-align:center}
+  .cal .n .today{background:#5B6BF9;color:#fff;border-radius:4px}
+  .cal .n .off{color:#d1d5db}
+  .stat{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.4);border-radius:12px;padding:12px}
+  .stat .ic{width:32px;height:32px;border-radius:8px;background:#dbeafe;display:grid;place-items:center}
+  .stat .v{font-size:18px;font-weight:700;color:rgba(111,78,55,.9);line-height:1.1}
+  .stat .l{font-size:9px;color:var(--muted)}
+  .list{background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.4);border-radius:12px;padding:12px;flex:1}
+  .list .row{display:flex;justify-content:space-between;font-size:10px;padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid rgba(229,231,235,.5)}
+  .list .row:last-child{border:none;margin:0;padding:0}
+  .list .row span:first-child{color:var(--muted);font-weight:500}
+  .list .row span:last-child{color:var(--dark);font-weight:700}
+  .card{position:absolute;background:#fff;border:1px solid #f3f4f6;border-radius:16px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1);padding:20px}
+  .card--cust{top:0;right:0;width:280px;animation:float 6s ease-in-out infinite;z-index:10}
+  .card--camp{bottom:16px;left:0;width:240px;animation:float 6s ease-in-out infinite;z-index:20}
+  .card--rev{bottom:48px;right:-16px;width:220px;animation:floatSlow 9s ease-in-out infinite;z-index:30}
+  .card .head{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:16px;border-bottom:1px solid #f3f4f6}
+  .card .av{width:40px;height:40px;border-radius:50%;background:#ffedd5;color:#ea580c;display:grid;place-items:center;font-weight:700;font-size:14px}
+  .card .nm{font-size:14px;font-weight:700;color:var(--dark)}
+  .card .sub{font-size:12px;color:var(--muted)}
+  .card .li{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .card .li .l{display:flex;align-items:center;gap:8px}
+  .card .li .a2{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700;color:#fff}
+  .card .li .n2{font-size:12px;font-weight:500;color:var(--dark)}
+  .tag{font-size:10px;background:#f3f4f6;padding:4px 8px;border-radius:999px;color:#6b7280}
+  .card--camp .t{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px}
+  .card--camp .d{font-size:10px;color:var(--muted);border-bottom:1px solid #f3f4f6;padding-bottom:8px;margin-bottom:16px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .grid2 .k{font-size:10px;color:var(--muted);margin-bottom:4px}
+  .grid2 .v{font-size:14px;font-weight:700;color:var(--dark)}
+  .bar-box{background:rgba(234,220,200,.5);padding:8px;border-radius:8px}
+  .bar-box .lb{font-size:10px;font-weight:600;color:var(--dark);margin-bottom:8px}
+  .bars{display:flex;gap:4px;height:48px;align-items:flex-end}
+  .bars i{flex:1;border-radius:4px 4px 0 0;background:rgba(111,78,55,.3)}
+  .bars i.hi{background:var(--green)}
+  .card--rev .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+  .card--rev .top b{font-size:12px;font-weight:700;color:var(--dark)}
+  .pill-up{font-size:10px;background:#EFE2CF;color:#6F4E37;padding:2px 8px;border-radius:999px;font-weight:600}
+  .card--rev .big{font-size:24px;font-weight:900;color:var(--dark);margin-bottom:12px}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes floatSlow{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+
+  @media(max-width:1024px){
+    .hero__in{grid-template-columns:1fr;padding:24px 24px 40px}
+    .shots{display:none}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero__in">
+    <div class="hero__text">
+      <h1>Turn Every Order<br>into a Lifetime Customer</h1>
+      <p class="lede">One AI-powered customer platform for all your marketing and sales needs. From email marketing, SMS, WhatsApp, and beyond, drive business growth and lasting loyalty.</p>
+      <a href="#" class="btn-dark">Sign up free</a>
+      <div class="rate">
+        <p>Loved by users everywhere</p>
+        <div class="stars">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="#B07D4F"><circle cx="12" cy="12" r="10"/><path d="M9 12l2.5 2.5L16 9.5" fill="none" stroke="#fff" stroke-width="2"/></svg>
+          <b>4.5</b>
+          <span class="s">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2C1A10" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="shots">
+      <div class="win win--bg">
+        <div class="win__bar"><i></i><i></i></div>
+        <div class="win__body">
+          <div class="win__side">
+            <div class="on">Home</div><div>CRM</div><div>Campaigns</div><div>Automations</div><div>Conversations</div>
+          </div>
+          <div class="win__main">
+            <h3>Hello Adrian</h3>
+            <div style="display:flex;gap:16px">
+              <div class="cal">
+                <span class="m">June</span>
+                <div class="d"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+                <div class="n"><span class="off">27</span><span class="off">28</span><span class="off">29</span><span class="off">30</span><span class="off">31</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span class="today">10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span></div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+                <div class="stat"><span class="ic">✉</span><span><span class="v">5,200</span><span class="l">New contacts added</span></span></div>
+                <div class="list">
+                  <div class="row"><span>Loyal Customers</span><span>3,321</span></div>
+                  <div class="row"><span>New Customers</span><span>2,905</span></div>
+                  <div class="row"><span>Win-back</span><span>1,678</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--cust">
+        <div class="head"><span class="av">AH</span><span><span class="nm">Anna Howard</span><br><span class="sub">Very loyal</span></span></div>
+        <div class="li"><span class="l"><span class="a2" style="background:#60a5fa">LM</span><span class="n2">Laura Manning</span></span><span class="tag">Very loyal</span></div>
+        <div class="li" style="margin:0"><span class="l"><span class="a2" style="background:#a78bfa">CG</span><span class="n2">Courtney Grant</span></span><span class="tag">Potentially loyal</span></div>
+      </div>
+
+      <div class="card card--camp">
+        <div class="t">Summer Collection</div>
+        <div class="d">Sent on June 27, 2025</div>
+        <div class="grid2"><div><div class="k">Delivered</div><div class="v">22,490</div></div><div><div class="k">Orders</div><div class="v">30</div></div></div>
+        <div class="bar-box">
+          <div class="lb">Clicks by hour</div>
+          <div class="bars">
+            <i style="height:40%"></i><i style="height:55%"></i><i style="height:35%"></i><i style="height:70%"></i><i class="hi" style="height:100%"></i><i style="height:60%"></i><i style="height:80%"></i><i style="height:50%"></i><i style="height:65%"></i><i style="height:75%"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--rev">
+        <div class="top"><b>Revenue</b><span class="pill-up">↑ 30%</span></div>
+        <div class="big">$190.00</div>
+        <svg viewBox="0 0 100 30" style="width:100%;height:48px;overflow:visible">
+          <path d="M0 30 Q 20 10, 40 25 T 70 15 T 100 5" fill="none" stroke="#2C1A10" stroke-width="2" stroke-linecap="round"/>
+          <path d="M0 30 Q 20 10, 40 25 T 70 15 T 100 5 L 100 30 L 0 30 Z" fill="rgba(44,26,16,0.1)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

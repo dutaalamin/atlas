@@ -58,7 +58,7 @@
       "category": "Product",
       "collection": "landing",
       "accent": "#6c5ce7",
-      "preview": "assets/img/hush-1.webp",
+      "preview": "assets/img/hush-1.png",
       "full": "assets/img/hush-full.png",
       "url": "templates/hush.html"
     },
@@ -68,7 +68,7 @@
       "category": "AI / Developer tool",
       "collection": "landing",
       "accent": "#7c5cff",
-      "preview": "assets/img/nova-1.webp",
+      "preview": "assets/img/nova-1.png",
       "full": "assets/img/nova-full.png",
       "url": "templates/nova.html"
     },
@@ -104,7 +104,7 @@
     },
     {
       "id": "hero-relay",
-      "name": "Editorial Hero",
+      "name": "Mono Hero",
       "category": "Section · Hero",
       "collection": "hero",
       "accent": "#1f4bff",
@@ -141,6 +141,36 @@
       "preview": "assets/img/pricing-relay-1.png",
       "full": "assets/img/pricing-relay-full.png",
       "url": "templates/pricing-relay.html"
+    },
+    {
+      "id": "hero-bravo",
+      "name": "Warm Hero",
+      "category": "Section · Hero",
+      "collection": "hero",
+      "accent": "#6F4E37",
+      "preview": "assets/img/hero-bravo-1.png",
+      "full": "assets/img/hero-bravo-full.png",
+      "url": "templates/hero-bravo.html"
+    },
+    {
+      "id": "hero-lumen",
+      "name": "Editorial Hero",
+      "category": "Section · Hero",
+      "collection": "hero",
+      "accent": "#c1886f",
+      "preview": "assets/img/hero-lumen-1.png",
+      "full": "assets/img/hero-lumen-full.png",
+      "url": "templates/hero-lumen.html"
+    },
+    {
+      "id": "hero-hush",
+      "name": "Friendly Hero",
+      "category": "Section · Hero",
+      "collection": "hero",
+      "accent": "#2563EB",
+      "preview": "assets/img/hero-hush-1.png",
+      "full": "assets/img/hero-hush-full.png",
+      "url": "templates/hero-hush.html"
     }
   ]
 }
