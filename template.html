@@ -23,17 +23,7 @@
   .back:hover { color: var(--fg); border-color: var(--fg); }
   .detail__title { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
   .detail__cat { font-size: 13px; color: var(--fg-dim); }
-  .detail__actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-  .viewtoggle {
-    display: inline-flex; padding: 3px; border-radius: 10px;
-    border: 1px solid var(--line); background: var(--bg-soft);
-  }
-  .viewtoggle button {
-    padding: 7px 15px; border-radius: 7px; font-size: 13.5px; font-weight: 600;
-    color: var(--fg-muted); transition: all var(--dur) var(--ease);
-  }
-  .viewtoggle button:hover { color: var(--fg); }
-  .viewtoggle button.on { background: var(--fg); color: #fff; }
+  .detail__actions { margin-left: auto; }
 
   /* the long, unbroken preview */
   .shot {
@@ -43,35 +33,6 @@
     border: 1px solid var(--line);
     box-shadow: var(--shadow);
     background: var(--bg-soft);
-  }
-
-  /* embedded live preview */
-  .live {
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    background: #fff;
-  }
-  .live__bar {
-    display: flex; align-items: center; gap: 7px;
-    padding: 11px 16px;
-    background: var(--bg-soft);
-    border-bottom: 1px solid var(--line-soft);
-  }
-  .live__bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
-  .live__url {
-    margin-left: 12px; flex: 1;
-    font-family: var(--font-mono); font-size: 12px; color: var(--fg-dim);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .live__hint {
-    font-size: 12px; font-weight: 600; color: var(--fg-muted);
-    white-space: nowrap;
-  }
-  .live__frame {
-    width: 100%; height: 82vh; min-height: 620px;
-    border: none; display: block; background: #fff;
   }
 
   .notfound { text-align: center; padding: 120px 20px; }
