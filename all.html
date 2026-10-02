@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>All templates | Atlas</title>
+<meta name="description" content="Every Atlas template in one place." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/gallery.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav__inner">
+    <div class="nav__left">
+      <a href="/" class="brand"><span class="brand__mark"></span>Atlas</a>
+      <nav class="nav__links">
+        <a href="/">Collections</a>
+        <a href="/all">All templates</a>
+        <a href="#">SaaS</a>
+      </nav>
+    </div>
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input type="search" id="search" placeholder="Search all templates" aria-label="Search templates">
+    </label>
+    <div class="nav__actions">
+      <a href="#" class="muted">Log in</a>
+      <a href="#" class="btn btn--primary">Get templates</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="tpl" style="padding-top:36px">
+    <div class="tpl__head">
+      <div>
+        <a href="/" class="crumb">← All collections</a>
+        <h1 class="tpl__title" id="title" style="margin-top:8px">All templates</h1>
+        <p class="dim" id="subtitle" style="margin-top:6px;font-size:15px"></p>
+      </div>
+    </div>
+    <div class="filters" id="filters" style="margin-bottom:22px"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden><p>No templates match that search.</p></div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>© 2026 Atlas Templates. Hand-built, one at a time.</span>
+    <span class="mono">atlas.templates</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var grid = document.getElementById('grid');
+  var empty = document.getElementById('empty');
+  var searchEl = document.getElementById('search');
+  var filtersEl = document.getElementById('filters');
+  var all = [], cols = [], query = '', active = 'all';
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function initials(n) { return escapeHtml((n || '?').trim().charAt(0).toUpperCase()); }
+  function colName(id) { var c = cols.filter(function (x) { return x.id === id; })[0]; return c ? c.name : ''; }
+
+  function tileHTML(t) {
+    return '<a class="tile" href="template?id=' + encodeURIComponent(t.id) + '" aria-label="' + escapeHtml(t.name) + '">' +
+      '<div class="tile__shot"><img loading="lazy" src="' + escapeHtml(t.preview) + '" alt="' + escapeHtml(t.name) + ' preview"></div>' +
+      '<div class="tile__meta">' +
+        '<span class="tile__mark" style="background:' + escapeHtml(t.accent || '#111') + '">' + initials(t.name) + '</span>' +
+        '<div class="tile__text"><span class="tile__name">' + escapeHtml(t.name) + '</span>' +
+        '<span class="tile__cat">' + escapeHtml(colName(t.collection) || t.category || '') + '</span></div>' +
+      '</div></a>';
+  }
+
+  function render() {
+    var list = all.filter(function (t) {
+      if (active !== 'all' && t.collection !== active) return false;
+      if (!query) return true;
+      return [t.name, t.category, colName(t.collection)].join(' ').toLowerCase().indexOf(query) !== -1;
+    });
+    grid.innerHTML = list.map(tileHTML).join('');
+    empty.hidden = list.length > 0;
+    document.getElementById('subtitle').textContent = list.length + ' template' + (list.length === 1 ? '' : 's');
+  }
+
+  function renderFilters() {
+    var nonEmpty = cols.filter(function (c) { return all.some(function (t) { return t.collection === c.id; }); });
+    var items = [{ id: 'all', name: 'All' }].concat(nonEmpty);
+    filtersEl.innerHTML = items.map(function (c) {
+      return '<button class="chip' + (active === c.id ? ' is-active' : '') + '" data-id="' + c.id + '">' + escapeHtml(c.name) + '</button>';
+    }).join('');
+  }
+
+  if (searchEl) searchEl.addEventListener('input', function () { query = searchEl.value.trim().toLowerCase(); render(); });
+  if (filtersEl) filtersEl.addEventListener('click', function (e) {
+    var chip = e.target.closest('.chip'); if (!chip) return;
+    active = chip.dataset.id; renderFilters(); render();
+  });
+
+  fetch('assets/data/templates.json')
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      cols = data.collections || [];
+      all = data.templates || [];
+      renderFilters(); render();
+    })
+    .catch(function () {
+      grid.innerHTML = ''; empty.hidden = false;
+      empty.querySelector('p').textContent = 'Could not load templates.json — run this folder from a local server.';
+    });
+})();
+</script>
+</body>
+</html>

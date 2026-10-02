@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Atlas | Landing page templates</title>
-<meta name="description" content="A small library of hand-built landing page templates." />
+<title>Atlas | Landing page collections</title>
+<meta name="description" content="Hand-built landing page collections. Browse by type, preview the full page, copy the code." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -14,18 +14,18 @@
 
 <!-- NAV -->
 <header class="nav">
-  <div class="container nav__inner">
+  <div class="nav__inner">
     <div class="nav__left">
-      <a href="#" class="brand"><span class="brand__mark"></span>Atlas</a>
+      <a href="/" class="brand"><span class="brand__mark"></span>Atlas</a>
       <nav class="nav__links">
-        <a href="#templates">Templates</a>
-        <a href="#">Categories</a>
+        <a href="/">Collections</a>
+        <a href="/all">All templates</a>
         <a href="#">SaaS</a>
       </nav>
     </div>
     <label class="search">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input type="search" id="search" placeholder="Search templates & categories" aria-label="Search templates">
+      <input type="search" id="search" placeholder="Search collections & templates" aria-label="Search">
     </label>
     <div class="nav__actions">
       <a href="#" class="muted">Log in</a>
@@ -48,24 +48,26 @@
     <span class="t8"><img src="https://cdn.simpleicons.org/behance" alt=""></span>
   </div>
   <div class="container hero__content">
-    <h1>Landing page<br>templates for <span style="color:var(--fg-dim)">builders</span></h1>
-    <p>A small, growing library of hand-built landing pages. Real code, real layouts, no stock screenshots, no filler.</p>
+    <h1>Landing page<br>collections for <span style="color:var(--fg-dim)">builders</span></h1>
+    <p>Browse by type — landing pages, heroes, pricing and more. Every screen is hand-built, real code, no stock screenshots.</p>
     <div class="hero__cta">
-      <a href="#templates" class="btn btn--primary">Browse templates</a>
+      <a href="#collections" class="btn btn--primary btn--lg">Browse collections</a>
+      <a href="/all" class="btn btn--ghost btn--lg">View all templates</a>
     </div>
   </div>
 </section>
 
-<!-- TEMPLATES -->
-<section id="templates" class="tpl" style="padding-bottom: 40px;">
+<!-- COLLECTIONS -->
+<section id="collections" class="tpl" style="padding-top:8px;padding-bottom:40px">
   <div class="tpl__head">
-    <h2 class="tpl__title">Templates</h2>
-    <a href="#" class="tpl__all">All templates</a>
+    <div>
+      <h2 class="tpl__title">Collections</h2>
+      <p class="dim" id="subtitle" style="margin-top:6px;font-size:15px"></p>
+    </div>
+    <a href="/all" class="tpl__all">All templates</a>
   </div>
   <div class="grid" id="grid"></div>
-  <div class="empty" id="empty" hidden>
-    <p>No templates match that search.</p>
-  </div>
+  <div class="empty" id="empty" hidden><p>No collections match that search.</p></div>
 </section>
 
 <!-- FOOTER -->
@@ -76,6 +78,68 @@
   </div>
 </footer>
 
-<script src="assets/js/gallery.js"></script>
+<script>
+(function () {
+  'use strict';
+  var grid = document.getElementById('grid');
+  var empty = document.getElementById('empty');
+  var searchEl = document.getElementById('search');
+  var all = [], cols = [], query = '';
+
+  var bg = document.getElementById('heroBg');
+  if (bg) for (var i = 0; i < 9 * 4; i++) bg.appendChild(document.createElement('i'));
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function tilesFor(id) {
+    return all.filter(function (t) { return t.collection === id; }).slice(0, 3);
+  }
+
+  function cardHTML(c) {
+    var items = tilesFor(c.id);
+    var shots = items.map(function (t) {
+      return '<img loading="lazy" src="' + escapeHtml(t.preview) + '" alt="' + escapeHtml(t.name) + '">';
+    }).join('');
+    var n = all.filter(function (t) { return t.collection === c.id; }).length;
+    return '<a class="col-card" href="category?id=' + encodeURIComponent(c.id) + '">' +
+        '<div class="col-card__name">' + (c.icon ? '<span class="col-card__ico">' + c.icon + '</span>' : '') + escapeHtml(c.name) + '</div>' +
+        '<div class="col-card__count">' + n + ' template' + (n === 1 ? '' : 's') + '</div>' +
+        '<div class="col-stack col-stack--' + Math.min(items.length, 3) + '">' + shots + '</div>' +
+      '</a>';
+  }
+
+  function countFor(id) { return all.filter(function (t) { return t.collection === id; }).length; }
+
+  function render() {
+    var list = cols.filter(function (c) {
+      if (countFor(c.id) === 0) return false;
+      if (!query) return true;
+      var names = all.filter(function (t) { return t.collection === c.id; }).map(function (t) { return t.name; }).join(' ');
+      return (c.name + ' ' + (c.desc || '') + ' ' + names).toLowerCase().indexOf(query) !== -1;
+    });
+    grid.innerHTML = list.map(cardHTML).join('');
+    empty.hidden = list.length > 0;
+  }
+
+  if (searchEl) searchEl.addEventListener('input', function () { query = searchEl.value.trim().toLowerCase(); render(); });
+
+  fetch('assets/data/templates.json')
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      cols = data.collections || [];
+      all = data.templates || [];
+      document.getElementById('subtitle').textContent = cols.length + ' collections · ' + all.length + ' templates';
+      render();
+    })
+    .catch(function () {
+      grid.innerHTML = ''; empty.hidden = false;
+      empty.querySelector('p').textContent = 'Could not load templates.json — run this folder from a local server.';
+    });
+})();
+</script>
 </body>
 </html>

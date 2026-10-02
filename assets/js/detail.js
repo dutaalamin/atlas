@@ -27,12 +27,14 @@
       '</div>';
   }
 
-  function render(t) {
+  function render(t, colName, colId) {
     document.title = t.name + ' — Atlas';
+    var backHref = colId ? ('category?id=' + encodeURIComponent(colId)) : '/';
+    var backLabel = colName ? ('← ' + colName) : '← All templates';
     main.innerHTML =
       '<div class="container detail">' +
         '<div class="detail__bar">' +
-          '<a href="/" class="back">← All templates</a>' +
+          '<a href="' + backHref + '" class="back">' + escapeHtml(backLabel) + '</a>' +
           '<div>' +
             '<div class="detail__title">' + escapeHtml(t.name) + '</div>' +
           '</div>' +
@@ -50,8 +52,11 @@
     .then(function (r) { return r.json(); })
     .then(function (data) {
       var list = (data && data.templates) || [];
+      var cols = (data && data.collections) || [];
       var t = list.filter(function (x) { return x.id === id; })[0];
-      if (t) render(t); else notFound();
+      if (!t) { notFound(); return; }
+      var col = cols.filter(function (c) { return c.id === t.collection; })[0];
+      render(t, col ? col.name : '', t.collection);
     })
     .catch(notFound);
 })();

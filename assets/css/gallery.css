@@ -238,6 +238,51 @@ p { margin: 0; }
 .tile__name { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
 .tile__cat { font-size: 12.5px; color: var(--fg-dim); }
 
+/* ---------- COLLECTION CARD (stacked previews) ---------- */
+.col-card {
+  display: block; position: relative;
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  background: var(--surface); padding: 20px 20px 0;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  overflow: hidden;
+}
+.col-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--line); }
+.col-card__name { display: flex; align-items: center; gap: 9px; font-size: 21px; font-weight: 700; letter-spacing: -0.02em; }
+.col-card__ico { font-size: 18px; }
+.col-card__count { font-size: 13.5px; color: var(--fg-dim); margin-top: 4px; }
+
+.col-stack {
+  position: relative; margin-top: 18px; height: 186px;
+  display: flex; align-items: flex-start;
+}
+.col-stack img {
+  position: absolute; top: 0;
+  width: 60%; height: auto;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid var(--line-soft); border-bottom: none;
+  background: var(--bg-soft);
+  box-shadow: 0 12px 30px -14px rgba(17,17,20,.30);
+  transition: transform var(--dur) var(--ease);
+}
+/* three staggered previews */
+.col-stack img:nth-child(1) { left: 0;   z-index: 3; transform: rotate(-2deg); }
+.col-stack img:nth-child(2) { left: 21%; z-index: 2; transform: rotate(1.5deg); top: 14px; }
+.col-stack img:nth-child(3) { left: 42%; z-index: 1; transform: rotate(3.5deg); top: 26px; }
+.col-card:hover .col-stack img:nth-child(1) { transform: rotate(-3deg) translateY(-4px); }
+.col-card:hover .col-stack img:nth-child(2) { transform: rotate(2deg) translateY(-4px); }
+.col-card:hover .col-stack img:nth-child(3) { transform: rotate(4deg) translateY(-4px); }
+/* single-template collections: one centred, wider preview */
+.col-stack--1 img:nth-child(1) { width: 82%; left: 9%; transform: rotate(-1.5deg); }
+.col-card:hover .col-stack--1 img:nth-child(1) { transform: rotate(-2.5deg) translateY(-4px); }
+.col-stack::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 60px; z-index: 4;
+  background: linear-gradient(to bottom, transparent, var(--surface));
+}
+
+/* breadcrumb */
+.crumb { font-size: 13.5px; font-weight: 500; color: var(--fg-dim); }
+.crumb:hover { color: var(--fg); }
+
 /* ---------- EMPTY ---------- */
 .empty { text-align: center; padding: 80px 20px; color: var(--fg-dim); }
 
