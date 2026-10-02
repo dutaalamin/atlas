@@ -39,10 +39,17 @@
             '<div class="detail__title">' + escapeHtml(t.name) + '</div>' +
           '</div>' +
           '<div class="detail__actions">' +
-            '<a href="' + escapeHtml(t.url) + '" target="_blank" rel="noopener" class="btn btn--primary">Live preview ↗</a>' +
+            '<a href="' + escapeHtml(t.url) + '" target="_blank" rel="noopener" class="btn btn--primary">Open full page ↗</a>' +
           '</div>' +
         '</div>' +
-        '<img class="shot" src="' + escapeHtml(t.full || t.preview) + '" alt="' + escapeHtml(t.name) + ' full preview">' +
+        '<div class="live">' +
+          '<div class="live__bar">' +
+            '<i></i><i></i><i></i>' +
+            '<span class="live__url">' + escapeHtml(t.url) + '</span>' +
+            '<span class="live__hint">Interactive — try it</span>' +
+          '</div>' +
+          '<iframe class="live__frame" src="' + escapeHtml(t.url) + '" title="' + escapeHtml(t.name) + ' live preview" loading="lazy"></iframe>' +
+        '</div>' +
       '</div>';
   }
 
