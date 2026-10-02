@@ -106,7 +106,7 @@
     }).join('');
     var n = all.filter(function (t) { return t.collection === c.id; }).length;
     return '<a class="col-card" href="category?id=' + encodeURIComponent(c.id) + '">' +
-        '<div class="col-card__name">' + (c.icon ? '<span class="col-card__ico">' + c.icon + '</span>' : '') + escapeHtml(c.name) + '</div>' +
+        '<div class="col-card__name">' + escapeHtml(c.name) + '</div>' +
         '<div class="col-card__count">' + n + ' template' + (n === 1 ? '' : 's') + '</div>' +
         '<div class="col-stack col-stack--' + Math.min(items.length, 3) + '">' + shots + '</div>' +
       '</a>';

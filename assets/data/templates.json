@@ -3,31 +3,26 @@
     {
       "id": "landing",
       "name": "Landing Page",
-      "icon": "🌐",
       "desc": "Full marketing pages, hero to footer"
     },
     {
       "id": "hero",
       "name": "Hero",
-      "icon": "✨",
       "desc": "Above-the-fold openers"
     },
     {
       "id": "pricing",
       "name": "Pricing Page",
-      "icon": "🏷️",
       "desc": "Plans, tiers and comparison"
     },
     {
       "id": "dashboard",
       "name": "Dashboard",
-      "icon": "📊",
       "desc": "App and admin screens"
     },
     {
       "id": "about",
       "name": "About Page",
-      "icon": "👥",
       "desc": "Team, story and mission"
     }
   ],

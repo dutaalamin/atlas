@@ -49,6 +49,27 @@ No aurora gradients, no glowing blur orbs, no conic-gradient marks, no gradient 
 **Allowed palettes:** white, black, grey, plus ONE accent colour (e.g. blue `#2563EB`, brown `#6F4E37`).
 Solid fills and subtle single-hue tints only. No rainbow gradients.
 
+### 5. Emojis and pictographic glyphs
+No emojis anywhere: not in copy, headings, buttons, or as icon stand-ins.
+
+Blocked: emoji range U+1F000 to U+1FAFF, misc symbols U+2600 to U+26FF, dingbats U+2700 to U+27BF (except the check mark), geometric shapes U+25A0 to U+25FF, and pictographs such as the wave, envelope, link, robot, half-circle, diamond, pencil, command and moon glyphs.
+
+Use an inline **SVG icon** instead. Keep only functional text arrows: right arrow, left arrow, up arrow, north-east arrow.
+
+```html
+<!-- BAD: emoji or pictograph as icon -->
+<span class="kicker">Welcome (wave emoji)</span>
+<span class="ic">(envelope glyph)</span>Email
+<span class="ico">(link glyph)</span>Integrations
+
+<!-- GOOD: inline SVG -->
+<span class="kicker">Welcome</span>
+<span class="ic"><svg ...>...</svg></span>Email
+<span class="ico"><svg ...>...</svg></span>Integrations
+```
+
+Also strip emoji from data files (`templates.json` collection icons) and decorative `.ico` / `.ic` slots.
+
 ## Do use
 
 - One accent colour, solid fills.
