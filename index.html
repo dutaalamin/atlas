@@ -132,7 +132,8 @@
     .then(function (data) {
       cols = data.collections || [];
       all = data.templates || [];
-      document.getElementById('subtitle').textContent = cols.length + ' collections · ' + all.length + ' templates';
+      var shown = cols.filter(function (c) { return countFor(c.id) > 0; }).length;
+      document.getElementById('subtitle').textContent = shown + ' collections · ' + all.length + ' templates';
       render();
     })
     .catch(function () {
