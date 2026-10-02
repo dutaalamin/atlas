@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hero — Section template</title>
+<meta name="description" content="A single hero section template: aurora gradient, glass badge, dual CTA and a floating product mock." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#07070C;
+    --ink-2:#0E0E17;
+    --white:#F5F5F7;
+    --muted:#9A9AA8;
+    --violet:#7C5CFF;
+    --cyan:#4ADEDE;
+    --pink:#FF6FD8;
+    --line:rgba(255,255,255,.09);
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--ink);color:var(--white);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  ::selection{background:var(--violet);color:#fff}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;min-height:100vh;overflow:hidden;
+    display:flex;flex-direction:column;
+    background:
+      radial-gradient(120% 90% at 50% -20%, #16162A 0%, transparent 55%),
+      radial-gradient(60% 50% at 82% 18%, rgba(124,92,255,.28) 0%, transparent 60%),
+      radial-gradient(55% 45% at 12% 30%, rgba(74,222,222,.18) 0%, transparent 60%),
+      radial-gradient(70% 60% at 70% 110%, rgba(255,111,216,.20) 0%, transparent 60%),
+      var(--ink);
+  }
+  /* fine grid */
+  .hero::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(80% 60% at 50% 20%, #000 0%, transparent 85%);
+    -webkit-mask-image:radial-gradient(80% 60% at 50% 20%, #000 0%, transparent 85%);
+  }
+  /* top fade */
+  .hero::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:180px;pointer-events:none;
+    background:linear-gradient(to bottom, transparent, var(--ink));
+  }
+
+  .nav{
+    position:relative;z-index:5;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px clamp(20px,4vw,56px);
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.02em;color:var(--white);text-decoration:none}
+  .brand i{
+    width:26px;height:26px;border-radius:8px;display:block;
+    background:conic-gradient(from 140deg,var(--violet),var(--cyan),var(--pink),var(--violet));
+    box-shadow:0 0 22px rgba(124,92,255,.5);
+  }
+  .nav__links{display:flex;gap:30px}
+  .nav__links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+  .nav__links a:hover{color:var(--white)}
+  .nav__cta{display:flex;align-items:center;gap:14px}
+  .nav__cta a{font-size:14px;font-weight:600;text-decoration:none;color:var(--white)}
+  .nav__cta .ghost{color:var(--muted)}
+  .nav__cta .ghost:hover{color:var(--white)}
+
+  .hero__body{
+    position:relative;z-index:5;flex:1;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:48px clamp(20px,4vw,56px) 96px;
+  }
+
+  .badge{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:7px 8px 7px 14px;border-radius:999px;
+    border:1px solid var(--line);background:rgba(255,255,255,.03);
+    backdrop-filter:blur(8px);
+    font-size:13px;color:#D7D7E0;margin-bottom:28px;
+    animation:rise .8s var(--ease) both;
+  }
+  .badge b{
+    font-weight:600;color:#fff;background:rgba(124,92,255,.22);
+    border:1px solid rgba(124,92,255,.4);border-radius:999px;
+    padding:3px 10px;font-size:11px;letter-spacing:.02em;
+  }
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+
+  h1{
+    font-family:'Inter',sans-serif;
+    font-weight:800;letter-spacing:-.045em;line-height:1.02;
+    font-size:clamp(40px,7.2vw,88px);
+    max-width:16ch;
+    animation:rise .8s var(--ease) .08s both;
+  }
+  h1 em{
+    font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;
+    letter-spacing:-.02em;
+    background:linear-gradient(100deg,var(--cyan),var(--violet) 55%,var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    padding-right:.06em;
+  }
+  .lede{
+    color:var(--muted);font-size:clamp(15px,1.6vw,18px);line-height:1.65;
+    max-width:56ch;margin:24px auto 0;
+    animation:rise .8s var(--ease) .16s both;
+  }
+
+  .cta-row{
+    display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
+    margin-top:36px;
+    animation:rise .8s var(--ease) .24s both;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:14px 26px;border-radius:12px;font-size:15px;font-weight:600;
+    text-decoration:none;cursor:pointer;border:1px solid transparent;
+    transition:transform .18s var(--ease),box-shadow .25s,background .2s,border-color .2s;
+  }
+  .btn--primary{
+    color:#0A0A12;
+    background:linear-gradient(180deg,#fff,#E8E8F0);
+    box-shadow:0 10px 30px -8px rgba(124,92,255,.55), inset 0 1px 0 #fff;
+  }
+  .btn--primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px -10px rgba(124,92,255,.7)}
+  .btn--ghost{color:var(--white);border-color:var(--line);background:rgba(255,255,255,.02)}
+  .btn--ghost:hover{background:rgba(255,255,255,.06);transform:translateY(-2px)}
+  .btn svg{width:16px;height:16px}
+
+  .proof{
+    margin-top:26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;
+    animation:rise .8s var(--ease) .32s both;
+  }
+  .avatars{display:flex}
+  .avatars span{
+    width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);
+    margin-left:-10px;background:linear-gradient(140deg,#3A3A55,#20203A);
+    display:grid;place-items:center;font-size:11px;font-weight:700;color:#C9C9DA;
+  }
+  .avatars span:first-child{margin-left:0}
+  .proof small{color:var(--muted);font-size:13px}
+  .proof small b{color:#fff;font-weight:600}
+
+  /* floating product mock */
+  .mock{
+    position:relative;z-index:4;
+    width:min(1040px,92vw);margin:0 auto;
+    transform:translateY(0);
+    animation:rise 1s var(--ease) .4s both;
+  }
+  .mock__frame{
+    border-radius:20px 20px 0 0;border:1px solid var(--line);border-bottom:none;
+    background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+    backdrop-filter:blur(10px);
+    box-shadow:0 -1px 0 rgba(255,255,255,.06) inset, 0 40px 120px -30px rgba(124,92,255,.45);
+    overflow:hidden;
+  }
+  .mock__bar{
+    display:flex;align-items:center;gap:8px;padding:13px 18px;
+    border-bottom:1px solid var(--line);
+  }
+  .mock__bar i{width:11px;height:11px;border-radius:50%;background:#2A2A3C}
+  .mock__bar i:nth-child(1){background:#FF5F57}
+  .mock__bar i:nth-child(2){background:#FEBC2E}
+  .mock__bar i:nth-child(3){background:#28C840}
+  .mock__bar .url{
+    margin-left:14px;flex:1;height:26px;border-radius:8px;
+    background:rgba(255,255,255,.05);border:1px solid var(--line);
+    display:flex;align-items:center;padding:0 12px;font-size:11px;color:#6E6E82;
+  }
+  .mock__ui{display:grid;grid-template-columns:200px 1fr;min-height:340px}
+  .mock__side{border-right:1px solid var(--line);padding:18px 14px;display:flex;flex-direction:column;gap:9px}
+  .mock__side .row{
+    height:30px;border-radius:8px;display:flex;align-items:center;gap:9px;
+    padding:0 10px;font-size:12px;color:#8A8AA0;
+  }
+  .mock__side .row.on{background:rgba(124,92,255,.16);color:#D9D2FF;border:1px solid rgba(124,92,255,.35)}
+  .mock__side .row b{width:14px;height:14px;border-radius:4px;background:rgba(255,255,255,.12)}
+  .mock__main{padding:22px;display:flex;flex-direction:column;gap:18px}
+  .mock__head{display:flex;align-items:center;justify-content:space-between}
+  .mock__head h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
+  .mock__head .pill{font-size:11px;color:#9CFFC4;background:rgba(74,222,128,.14);border:1px solid rgba(74,222,128,.3);padding:4px 10px;border-radius:999px}
+  .mock__cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .mc{
+    border:1px solid var(--line);border-radius:12px;padding:14px;
+    background:rgba(255,255,255,.025);
+  }
+  .mc .k{font-size:11px;color:#71718A;margin-bottom:8px}
+  .mc .v{font-size:20px;font-weight:700;letter-spacing:-.02em}
+  .mc .v.c1{color:#8FE3FF}.mc .v.c2{color:#C4B5FF}.mc .v.c3{color:#FF9FE1}
+  .mock__chart{
+    flex:1;border:1px solid var(--line);border-radius:12px;
+    background:rgba(255,255,255,.02);padding:16px;display:flex;align-items:flex-end;gap:8px;min-height:120px;
+  }
+  .mock__chart i{flex:1;border-radius:6px 6px 0 0;background:linear-gradient(180deg,rgba(124,92,255,.85),rgba(124,92,255,.15))}
+  .mock__chart i:nth-child(2n){background:linear-gradient(180deg,rgba(74,222,222,.8),rgba(74,222,222,.12))}
+
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+
+  @media(max-width:860px){
+    .nav__links{display:none}
+    .mock__ui{grid-template-columns:1fr}
+    .mock__side{display:none}
+    .mock__cards{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:520px){
+    .mock__cards{grid-template-columns:1fr}
+    .nav__cta .ghost{display:none}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <nav class="nav">
+    <a href="#" class="brand"><i></i>Nebula</a>
+    <div class="nav__links">
+      <a href="#">Product</a>
+      <a href="#">Solutions</a>
+      <a href="#">Pricing</a>
+      <a href="#">Docs</a>
+    </div>
+    <div class="nav__cta">
+      <a href="#" class="ghost">Sign in</a>
+      <a href="#" class="btn btn--ghost" style="padding:10px 18px">Start free</a>
+    </div>
+  </nav>
+
+  <div class="hero__body">
+    <span class="badge"><span class="dot"></span>Now in public beta <b>v2.0</b></span>
+
+    <h1>Ship your ideas <em>at the speed</em> of thought</h1>
+
+    <p class="lede">Nebula is the all-in-one workspace that turns scattered notes, tasks and docs into one calm, connected flow — so your team stops switching tabs and starts shipping.</p>
+
+    <div class="cta-row">
+      <a href="#" class="btn btn--primary">
+        Start building free
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="#" class="btn btn--ghost">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
+        Watch demo
+      </a>
+    </div>
+
+    <div class="proof">
+      <div class="avatars"><span>AK</span><span>JR</span><span>ML</span><span>+9</span></div>
+      <small>Loved by <b>12,000+</b> teams · <b>4.9</b>/5 average rating</small>
+    </div>
+  </div>
+
+  <div class="mock" aria-hidden="true">
+    <div class="mock__frame">
+      <div class="mock__bar"><i></i><i></i><i></i><span class="url">app.nebula.so/workspace</span></div>
+      <div class="mock__ui">
+        <div class="mock__side">
+          <div class="row on"><b></b>Overview</div>
+          <div class="row"><b></b>Projects</div>
+          <div class="row"><b></b>Tasks</div>
+          <div class="row"><b></b>Docs</div>
+          <div class="row"><b></b>Analytics</div>
+          <div class="row"><b></b>Team</div>
+        </div>
+        <div class="mock__main">
+          <div class="mock__head"><h3>Good morning, Adrian</h3><span class="pill">All systems normal</span></div>
+          <div class="mock__cards">
+            <div class="mc"><div class="k">Active projects</div><div class="v c1">24</div></div>
+            <div class="mc"><div class="k">Tasks shipped</div><div class="v c2">318</div></div>
+            <div class="mc"><div class="k">Cycle time</div><div class="v c3">1.8d</div></div>
+          </div>
+          <div class="mock__chart">
+            <i style="height:38%"></i><i style="height:56%"></i><i style="height:44%"></i><i style="height:72%"></i>
+            <i style="height:60%"></i><i style="height:88%"></i><i style="height:52%"></i><i style="height:96%"></i>
+            <i style="height:66%"></i><i style="height:80%"></i><i style="height:48%"></i><i style="height:70%"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

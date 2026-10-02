@@ -49,10 +49,28 @@
       "id": "bravo",
       "name": "Bravo",
       "category": "Marketing platform",
-      "accent": "#b45309",
+      "accent": "#6F4E37",
       "preview": "assets/img/bravo-1.png",
       "full": "assets/img/bravo-full.png",
       "url": "templates/bravo.html"
+    },
+    {
+      "id": "hero",
+      "name": "Hero",
+      "category": "Section · Hero",
+      "accent": "#7C5CFF",
+      "preview": "assets/img/hero-1.png",
+      "full": "assets/img/hero-full.png",
+      "url": "templates/hero.html"
+    },
+    {
+      "id": "pricing",
+      "name": "Pricing",
+      "category": "Section · Pricing",
+      "accent": "#4ADEDE",
+      "preview": "assets/img/pricing-1.png",
+      "full": "assets/img/pricing-full.png",
+      "url": "templates/pricing.html"
     }
   ]
 }
