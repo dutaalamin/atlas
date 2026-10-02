@@ -39,10 +39,14 @@
             '<div class="detail__title">' + escapeHtml(t.name) + '</div>' +
           '</div>' +
           '<div class="detail__actions">' +
-            '<a href="' + escapeHtml(t.url) + '" target="_blank" rel="noopener" class="btn btn--primary">Open full page ↗</a>' +
+            '<div class="viewtoggle" id="viewToggle">' +
+              '<button class="on" data-view="live">Live</button>' +
+              '<button data-view="shot">Full page</button>' +
+            '</div>' +
+            '<a href="' + escapeHtml(t.url) + '" target="_blank" rel="noopener" class="btn btn--primary">Open in new tab ↗</a>' +
           '</div>' +
         '</div>' +
-        '<div class="live">' +
+        '<div class="live" id="viewLive">' +
           '<div class="live__bar">' +
             '<i></i><i></i><i></i>' +
             '<span class="live__url">' + escapeHtml(t.url) + '</span>' +
@@ -50,7 +54,21 @@
           '</div>' +
           '<iframe class="live__frame" src="' + escapeHtml(t.url) + '" title="' + escapeHtml(t.name) + ' live preview" loading="lazy"></iframe>' +
         '</div>' +
+        '<img class="shot" id="viewShot" src="' + escapeHtml(t.full || t.preview) + '" alt="' + escapeHtml(t.name) + ' full page" hidden>' +
       '</div>';
+
+    var vt = document.getElementById('viewToggle');
+    var live = document.getElementById('viewLive');
+    var shot = document.getElementById('viewShot');
+    vt.addEventListener('click', function (e) {
+      var btn = e.target.closest('button');
+      if (!btn) return;
+      var v = btn.dataset.view;
+      vt.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b === btn); });
+      live.hidden = v !== 'live';
+      shot.hidden = v !== 'shot';
+      if (v === 'shot') window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
   var id = new URLSearchParams(location.search).get('id');

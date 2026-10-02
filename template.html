@@ -23,7 +23,17 @@
   .back:hover { color: var(--fg); border-color: var(--fg); }
   .detail__title { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
   .detail__cat { font-size: 13px; color: var(--fg-dim); }
-  .detail__actions { margin-left: auto; }
+  .detail__actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .viewtoggle {
+    display: inline-flex; padding: 3px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--bg-soft);
+  }
+  .viewtoggle button {
+    padding: 7px 15px; border-radius: 7px; font-size: 13.5px; font-weight: 600;
+    color: var(--fg-muted); transition: all var(--dur) var(--ease);
+  }
+  .viewtoggle button:hover { color: var(--fg); }
+  .viewtoggle button.on { background: var(--fg); color: #fff; }
 
   /* the long, unbroken preview */
   .shot {
