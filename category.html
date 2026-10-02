@@ -107,7 +107,7 @@
         empty.querySelector('p').textContent = 'That collection doesn\u2019t exist.';
         return;
       }
-      document.title = col.name + ' — Atlas';
+      document.title = col.name + ' | Atlas';
       document.getElementById('title').textContent = col.name;
       all = (data.templates || []).filter(function (t) { return t.collection === id; });
       document.getElementById('subtitle').textContent = all.length + ' template' + (all.length === 1 ? '' : 's') + (col.desc ? ' · ' + col.desc : '');
@@ -115,7 +115,7 @@
     })
     .catch(function () {
       grid.innerHTML = ''; empty.hidden = false;
-      empty.querySelector('p').textContent = 'Could not load templates.json — run this folder from a local server.';
+      empty.querySelector('p').textContent = 'Could not load templates.json | run this folder from a local server.';
     });
 })();
 </script>

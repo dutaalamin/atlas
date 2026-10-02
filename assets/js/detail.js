@@ -1,5 +1,5 @@
 /* ============================================================
-   DETAIL — read ?id= from the URL and render one template
+   DETAIL | read ?id= from the URL and render one template
    ============================================================ */
 
 (function () {
@@ -18,7 +18,7 @@
   }
 
   function notFound() {
-    document.title = 'Not found — Atlas';
+    document.title = 'Not found | Atlas';
     main.innerHTML =
       '<div class="container notfound">' +
         '<h2>Template not found</h2>' +
@@ -28,7 +28,7 @@
   }
 
   function render(t, colName, colId) {
-    document.title = t.name + ' — Atlas';
+    document.title = t.name + ' | Atlas';
     var backHref = colId ? ('category?id=' + encodeURIComponent(colId)) : '/';
     var backLabel = colName ? ('← ' + colName) : '← All templates';
     main.innerHTML =

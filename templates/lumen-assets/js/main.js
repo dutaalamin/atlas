@@ -1,5 +1,5 @@
 /* ============================================================
-   MAIN — theme toggle, scroll reveal, small niceties
+   MAIN | theme toggle, scroll reveal, small niceties
    ============================================================ */
 
 (function () {

@@ -1,5 +1,5 @@
 /* ============================================================
-   BASE — reset, elements, primitives
+   BASE | reset, elements, primitives
    ============================================================ */
 
 *, *::before, *::after { box-sizing: border-box; }

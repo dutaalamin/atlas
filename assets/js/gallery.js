@@ -1,5 +1,5 @@
 /* ============================================================
-   GALLERY — load templates.json, render clean stacked cards
+   GALLERY | load templates.json, render clean stacked cards
    ============================================================ */
 
 (function () {
@@ -95,6 +95,6 @@
     .catch(function () {
       grid.innerHTML = '';
       empty.hidden = false;
-      empty.querySelector('p').textContent = 'Could not load templates.json — run this folder from a local server.';
+      empty.querySelector('p').textContent = 'Could not load templates.json | run this folder from a local server.';
     });
 })();

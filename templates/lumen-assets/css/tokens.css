@@ -1,5 +1,5 @@
 /* ============================================================
-   TOKENS — the only file you need to touch to re-theme.
+   TOKENS | the only file you need to touch to re-theme.
    Change these values and every page follows.
    ============================================================ */
 
@@ -108,7 +108,7 @@
 }
 
 /* ============================================================
-   THEME · COOL (alternate palette — proof the system works)
+   THEME · COOL (alternate palette | proof the system works)
    Swap [data-theme="cool"] onto <html> and the whole site turns blue.
    ============================================================ */
 [data-theme="cool"] {
