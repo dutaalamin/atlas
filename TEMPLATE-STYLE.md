@@ -70,6 +70,21 @@ Use an inline **SVG icon** instead. Keep only functional text arrows: right arro
 
 Also strip emoji from data files (`templates.json` collection icons) and decorative `.ico` / `.ic` slots.
 
+### 6. No trailing period in headings
+Headlines and section titles (h1/h2/h3) must not end with a period. Drop the full stop.
+
+```html
+<!-- BAD -->
+<h1>Ship software on schedule.</h1>
+<h2>Simple, per-seat, no surprises.</h2>
+
+<!-- GOOD -->
+<h1>Ship software on schedule</h1>
+<h2>Simple, per-seat, no surprises</h2>
+```
+
+Periods inside a sentence are fine (e.g. "Open. Write. Done."); only the final full stop is removed.
+
 ## Do use
 
 - One accent colour, solid fills.
