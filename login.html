@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in | Atlas</title>
+<meta name="description" content="Sign in to Atlas to get the templates." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --bg-soft:#f6f6f7;
+    --line:rgba(17,17,20,.10);
+    --line-2:rgba(17,17,20,.16);
+    --fg:#111114;
+    --fg-muted:#55555e;
+    --fg-dim:#8b8b95;
+    --ease:cubic-bezier(.4,0,.2,1);
+    --font-sans:'Inter',system-ui,sans-serif;
+    --font-mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--fg);color:#fff}
+  a{color:inherit;text-decoration:none}
+  input{font:inherit}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  :focus-visible{outline:2px solid var(--fg);outline-offset:2px;border-radius:6px}
+
+  .auth{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);min-height:100vh}
+
+  /* ---------- LEFT: form ---------- */
+  .auth__form{
+    position:relative;display:flex;flex-direction:column;
+    padding:36px clamp(28px,6vw,84px);
+  }
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.03em;font-size:18px}
+  .brand__mark{width:22px;height:22px;border-radius:6px;background:linear-gradient(140deg,#111114,#4a4a55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+
+  .form-wrap{margin:auto 0;width:100%;max-width:430px;padding:40px 0}
+  .kicker{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:14px}
+  .form-wrap h1{font-size:clamp(28px,3.4vw,38px);font-weight:700;letter-spacing:-.03em;margin:0 0 32px}
+
+  .field{margin-bottom:20px}
+  .field label{display:block;font-size:13.5px;font-weight:500;color:var(--fg-muted);margin-bottom:8px}
+  .field input{
+    width:100%;padding:14px 16px;border:1px solid var(--line-2);border-radius:12px;
+    background:#fff;color:var(--fg);font-size:15px;transition:border-color .2s var(--ease),box-shadow .2s var(--ease);
+  }
+  .field input::placeholder{color:var(--fg-dim)}
+  .field input:focus{outline:none;border-color:var(--fg);box-shadow:0 0 0 3px rgba(17,17,20,.06)}
+
+  .submit{
+    width:100%;margin-top:8px;padding:15px 20px;border-radius:12px;
+    background:var(--fg);color:#fff;font-size:15px;font-weight:600;
+    transition:opacity .2s var(--ease),transform .15s var(--ease);
+  }
+  .submit:hover{opacity:.9}
+  .submit:active{transform:translateY(1px)}
+
+  .links{margin-top:22px;text-align:center;font-size:14px;color:var(--fg-muted);display:grid;gap:12px}
+  .links a{font-weight:600;color:var(--fg)}
+  .links a:hover{text-decoration:underline}
+  .foot{font-size:12.5px;color:var(--fg-dim);padding-top:20px}
+
+  /* ---------- RIGHT: collage ---------- */
+  .auth__art{
+    position:relative;overflow:hidden;background:var(--bg-soft);
+    border-left:1px solid var(--line);
+  }
+  .auth__art::before{
+    content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+    background:linear-gradient(90deg,var(--bg-soft),transparent 22%);
+  }
+  .auth__art::after{
+    content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+    background:linear-gradient(0deg,rgba(246,246,247,.6),transparent 18%,transparent 82%,rgba(246,246,247,.6));
+  }
+  .collage{
+    position:absolute;top:-16%;left:-8%;width:126%;height:150%;
+    display:flex;gap:20px;
+    transform:rotate(-13deg);
+  }
+  .col{flex:1;display:flex;flex-direction:column;gap:20px;will-change:transform}
+  .col img{
+    width:100%;display:block;border-radius:12px;
+    border:1px solid var(--line);background:#fff;
+    box-shadow:0 12px 30px -14px rgba(17,17,20,.28);
+  }
+  .col:nth-child(1){animation:up 54s linear infinite}
+  .col:nth-child(2){animation:down 66s linear infinite}
+  .col:nth-child(3){animation:up 60s linear infinite}
+  .col:nth-child(4){animation:down 72s linear infinite}
+  @keyframes up{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+  @keyframes down{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+  @media (prefers-reduced-motion:reduce){.col{animation:none}}
+
+  @media(max-width:920px){
+    .auth{grid-template-columns:1fr}
+    .auth__art{display:none}
+    .form-wrap{max-width:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="auth">
+  <!-- LEFT -->
+  <div class="auth__form">
+    <a href="/" class="brand"><span class="brand__mark"></span>Atlas</a>
+
+    <div class="form-wrap">
+      <div class="kicker">Welcome &#128075;</div>
+      <h1>Sign in to Atlas</h1>
+
+      <form onsubmit="return false">
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input id="email" type="email" placeholder="Email" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+        </div>
+        <button class="submit" type="submit">Sign in</button>
+      </form>
+
+      <div class="links">
+        <a href="#">Forgot password?</a>
+        <span>Don't have an account? <a href="#">Sign up</a></span>
+      </div>
+    </div>
+
+    <div class="foot">© 2026 Atlas Templates</div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="auth__art" aria-hidden="true">
+    <div class="collage">
+      <div class="col" id="c1"></div>
+      <div class="col" id="c2"></div>
+      <div class="col" id="c3"></div>
+      <div class="col" id="c4"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var shots = [
+    'assets/img/bravo-1.png','assets/img/hero-1.png','assets/img/hero-lumen-1.png',
+    'assets/img/nova-1.png','assets/img/hero-relay-1.png','assets/img/pricing-1.png',
+    'assets/img/hush-1.png','assets/img/hero-nova-1.png','assets/img/relay-1.png',
+    'assets/img/hero-bravo-1.png','assets/img/lumen-1.png','assets/img/pricing-relay-1.png',
+    'assets/img/rubic-1.png','assets/img/hero-hush-1.png'
+  ];
+  // distribute round-robin into 4 columns, duplicated for a seamless loop
+  var cols = [document.getElementById('c1'),document.getElementById('c2'),document.getElementById('c3'),document.getElementById('c4')];
+  var buckets = cols.map(function(){ return []; });
+  shots.forEach(function(src,i){ buckets[i % 4].push(src); });
+  cols.forEach(function(col,ci){
+    var list = buckets[ci].concat(buckets[ci]); // duplicate for loop
+    col.innerHTML = list.map(function(src){
+      return '<img src="'+src+'" alt="" loading="lazy">';
+    }).join('');
+  });
+})();
+</script>
+</body>
+</html>
