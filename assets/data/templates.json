@@ -1,10 +1,35 @@
 {
   "collections": [
-    { "id": "landing", "name": "Landing Page", "icon": "🌐", "desc": "Full marketing pages, hero to footer" },
-    { "id": "hero", "name": "Hero", "icon": "✨", "desc": "Above-the-fold openers" },
-    { "id": "pricing", "name": "Pricing Page", "icon": "🏷️", "desc": "Plans, tiers and comparison" },
-    { "id": "dashboard", "name": "Dashboard", "icon": "📊", "desc": "App and admin screens" },
-    { "id": "about", "name": "About Page", "icon": "👥", "desc": "Team, story and mission" }
+    {
+      "id": "landing",
+      "name": "Landing Page",
+      "icon": "🌐",
+      "desc": "Full marketing pages, hero to footer"
+    },
+    {
+      "id": "hero",
+      "name": "Hero",
+      "icon": "✨",
+      "desc": "Above-the-fold openers"
+    },
+    {
+      "id": "pricing",
+      "name": "Pricing Page",
+      "icon": "🏷️",
+      "desc": "Plans, tiers and comparison"
+    },
+    {
+      "id": "dashboard",
+      "name": "Dashboard",
+      "icon": "📊",
+      "desc": "App and admin screens"
+    },
+    {
+      "id": "about",
+      "name": "About Page",
+      "icon": "👥",
+      "desc": "Team, story and mission"
+    }
   ],
   "templates": [
     {
@@ -69,23 +94,53 @@
     },
     {
       "id": "hero",
-      "name": "Hero",
+      "name": "Clean Hero",
       "category": "Section · Hero",
       "collection": "hero",
-      "accent": "#7C5CFF",
+      "accent": "#2563EB",
       "preview": "assets/img/hero-1.png",
       "full": "assets/img/hero-full.png",
       "url": "templates/hero.html"
     },
     {
+      "id": "hero-relay",
+      "name": "Editorial Hero",
+      "category": "Section · Hero",
+      "collection": "hero",
+      "accent": "#1f4bff",
+      "preview": "assets/img/hero-relay-1.png",
+      "full": "assets/img/hero-relay-full.png",
+      "url": "templates/hero-relay.html"
+    },
+    {
+      "id": "hero-nova",
+      "name": "Terminal Hero",
+      "category": "Section · Hero",
+      "collection": "hero",
+      "accent": "#3b82f6",
+      "preview": "assets/img/hero-nova-1.png",
+      "full": "assets/img/hero-nova-full.png",
+      "url": "templates/hero-nova.html"
+    },
+    {
       "id": "pricing",
-      "name": "Pricing",
+      "name": "Toggle Pricing",
       "category": "Section · Pricing",
       "collection": "pricing",
-      "accent": "#4ADEDE",
+      "accent": "#2563EB",
       "preview": "assets/img/pricing-1.png",
       "full": "assets/img/pricing-full.png",
       "url": "templates/pricing.html"
+    },
+    {
+      "id": "pricing-relay",
+      "name": "Per-Seat Pricing",
+      "category": "Section · Pricing",
+      "collection": "pricing",
+      "accent": "#1f4bff",
+      "preview": "assets/img/pricing-relay-1.png",
+      "full": "assets/img/pricing-relay-full.png",
+      "url": "templates/pricing-relay.html"
     }
   ]
 }
