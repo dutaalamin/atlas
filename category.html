@@ -29,7 +29,6 @@
     </label>
     <div class="nav__actions">
       <a href="#" class="muted">Log in</a>
-      <a href="#" class="btn btn--primary">Get templates</a>
     </div>
   </div>
 </header>
@@ -115,7 +114,7 @@
     })
     .catch(function () {
       grid.innerHTML = ''; empty.hidden = false;
-      empty.querySelector('p').textContent = 'Could not load templates.json | run this folder from a local server.';
+      empty.querySelector('p').textContent = 'Could not load templates.json. Run this folder from a local server.';
     });
 })();
 </script>
