@@ -169,9 +169,9 @@
     },
     {
       "id": "galaxa",
-      "name": "Cosmic Hero",
-      "category": "Section · Hero",
-      "collection": "hero",
+      "name": "Galaxa",
+      "category": "SaaS Landing",
+      "collection": "landing",
       "accent": "#FF7A1A",
       "preview": "assets/img/galaxa-1.png",
       "full": "assets/img/galaxa-full.png",

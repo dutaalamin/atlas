@@ -3,182 +3,475 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Galaxa | Section template</title>
-<meta name="description" content="A dark cosmic hero section: dot-matrix nebula backdrop, oversized headline and an email capture." />
+<title>Galaxa | Your window to the universe</title>
+<meta name="description" content="Galaxa is an always-on window to the night sky: live star maps, real-time tracking and plain-language cosmic insights." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#050506;
+    --panel:#0c0c10;
+    --panel-2:#111117;
     --ink:#FFFFFF;
     --body:#B9B9C0;
     --muted:#7C7C85;
-    --line:rgba(255,255,255,.14);
-    --line-soft:rgba(255,255,255,.08);
-    --glass:rgba(20,20,24,.72);
+    --faint:#4E4E57;
+    --line:rgba(255,255,255,.10);
+    --line-strong:rgba(255,255,255,.18);
     --accent:#FF7A1A;
-    --accent-soft:rgba(255,122,26,.16);
+    --accent-ink:#FF9E3D;
+    --accent-soft:rgba(255,122,26,.14);
+    --glass:rgba(18,18,22,.72);
+    --radius:16px;
     --ease:cubic-bezier(.22,1,.36,1);
+    --max:1120px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-text-size-adjust:100%}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
   body{
     font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);
-    -webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;line-height:1.5;
   }
   ::selection{background:var(--accent);color:#0a0a0a}
   a{text-decoration:none;color:inherit}
-  img{display:block;max-width:100%}
+  img,svg{display:block;max-width:100%}
   button,input{font:inherit}
-
-  /* ---------- COSMOS BACKDROP ---------- */
-  .cosmos{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-  .cosmos__glow{
-    position:absolute;right:-18%;bottom:-30%;width:90%;height:130%;
-    background:radial-gradient(closest-side,
-      #FFFDF6 0%, #FFE1A6 7%, #FF9E3D 18%,
-      rgba(255,122,26,.55) 34%, rgba(255,122,26,.16) 56%, transparent 76%);
-    filter:blur(8px);
-  }
-  .cosmos__dots{
-    position:absolute;inset:0;
-    background-image:radial-gradient(circle, rgba(255,255,255,.95) 1.1px, transparent 1.5px);
-    background-size:13px 13px;
-    -webkit-mask-image:radial-gradient(closest-side at 74% 64%, #000 0%, #000 26%, transparent 74%);
-    mask-image:radial-gradient(closest-side at 74% 64%, #000 0%, #000 26%, transparent 74%);
-    mix-blend-mode:screen;
-  }
-  .cosmos__grain{
-    position:absolute;inset:0;
-    background:radial-gradient(120% 100% at 0% 100%, rgba(5,5,6,.96) 0%, rgba(5,5,6,.4) 42%, transparent 70%);
-  }
-
-  /* ---------- SHELL ---------- */
-  .wrap{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;
-        padding:20px clamp(20px,4vw,56px)}
+  .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 clamp(20px,4vw,40px)}
 
   /* ---------- NAV ---------- */
-  .nav{display:flex;align-items:center;justify-content:space-between}
-  .brand{
-    display:inline-flex;align-items:center;gap:10px;
-    padding:10px 12px 10px 16px;border-radius:999px;
-    background:var(--glass);border:1px solid var(--line);
-    backdrop-filter:blur(10px);font-weight:600;font-size:15px;letter-spacing:-.01em;
-  }
-  .brand .mark{width:16px;height:16px;color:var(--accent)}
-  .brand .menu{
-    width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);
-    display:grid;place-items:center;color:#fff;margin-left:6px;
-  }
-  .brand .menu svg{width:14px;height:14px}
-  .nav__cta{
-    display:inline-flex;align-items:center;gap:8px;
-    padding:12px 22px;border-radius:999px;background:#fff;color:#0a0a0a;
-    font-weight:600;font-size:14.5px;border:1px solid #fff;
-    transition:transform .18s var(--ease),background .18s;
-  }
-  .nav__cta:hover{transform:translateY(-1px);background:#F2F2F2}
+  .nav{position:sticky;top:0;z-index:50;background:rgba(5,5,6,.72);
+       backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav__inner{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:16px;letter-spacing:-.02em}
+  .brand .mark{width:17px;height:17px;color:var(--accent)}
+  .nav__links{display:flex;gap:30px}
+  .nav__links a{font-size:14px;font-weight:500;color:var(--body);transition:color .18s}
+  .nav__links a:hover{color:var(--ink)}
+  .nav__cta{display:flex;align-items:center;gap:18px}
+  .nav__cta .login{font-size:14px;font-weight:500;color:var(--body)}
+  .nav__cta .login:hover{color:var(--ink)}
+
+  /* ---------- BUTTONS ---------- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+       padding:12px 22px;border-radius:999px;font-size:14.5px;font-weight:600;
+       border:1px solid transparent;cursor:pointer;
+       transition:transform .18s var(--ease),background .18s,border-color .18s,color .18s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn--light{background:#fff;color:#0a0a0a}
+  .btn--light:hover{background:#EDEDED}
+  .btn--accent{background:var(--accent);color:#160800}
+  .btn--accent:hover{background:var(--accent-ink)}
+  .btn--ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+  .btn--ghost:hover{border-color:#fff}
+  .btn svg{width:15px;height:15px}
 
   /* ---------- HERO ---------- */
-  .hero{margin-top:auto;padding-bottom:clamp(24px,4vw,48px);position:relative}
-  h1{
-    font-weight:600;letter-spacing:-.03em;line-height:1.02;
-    font-size:clamp(40px,7.2vw,92px);max-width:14ch;color:#fff;
-  }
-  .lede{
-    color:var(--body);font-size:clamp(15px,1.5vw,17.5px);line-height:1.65;
-    max-width:46ch;margin-top:26px;
-  }
-
-  /* ---------- EMAIL CAPTURE ---------- */
-  .capture{
-    display:flex;align-items:center;gap:8px;margin-top:34px;
-    width:min(430px,100%);padding:7px;border-radius:999px;
-    background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);
-  }
-  .capture input{
-    flex:1;background:transparent;border:none;outline:none;color:#fff;
-    padding:11px 18px;font-size:14.5px;
-  }
+  .hero{position:relative;overflow:hidden;padding:clamp(64px,9vw,116px) 0 clamp(72px,9vw,120px)}
+  .cosmos{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .cosmos__glow{position:absolute;right:-16%;top:-30%;width:78%;height:130%;
+    background:radial-gradient(closest-side,#FFFDF6 0%,#FFE1A6 6%,#FF9E3D 16%,
+      rgba(255,122,26,.5) 32%,rgba(255,122,26,.14) 54%,transparent 74%);
+    filter:blur(8px)}
+  .cosmos__dots{position:absolute;inset:0;
+    background-image:radial-gradient(circle,rgba(255,255,255,.9) 1.1px,transparent 1.5px);
+    background-size:14px 14px;
+    -webkit-mask-image:radial-gradient(closest-side at 76% 30%,#000 0%,#000 22%,transparent 70%);
+    mask-image:radial-gradient(closest-side at 76% 30%,#000 0%,#000 22%,transparent 70%);
+    mix-blend-mode:screen}
+  .cosmos__grain{position:absolute;inset:0;
+    background:radial-gradient(120% 90% at 0% 100%,rgba(5,5,6,.95) 0%,rgba(5,5,6,.35) 45%,transparent 72%)}
+  .hero__inner{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  h1{font-weight:600;letter-spacing:-.03em;line-height:1.02;font-size:clamp(40px,5.6vw,72px)}
+  .lede{color:var(--body);font-size:clamp(15px,1.4vw,17.5px);line-height:1.65;max-width:46ch;margin-top:24px}
+  .capture{display:flex;align-items:center;gap:8px;margin-top:32px;width:min(430px,100%);
+    padding:7px;border-radius:999px;background:var(--glass);border:1px solid var(--line);
+    backdrop-filter:blur(10px)}
+  .capture input{flex:1;background:transparent;border:none;outline:none;color:#fff;padding:11px 18px;font-size:14.5px}
   .capture input::placeholder{color:var(--muted)}
-  .capture button{
-    border:none;cursor:pointer;background:#fff;color:#0a0a0a;font-weight:600;
+  .capture button{border:none;cursor:pointer;background:#fff;color:#0a0a0a;font-weight:600;
     font-size:14.5px;padding:12px 22px;border-radius:999px;white-space:nowrap;
-    transition:transform .18s var(--ease),background .18s;
-  }
-  .capture button:hover{transform:translateY(-1px);background:#F2F2F2}
+    transition:transform .18s var(--ease),background .18s}
+  .capture button:hover{transform:translateY(-1px);background:#EDEDED}
+  .hero__note{margin-top:14px;font-size:12.5px;color:var(--faint)}
+  .hero__pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+  .hero__pills span{padding:10px 18px;border-radius:999px;font-size:13.5px;font-weight:500;
+    color:#EDEDEF;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px)}
+  /* orbit visual */
+  .orbit{position:relative;aspect-ratio:1;width:100%;max-width:440px;margin-left:auto}
+  .orbit__ring{position:absolute;inset:0;border:1px solid var(--line);border-radius:50%}
+  .orbit__ring:nth-child(1){inset:0}
+  .orbit__ring:nth-child(2){inset:14%;border-color:var(--line-strong)}
+  .orbit__ring:nth-child(3){inset:30%}
+  .orbit__core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:38%;aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle at 34% 30%,#FFD9A0,#FF9E3D 42%,#B4470A 100%);
+    box-shadow:0 0 80px rgba(255,122,26,.45)}
+  .orbit__dot{position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;
+    box-shadow:0 0 14px rgba(255,255,255,.9)}
+  .orbit__dot.d1{left:50%;top:0;transform:translate(-50%,-50%)}
+  .orbit__dot.d2{left:14%;top:50%;transform:translate(-50%,-50%);width:9px;height:9px;opacity:.8}
+  .orbit__dot.d3{left:70%;top:70%;width:7px;height:7px;opacity:.6}
 
-  /* ---------- FEATURE PILLS ---------- */
-  .features{
-    position:absolute;right:clamp(20px,4vw,56px);bottom:clamp(28px,5vw,64px);
-    display:flex;flex-direction:column;gap:10px;align-items:flex-end;
-  }
-  .features span{
-    padding:11px 20px;border-radius:999px;font-size:14px;font-weight:500;
-    color:#EDEDEF;background:var(--glass);border:1px solid var(--line);
-    backdrop-filter:blur(10px);transition:border-color .18s,color .18s;
-  }
-  .features span:hover{border-color:rgba(255,255,255,.32);color:#fff}
+  /* ---------- SECTION ---------- */
+  section{padding:clamp(64px,8vw,104px) 0}
+  .sec-head{max-width:640px;margin-bottom:52px}
+  .kicker{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:16px}
+  h2{font-weight:600;letter-spacing:-.028em;line-height:1.08;font-size:clamp(28px,3.6vw,44px)}
+  .sec-head p{color:var(--body);font-size:16px;line-height:1.65;margin-top:16px}
 
-  @media(max-width:900px){
-    .features{position:static;flex-direction:row;flex-wrap:wrap;align-items:flex-start;
-              margin-top:40px;justify-content:flex-start}
+  /* ---------- LOGOS ---------- */
+  .logos{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:32px 0}
+  .logos__row{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
+  .logos__row span{font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--faint)}
+
+  /* ---------- FEATURES ---------- */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px;transition:border-color .2s,transform .2s var(--ease)}
+  .card:hover{border-color:var(--line-strong);transform:translateY(-3px)}
+  .card__ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+    background:var(--accent-soft);color:var(--accent);margin-bottom:20px}
+  .card__ic svg{width:20px;height:20px}
+  .card h3{font-size:17px;font-weight:600;letter-spacing:-.01em;margin-bottom:9px}
+  .card p{color:var(--body);font-size:14.5px;line-height:1.6}
+
+  /* ---------- HOW ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:s}
+  .step{padding-top:24px;border-top:1px solid var(--line)}
+  .step__n{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:14px}
+  .step h3{font-size:16.5px;font-weight:600;margin-bottom:9px}
+  .step p{color:var(--body);font-size:14.5px;line-height:1.6}
+
+  /* ---------- PRICING ---------- */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+  .plan{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:30px}
+  .plan--hi{border-color:var(--accent);background:var(--panel-2);position:relative}
+  .plan__tag{position:absolute;top:-11px;left:30px;background:var(--accent);color:#160800;
+    font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:4px 11px;border-radius:999px}
+  .plan h3{font-size:15px;font-weight:600;color:var(--body)}
+  .plan__price{font-size:42px;font-weight:700;letter-spacing:-.03em;margin:12px 0 4px}
+  .plan__price small{font-size:15px;font-weight:500;color:var(--muted)}
+  .plan__desc{color:var(--muted);font-size:13.5px;margin-bottom:22px}
+  .plan ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:26px}
+  .plan li{display:flex;gap:10px;font-size:14px;color:var(--body)}
+  .plan li svg{width:16px;height:16px;color:var(--accent);flex:none;margin-top:2px}
+  .plan .btn{width:100%}
+
+  /* ---------- QUOTES ---------- */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .quote{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+  .quote p{font-size:15px;line-height:1.6;color:#E4E4E8}
+  .quote footer{display:flex;align-items:center;gap:11px;margin-top:20px;
+    font-size:13.5px;color:var(--muted)}
+  .quote .avatar{width:32px;height:32px;border-radius:50%;
+    background:linear-gradient(140deg,#2a2a32,#14141a);border:1px solid var(--line-strong)}
+
+  /* ---------- CTA ---------- */
+  .cta{position:relative;overflow:hidden;border-radius:24px;border:1px solid var(--line);
+    background:var(--panel-2);padding:clamp(40px,6vw,72px);text-align:center}
+  .cta__glow{position:absolute;left:50%;bottom:-70%;transform:translateX(-50%);
+    width:70%;height:120%;pointer-events:none;
+    background:radial-gradient(closest-side,rgba(255,158,61,.5),rgba(255,122,26,.14) 45%,transparent 72%);
+    filter:blur(10px)}
+  .cta h2{position:relative;max-width:20ch;margin:0 auto}
+  .cta p{position:relative;color:var(--body);margin-top:16px}
+  .cta .capture{position:relative;margin:28px auto 0}
+
+  /* ---------- FOOTER ---------- */
+  .footer{border-top:1px solid var(--line);padding:56px 0 40px;margin-top:24px}
+  .footer__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+  .footer h4{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:16px}
+  .footer a{display:block;font-size:14px;color:var(--body);padding:5px 0}
+  .footer a:hover{color:var(--ink)}
+  .footer__brand p{color:var(--muted);font-size:14px;max-width:34ch;margin-top:14px}
+  .footer__base{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    margin-top:44px;padding-top:24px;border-top:1px solid var(--line);
+    font-size:13px;color:var(--faint);flex-wrap:wrap}
+
+  @media(max-width:940px){
+    .hero__inner{grid-template-columns:1fr;gap:44px}
+    .orbit{margin:0 auto}
+    .grid-3,.steps,.plans,.quotes{grid-template-columns:1fr}
+    .footer__grid{grid-template-columns:1fr 1fr}
+    .nav__links{display:none}
   }
   @media(max-width:560px){
-    h1{max-width:100%}
-    .capture{flex-direction:column;border-radius:20px;padding:10px}
+    .capture{flex-direction:column;border-radius:22px;padding:10px}
     .capture input,.capture button{width:100%;border-radius:999px}
-    .nav__cta span.long{display:none}
+    .footer__grid{grid-template-columns:1fr}
+    .nav__cta .login{display:none}
   }
 </style>
 </head>
 <body>
 
-<div class="cosmos" aria-hidden="true">
-  <div class="cosmos__glow"></div>
-  <div class="cosmos__dots"></div>
-  <div class="cosmos__grain"></div>
-</div>
-
-<div class="wrap">
-
-  <nav class="nav">
+<!-- NAV -->
+<header class="nav">
+  <div class="container nav__inner">
     <a href="#" class="brand">
       <svg class="mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M12 1.6l2.7 7.7L22.4 12l-7.7 2.7L12 22.4l-2.7-7.7L1.6 12l7.7-2.7z"/>
       </svg>
       Galaxa
-      <span class="menu" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-          <path d="M4 8h16M4 16h16"/>
-        </svg>
-      </span>
     </a>
-    <a href="#" class="nav__cta">Join the list<span class="long"></span></a>
-  </nav>
-
-  <section class="hero">
-    <h1>Your cosmos is always in motion</h1>
-    <p class="lede">
-      Galaxa is your always-on window to the universe. Built by leading
-      astronomers, it brings you the wonder and clarity of deep space right
-      when you need it.
-    </p>
-
-    <form class="capture" onsubmit="return false">
-      <input type="email" placeholder="Your email address" aria-label="Your email address" />
-      <button type="submit">Join the list</button>
-    </form>
-
-    <div class="features">
-      <span>Live Star Maps</span>
-      <span>Real-time Tracking</span>
-      <span>Cosmic Insights</span>
+    <nav class="nav__links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#stories">Stories</a>
+    </nav>
+    <div class="nav__cta">
+      <a href="#" class="login">Log in</a>
+      <a href="#pricing" class="btn btn--light">Join the list</a>
     </div>
-  </section>
+  </div>
+</header>
 
+<!-- HERO -->
+<section class="hero">
+  <div class="cosmos" aria-hidden="true">
+    <div class="cosmos__glow"></div>
+    <div class="cosmos__dots"></div>
+    <div class="cosmos__grain"></div>
+  </div>
+  <div class="container hero__inner">
+    <div>
+      <h1>Your cosmos is always in motion</h1>
+      <p class="lede">
+        Galaxa is your always-on window to the universe. Built by leading
+        astronomers, it brings you the wonder and clarity of deep space right
+        when you need it.
+      </p>
+      <form class="capture" onsubmit="return false">
+        <input type="email" placeholder="Your email address" aria-label="Your email address" />
+        <button type="submit">Join the list</button>
+      </form>
+      <p class="hero__note">Free to start. No credit card required.</p>
+      <div class="hero__pills">
+        <span>Live Star Maps</span>
+        <span>Real-time Tracking</span>
+        <span>Cosmic Insights</span>
+      </div>
+    </div>
+    <div class="orbit" aria-hidden="true">
+      <span class="orbit__ring"></span>
+      <span class="orbit__ring"></span>
+      <span class="orbit__ring"></span>
+      <span class="orbit__core"></span>
+      <span class="orbit__dot d1"></span>
+      <span class="orbit__dot d2"></span>
+      <span class="orbit__dot d3"></span>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos">
+  <div class="container logos__row">
+    <span>Nordic Observatory</span>
+    <span>Astro Society</span>
+    <span>Skyline Labs</span>
+    <span>Deep Field</span>
+    <span>Meridian</span>
+  </div>
 </div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="sec-head">
+      <p class="kicker">Features</p>
+      <h2>Everything you need to look up</h2>
+      <p>From a first glance at tonight's sky to tracking a passing satellite, Galaxa keeps the universe within reach.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <div class="card__ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>
+          </svg>
+        </div>
+        <h3>Live Star Maps</h3>
+        <p>See exactly what is overhead right now, from anywhere on Earth, with a map that moves as the sky does.</p>
+      </article>
+      <article class="card">
+        <div class="card__ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>
+          </svg>
+        </div>
+        <h3>Real-time Tracking</h3>
+        <p>Follow planets, satellites and deep-sky objects as they travel, and know when each one is best placed to view.</p>
+      </article>
+      <article class="card">
+        <div class="card__ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M4 16l4-5 3 3 4-6 5 8"/><path d="M4 20h16"/>
+          </svg>
+        </div>
+        <h3>Cosmic Insights</h3>
+        <p>Plain-language briefings explain what is worth your attention tonight, so you spend less time searching and more time watching.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how" style="padding-top:0">
+  <div class="container">
+    <div class="sec-head">
+      <p class="kicker">How it works</p>
+      <h2>Three steps to a clear night</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step__n">Step 01</div>
+        <h3>Set your sky</h3>
+        <p>Pick a location, or let Galaxa use where you are. Your sky map adjusts to your horizon in seconds.</p>
+      </div>
+      <div class="step">
+        <div class="step__n">Step 02</div>
+        <h3>Explore tonight</h3>
+        <p>See the best targets ranked by visibility, with the time and direction for each one.</p>
+      </div>
+      <div class="step">
+        <div class="step__n">Step 03</div>
+        <h3>Get a nudge</h3>
+        <p>We tell you when something rare is about to happen, before it passes you by.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="padding-top:0">
+  <div class="container">
+    <div class="sec-head">
+      <p class="kicker">Pricing</p>
+      <h2>Simple plans, no surprises</h2>
+      <p>Start free and upgrade when the sky pulls you in further.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Stargazer</h3>
+        <div class="plan__price">Free</div>
+        <p class="plan__desc">For the curious</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>Live star map</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>Tonight's best targets</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>Daily sky brief</li>
+        </ul>
+        <a href="#" class="btn btn--ghost">Start free</a>
+      </div>
+      <div class="plan plan--hi">
+        <span class="plan__tag">Most popular</span>
+        <h3>Explorer</h3>
+        <div class="plan__price">$8<small> / month</small></div>
+        <p class="plan__desc">For regular watchers</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>Everything in Stargazer</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>Satellite and planet tracking</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>Rare-event alerts</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>Offline sky packs</li>
+        </ul>
+        <a href="#" class="btn btn--accent">Choose Explorer</a>
+      </div>
+      <div class="plan">
+        <h3>Observatory</h3>
+        <div class="plan__price">$24<small> / month</small></div>
+        <p class="plan__desc">For teams and clubs</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>Everything in Explorer</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>Shared sessions and notes</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>Telescope control hooks</li>
+        </ul>
+        <a href="#" class="btn btn--ghost">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section id="stories" style="padding-top:0">
+  <div class="container">
+    <div class="sec-head">
+      <p class="kicker">Stories</p>
+      <h2>Loved by people who look up</h2>
+    </div>
+    <div class="quotes">
+      <figure class="quote">
+        <p>"I finally know what I am looking at. The nightly brief turned a casual glance into a habit."</p>
+        <footer><span class="avatar"></span>Maya R., teacher</footer>
+      </figure>
+      <figure class="quote">
+        <p>"The satellite tracking is spot on. We planned a whole club night around one pass and it landed to the second."</p>
+        <footer><span class="avatar"></span>Deni P., astronomy club</footer>
+      </figure>
+      <figure class="quote">
+        <p>"Clean, calm and genuinely useful. It respects your attention instead of shouting for it."</p>
+        <footer><span class="avatar"></span>Rina A., designer</footer>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-top:0">
+  <div class="container">
+    <div class="cta">
+      <div class="cta__glow" aria-hidden="true"></div>
+      <h2>Start looking up tonight</h2>
+      <p>Join thousands of people who let the universe into their evening.</p>
+      <form class="capture" onsubmit="return false">
+        <input type="email" placeholder="Your email address" aria-label="Your email address" />
+        <button type="submit">Join the list</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="#" class="brand">
+          <svg class="mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 1.6l2.7 7.7L22.4 12l-7.7 2.7L12 22.4l-2.7-7.7L1.6 12l7.7-2.7z"/>
+          </svg>
+          Galaxa
+        </a>
+        <p>An always-on window to the night sky, for everyone who has ever looked up and wondered.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Stories</a>
+        <a href="#">Careers</a>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <a href="#">Sky guide</a>
+        <a href="#">Support</a>
+        <a href="#">Status</a>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© 2026 Galaxa. Hand-built, one at a time.</span>
+      <span>Privacy | Terms</span>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
