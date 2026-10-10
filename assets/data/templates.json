@@ -186,6 +186,16 @@
       "preview": "assets/img/aria-1.png",
       "full": "assets/img/aria-full.png",
       "url": "templates/aria.html"
+    },
+    {
+      "id": "regalia",
+      "name": "Imperial Hero",
+      "category": "Section · Hero",
+      "collection": "hero",
+      "accent": "#A9863F",
+      "preview": "assets/img/regalia-1.png",
+      "full": "assets/img/regalia-full.png",
+      "url": "templates/regalia.html"
     }
   ]
 }
