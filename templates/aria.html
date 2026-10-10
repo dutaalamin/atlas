@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aria | Section template</title>
+<meta name="description" content="A bold single-screen hero: full red field, plain-spoken headline, pill actions and an illustrated studio character." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#E11D2E;
+    --ink:#FFFFFF;
+    --ink-soft:rgba(255,255,255,.62);
+    --ink-faint:rgba(255,255,255,.42);
+    --line:rgba(255,255,255,.28);
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Inter',system-ui,sans-serif;background:var(--red);color:var(--ink);
+    -webkit-font-smoothing:antialiased;min-height:100vh;
+  }
+  ::selection{background:#fff;color:var(--red)}
+  a{text-decoration:none;color:inherit}
+  img,svg{display:block;max-width:100%}
+
+  /* ---------- STAGE ---------- */
+  .stage{
+    position:relative;min-height:100vh;overflow:hidden;
+    display:flex;flex-direction:column;
+    padding:24px clamp(20px,4vw,52px) clamp(28px,4vw,48px);
+  }
+  .stage::after{
+    content:"";position:absolute;right:-12%;top:-20%;width:70%;height:140%;
+    background:radial-gradient(closest-side,rgba(255,255,255,.16),transparent 72%);
+    pointer-events:none;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .brand{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:17px;letter-spacing:-.02em}
+  .brand .star{width:15px;height:15px;color:#fff}
+  .nav__links{display:flex;gap:8px;font-size:15px;font-weight:500}
+  .nav__links a{transition:opacity .18s}
+  .nav__links a:hover{opacity:.7}
+  .nav__cta{font-size:15px;font-weight:500;text-decoration:underline;text-underline-offset:4px}
+  .nav__cta:hover{opacity:.75}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;z-index:2;flex:1;
+    display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;
+    margin-top:clamp(24px,4vw,48px);
+  }
+  .copy{max-width:640px}
+  .kicker{color:var(--ink-faint);font-size:clamp(15px,1.6vw,19px);line-height:1.5;max-width:34ch}
+  h1{
+    font-weight:500;letter-spacing:-.02em;line-height:1.18;
+    font-size:clamp(26px,3.4vw,42px);margin-top:clamp(20px,3vw,34px);max-width:24ch;
+  }
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(26px,3.4vw,40px)}
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:500;
+    background:#fff;color:#111;border:1px solid #fff;cursor:pointer;
+    transition:transform .18s var(--ease),background .18s;
+  }
+  .pill:hover{transform:translateY(-1px);background:#F1F1F1}
+  .pill--line{background:transparent;color:#fff;border-color:var(--line)}
+  .pill--line:hover{background:rgba(255,255,255,.1);border-color:#fff}
+  .pill .ic{width:15px;height:15px;color:#fff}
+
+  /* ---------- CHARACTER ---------- */
+  .character{position:relative;align-self:end;justify-self:center;width:min(440px,100%)}
+  .character svg{width:100%;height:auto;filter:drop-shadow(0 30px 60px rgba(90,0,10,.35))}
+
+  @media(max-width:920px){
+    .hero{grid-template-columns:1fr;align-items:start}
+    .character{order:-1;width:min(300px,70%)}
+    .nav__links{display:none}
+  }
+  @media(max-width:560px){
+    .actions{flex-direction:column;align-items:stretch}
+    .pill{justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<section class="stage">
+
+  <nav class="nav">
+    <a href="#" class="brand">
+      Aria
+      <svg class="star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 1.4l1.9 8.7 8.7 1.9-8.7 1.9L12 22.6l-1.9-8.7L1.4 12l8.7-1.9z"/>
+      </svg>
+    </a>
+    <div class="nav__links">
+      <a href="#">Labs</a>,&nbsp;<a href="#">Studio</a>,&nbsp;<a href="#">Openings</a>,&nbsp;<a href="#">Shop</a>
+    </div>
+    <a href="#" class="nav__cta">Get in touch</a>
+  </nav>
+
+  <div class="hero">
+    <div class="copy">
+      <p class="kicker">Hey there, meet A.R.I.A, Aria's Adaptive Response Interface Agent</p>
+
+      <h1>Glad you stopped in. Good taste tends to find us. Now, what are we building?</h1>
+
+      <div class="actions">
+        <button class="pill" type="button">Pitch us an idea</button>
+        <button class="pill" type="button">Come work here</button>
+        <button class="pill" type="button">Send a brief hello</button>
+      </div>
+
+      <div class="actions" style="margin-top:10px">
+        <button class="pill pill--line" type="button">See how we operate</button>
+        <a class="pill pill--line" href="mailto:hello@aria.co">
+          Reach us: hello@aria.co
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="character" aria-hidden="true">
+      <svg viewBox="0 0 420 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M92 540c0-96 54-158 118-158s118 62 118 158z" fill="#7E8B4E"/>
+        <path d="M92 540c0-96 54-158 118-158s118 62 118 158z" fill="url(#shade)"/>
+        <path d="M172 392l38 34 38-34 24 18-62 56-62-56z" fill="#8C9A57"/>
+        <path d="M186 330c0 30 10 52 24 62 14-10 24-32 24-62z" fill="#E8B592"/>
+        <ellipse cx="146" cy="252" rx="17" ry="23" fill="#EFC0A0"/>
+        <ellipse cx="274" cy="252" rx="17" ry="23" fill="#EFC0A0"/>
+        <ellipse cx="146" cy="252" rx="7" ry="11" fill="#E3AC89"/>
+        <ellipse cx="274" cy="252" rx="7" ry="11" fill="#E3AC89"/>
+        <path d="M146 244c0-58 30-96 64-96s64 38 64 96c0 56-29 92-64 92s-64-36-64-92z" fill="#F3C8A6"/>
+        <ellipse cx="170" cy="278" rx="16" ry="11" fill="#F0A98C" opacity=".65"/>
+        <ellipse cx="250" cy="278" rx="16" ry="11" fill="#F0A98C" opacity=".65"/>
+        <g fill="#7A4A2B">
+          <circle cx="160" cy="176" r="30"/>
+          <circle cx="200" cy="156" r="34"/>
+          <circle cx="242" cy="172" r="32"/>
+          <circle cx="268" cy="196" r="26"/>
+          <circle cx="146" cy="206" r="26"/>
+          <path d="M140 210c-8-64 40-104 82-104 46 0 78 40 74 106-10-40-34-58-58-52-10-20-38-30-60-18-18 9-26 30-24 48-8 4-12 12-14 20z"/>
+        </g>
+        <g fill="#8A5633" opacity=".8">
+          <circle cx="196" cy="150" r="16"/>
+          <circle cx="234" cy="162" r="14"/>
+          <circle cx="166" cy="172" r="13"/>
+        </g>
+        <path d="M170 226c9-8 24-8 33 0" stroke="#6B3F24" stroke-width="6.5" stroke-linecap="round"/>
+        <path d="M217 226c9-8 24-8 33 0" stroke="#6B3F24" stroke-width="6.5" stroke-linecap="round"/>
+        <ellipse cx="186" cy="250" rx="15.5" ry="18" fill="#fff"/>
+        <ellipse cx="234" cy="250" rx="15.5" ry="18" fill="#fff"/>
+        <circle cx="188" cy="252" r="8" fill="#2B2B2B"/>
+        <circle cx="232" cy="252" r="8" fill="#2B2B2B"/>
+        <circle cx="190.5" cy="248.5" r="2.6" fill="#fff"/>
+        <circle cx="234.5" cy="248.5" r="2.6" fill="#fff"/>
+        <path d="M210 264c4 9 4 15 0 20" stroke="#D89C7A" stroke-width="5" stroke-linecap="round"/>
+        <path d="M188 296c13 14 31 14 44 0" stroke="#8A4A32" stroke-width="5" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="shade" x1="0" y1="382" x2="0" y2="540" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#000" stop-opacity="0"/>
+            <stop offset="1" stop-color="#000" stop-opacity=".16"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+</section>
+
+</body>
+</html>
