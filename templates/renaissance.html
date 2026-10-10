@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Renaissance | AI-native design studio</title>
+<meta name="description" content="Renaissance is an AI-native design studio for identity, websites and product UI. AI drafts, we decide." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,opsz,wght@0,5..1200,400;0,5..1200,500;0,5..1200,600;1,5..1200,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#EDE7DA;
+    --cream-2:#E6DFD0;
+    --ink:#191713;
+    --ink-2:#2B2822;
+    --body:#555045;
+    --muted:#8C8577;
+    --line:rgba(25,23,19,.14);
+    --line-soft:rgba(25,23,19,.08);
+    --gold:#B08A4A;
+    --dark:#161512;
+    --dark-line:rgba(255,255,255,.12);
+    --serif:'Playfair Display',Georgia,serif;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --max:1160px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--ink);
+    -webkit-font-smoothing:antialiased;line-height:1.5}
+  ::selection{background:var(--ink);color:var(--cream)}
+  a{text-decoration:none;color:inherit}
+  img,svg{display:block;max-width:100%}
+  .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 clamp(20px,4vw,44px)}
+  .kicker{font-size:11.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    padding:14px 26px;border-radius:999px;font-size:12.5px;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;border:1px solid transparent;cursor:pointer;
+    transition:transform .18s var(--ease),background .18s,border-color .18s,color .18s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn--ink{background:var(--ink);color:var(--cream)}
+  .btn--ink:hover{background:#000}
+  .btn--line{border-color:var(--line);color:var(--ink);background:transparent}
+  .btn--line:hover{border-color:var(--ink)}
+  .btn--light{background:var(--cream);color:var(--ink)}
+  .btn--outline-light{border-color:var(--dark-line);color:var(--cream);background:transparent}
+  .btn--outline-light:hover{border-color:var(--cream)}
+
+  /* ---------- NAV ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(237,231,218,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line-soft)}
+  .nav__inner{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{font-family:var(--serif);font-weight:500;font-size:19px;letter-spacing:-.01em}
+  .brand sup{font-family:'Inter';font-size:9px;vertical-align:super;color:var(--muted)}
+  .nav__links{display:flex;gap:30px}
+  .nav__links a{font-size:13px;font-weight:500;letter-spacing:.04em;color:var(--body);transition:color .18s}
+  .nav__links a:hover{color:var(--ink)}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;overflow:hidden;padding:clamp(48px,7vw,84px) 0 clamp(60px,7vw,96px)}
+  .hero__inner{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+  h1{font-family:var(--serif);font-weight:500;line-height:.98;letter-spacing:-.015em;
+    font-size:clamp(46px,7.4vw,108px);text-transform:uppercase}
+  .hero__lede{margin-top:28px;max-width:40ch;color:var(--body);font-size:16px;line-height:1.7}
+  .hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+  .hero__art{position:relative;justify-self:center;width:min(440px,100%)}
+  .hero__art svg{width:100%;height:auto}
+
+  /* ---------- NUMBERS CARD ---------- */
+  .numbers{position:relative;margin-top:clamp(40px,5vw,64px);border-radius:22px;
+    background:rgba(255,255,255,.55);border:1px solid var(--line);backdrop-filter:blur(6px);
+    padding:clamp(30px,4vw,46px);display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .numbers__title{position:absolute;top:-13px;left:clamp(30px,4vw,46px);background:var(--cream);
+    padding:0 12px;font-family:var(--serif);font-size:17px;letter-spacing:.02em}
+  .num h4{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:10px}
+  .num .v{font-family:var(--serif);font-size:clamp(30px,4vw,46px);letter-spacing:-.01em}
+
+  /* ---------- DARK BANDS ---------- */
+  .band{background:var(--dark);color:#F1EEE6}
+  .band .kicker{color:#9A9384}
+  .band h2{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;line-height:1.02;
+    font-size:clamp(30px,4.2vw,58px);text-transform:uppercase}
+  .band p{color:#B9B2A4;font-size:15.5px;line-height:1.7;max-width:52ch}
+
+  .band--split{padding:clamp(56px,7vw,96px) 0}
+  .band__row{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:center}
+  .band__row.rev{grid-template-columns:1.1fr .9fr}
+  .band__art{display:grid;place-items:center}
+  .band__art svg{width:min(320px,72%)}
+
+  /* ---------- STEPS ---------- */
+  .steps{padding:clamp(56px,7vw,96px) 0}
+  .steps h2{font-family:var(--serif);font-weight:500;line-height:1.02;
+    font-size:clamp(30px,4.2vw,56px);text-transform:uppercase;margin-bottom:46px}
+  .step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .step{border-top:1px solid var(--line);padding-top:22px}
+  .step .n{font-family:var(--serif);font-size:15px;color:var(--gold);margin-bottom:12px}
+  .step h3{font-size:16px;font-weight:600;margin-bottom:9px}
+  .step p{color:var(--body);font-size:14.5px;line-height:1.65}
+
+  /* ---------- FOOTER ---------- */
+  .footer{background:var(--dark);color:#F1EEE6;padding:64px 0 40px}
+  .footer__row{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;flex-wrap:wrap}
+  .footer h3{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4vw,54px);
+    text-transform:uppercase;line-height:1}
+  .footer__links{display:flex;gap:28px;flex-wrap:wrap}
+  .footer__links a{font-size:13px;color:#B9B2A4;letter-spacing:.04em}
+  .footer__links a:hover{color:#fff}
+  .footer__base{margin-top:48px;padding-top:22px;border-top:1px solid var(--dark-line);
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12.5px;color:#7E7869}
+
+  @media(max-width:900px){
+    .hero__inner,.band__row,.band__row.rev{grid-template-columns:1fr;gap:34px}
+    .hero__art{order:-1;width:min(300px,70%)}
+    .step-grid,.numbers{grid-template-columns:1fr}
+    .nav__links{display:none}
+  }
+  @media(max-width:560px){
+    .hero__cta .btn{flex:1}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="container nav__inner">
+    <a href="#" class="brand">Renaissance<sup>AI</sup></a>
+    <nav class="nav__links">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#journal">Journal</a>
+      <a href="#studio">Studio</a>
+    </nav>
+    <a href="#studio" class="btn btn--ink">Book a call</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero__inner">
+      <div>
+        <p class="kicker">AI-native design studio</p>
+        <h1>Brands people fall for.</h1>
+        <p class="hero__lede">A small studio for identity, websites and product UI. AI drafts, we decide.</p>
+        <div class="hero__cta">
+          <a href="#studio" class="btn btn--ink">Book a call</a>
+          <a href="#work" class="btn btn--line">See the work
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__art" aria-hidden="true">
+        <svg viewBox="0 0 420 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- classical figure, line art -->
+          <g stroke="#B08A4A" stroke-width="1.4" stroke-linecap="round" opacity=".9">
+            <!-- halo -->
+            <ellipse cx="210" cy="150" rx="96" ry="30" fill="none"/>
+            <ellipse cx="210" cy="150" rx="120" ry="42" fill="none" opacity=".5"/>
+            <!-- head -->
+            <path d="M210 92c22 0 38 20 38 46 0 30-18 54-38 54s-38-24-38-54c0-26 16-46 38-46z" fill="#F6F1E7"/>
+            <path d="M186 150c8 10 40 10 48 0" fill="none"/>
+            <!-- hair -->
+            <path d="M172 132c-4-34 18-52 38-52s42 18 38 52c-6-18-16-26-30-24-6-10-22-14-34-6-8 6-12 18-12 30z" fill="#E4D6BE"/>
+            <!-- shoulders / robe -->
+            <path d="M210 196c-42 0-78 30-92 76-6 20-10 44-12 68h208c-2-24-6-48-12-68-14-46-50-76-92-76z" fill="#F6F1E7"/>
+            <!-- drapery folds -->
+            <path d="M150 250c14 26 20 58 20 90M270 250c-14 26-20 58-20 90M210 210v130" opacity=".55"/>
+            <path d="M126 300c10 18 16 40 18 62M294 300c-10 18-16 40-18 62" opacity=".4"/>
+          </g>
+          <!-- base plinth -->
+          <rect x="118" y="404" width="184" height="18" rx="3" fill="#E4D6BE" stroke="#B08A4A" stroke-width="1.2"/>
+          <rect x="132" y="422" width="156" height="14" rx="3" fill="#DCCBAE"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- STUDIO NUMBERS -->
+    <div class="numbers" id="work">
+      <span class="numbers__title">Studio numbers</span>
+      <div class="num"><h4>Projects shipped</h4><div class="v">140</div></div>
+      <div class="num"><h4>First concepts in</h4><div class="v">72 hours</div></div>
+      <div class="num"><h4>Working since</h4><div class="v">March 2019</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BAND: A SYSTEM, NOT SCREENS -->
+<section class="band band--split" id="process">
+  <div class="container band__row">
+    <div class="band__art" aria-hidden="true">
+      <svg viewBox="0 0 300 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#8A8478" stroke-width="1.2" stroke-linejoin="round">
+          <path d="M150 40l86 50v100l-86 50-86-50V90z" fill="#1E1C18"/>
+          <path d="M150 40v100M64 90l86 50 86-50M150 140v100" opacity=".6"/>
+        </g>
+        <path d="M150 130l40 24v40l-40 24-40-24v-40z" fill="#F6F1E7" opacity=".9"/>
+        <path d="M150 130v44M110 154l40 20 40-20M150 174v44" stroke="#B08A4A" stroke-width="1.3"/>
+        <circle cx="150" cy="164" r="9" fill="#B08A4A"/>
+      </svg>
+    </div>
+    <div>
+      <p class="kicker">What you get</p>
+      <h2 style="margin-top:16px">A system, not screens</h2>
+      <p style="margin-top:18px">You get the type scale, the colour tokens, the component library and the file that made them, documented closely enough that your engineers never have to guess a value. Every project ships with the source, not just the exports.</p>
+      <div class="hero__cta" style="margin-top:28px">
+        <a href="#" class="btn btn--light">See a handoff</a>
+        <a href="#" class="btn btn--outline-light">What's included</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BAND: AI DRAFTS, WE DECIDE -->
+<section class="band band--split" style="padding-top:0">
+  <div class="container band__row rev">
+    <div>
+      <p class="kicker">How we work</p>
+      <h2 style="margin-top:16px">AI drafts, we decide</h2>
+      <p style="margin-top:18px">We generate twenty routes before lunch and throw away nineteen. AI covers the ground that used to take a month of moodboards. Choosing which one is right stays human, and so does the last ten percent.</p>
+      <div class="hero__cta" style="margin-top:28px">
+        <a href="#work" class="btn btn--light">See the work</a>
+        <a href="#studio" class="btn btn--outline-light">Book a call</a>
+      </div>
+    </div>
+    <div class="band__art" aria-hidden="true">
+      <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#8A8478" stroke-width="1.1">
+          <circle cx="160" cy="160" r="120"/>
+          <circle cx="160" cy="160" r="86"/>
+          <circle cx="160" cy="160" r="52"/>
+          <path d="M160 40v240M40 160h240M75 75l170 170M245 75L75 245" opacity=".7"/>
+        </g>
+        <path d="M160 60l16 84 84 16-84 16-16 84-16-84-84-16 84-16z" fill="#F6F1E7" opacity=".92"/>
+        <circle cx="160" cy="160" r="10" fill="#B08A4A"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO GET STARTED -->
+<section class="steps" id="studio">
+  <div class="container">
+    <p class="kicker">How to get started</p>
+    <h2 style="margin-top:14px">Three moves, one call</h2>
+    <div class="step-grid">
+      <div class="step">
+        <div class="n">01</div>
+        <h3>Send the brief</h3>
+        <p>Tell us what you are building and where it stands. A paragraph is enough to start.</p>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <h3>We draft routes</h3>
+        <p>Within 72 hours you get first concepts, with the reasoning behind each one.</p>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <h3>We decide together</h3>
+        <p>Pick a direction, and we take it to a shipped system with the source included.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__row">
+      <h3>Let's make<br>something<br>worth keeping</h3>
+      <div>
+        <a href="#" class="btn btn--light">Book a call</a>
+        <div class="footer__links" style="margin-top:26px">
+          <a href="#work">Work</a>
+          <a href="#process">Process</a>
+          <a href="#journal">Journal</a>
+          <a href="#studio">Studio</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© 2026 Renaissance AI Design. AI drafts, we decide.</span>
+      <span>hello@renaissance.studio</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

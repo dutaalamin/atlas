@@ -196,6 +196,16 @@
       "preview": "assets/img/regalia-1.png",
       "full": "assets/img/regalia-full.png",
       "url": "templates/regalia.html"
+    },
+    {
+      "id": "renaissance",
+      "name": "Renaissance",
+      "category": "AI Studio",
+      "collection": "landing",
+      "accent": "#B08A4A",
+      "preview": "assets/img/renaissance-1.png",
+      "full": "assets/img/renaissance-full.png",
+      "url": "templates/renaissance.html"
     }
   ]
 }

@@ -158,10 +158,12 @@
         <path d="M217 226c9-8 24-8 33 0" stroke="#6B3F24" stroke-width="6.5" stroke-linecap="round"/>
         <ellipse cx="186" cy="250" rx="15.5" ry="18" fill="#fff"/>
         <ellipse cx="234" cy="250" rx="15.5" ry="18" fill="#fff"/>
-        <circle cx="188" cy="252" r="8" fill="#2B2B2B"/>
-        <circle cx="232" cy="252" r="8" fill="#2B2B2B"/>
-        <circle cx="190.5" cy="248.5" r="2.6" fill="#fff"/>
-        <circle cx="234.5" cy="248.5" r="2.6" fill="#fff"/>
+        <g class="pupils">
+          <circle cx="188" cy="252" r="8" fill="#2B2B2B"/>
+          <circle cx="232" cy="252" r="8" fill="#2B2B2B"/>
+          <circle cx="190.5" cy="248.5" r="2.6" fill="#fff"/>
+          <circle cx="234.5" cy="248.5" r="2.6" fill="#fff"/>
+        </g>
         <path d="M210 264c4 9 4 15 0 20" stroke="#D89C7A" stroke-width="5" stroke-linecap="round"/>
         <path d="M188 296c13 14 31 14 44 0" stroke="#8A4A32" stroke-width="5" stroke-linecap="round"/>
         <defs>
@@ -175,6 +177,30 @@
   </div>
 
 </section>
+
+<script>
+  // Mata karakter mengikuti kursor.
+  (function () {
+    var pupils = document.querySelector('.pupils');
+    if (!pupils) return;
+    var max = 6;
+    function move(e) {
+      var r = pupils.getBoundingClientRect();
+      var cx = r.left + r.width / 2;
+      var cy = r.top + r.height / 2;
+      var dx = e.clientX - cx;
+      var dy = e.clientY - cy;
+      var len = Math.hypot(dx, dy) || 1;
+      var d = Math.min(len / 40, 1) * max;
+      pupils.setAttribute('transform',
+        'translate(' + (dx / len * d).toFixed(2) + ' ' + (dy / len * d).toFixed(2) + ')');
+    }
+    window.addEventListener('mousemove', move);
+    window.addEventListener('touchmove', function (e) {
+      if (e.touches[0]) move(e.touches[0]);
+    }, { passive: true });
+  })();
+</script>
 
 </body>
 </html>
