@@ -166,6 +166,16 @@
       "preview": "assets/img/hero-hush-1.png",
       "full": "assets/img/hero-hush-full.png",
       "url": "templates/hero-hush.html"
+    },
+    {
+      "id": "galaxa",
+      "name": "Cosmic Hero",
+      "category": "Section · Hero",
+      "collection": "hero",
+      "accent": "#FF7A1A",
+      "preview": "assets/img/galaxa-1.png",
+      "full": "assets/img/galaxa-full.png",
+      "url": "templates/galaxa.html"
     }
   ]
 }

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Galaxa | Section template</title>
+<meta name="description" content="A dark cosmic hero section: dot-matrix nebula backdrop, oversized headline and an email capture." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050506;
+    --ink:#FFFFFF;
+    --body:#B9B9C0;
+    --muted:#7C7C85;
+    --line:rgba(255,255,255,.14);
+    --line-soft:rgba(255,255,255,.08);
+    --glass:rgba(20,20,24,.72);
+    --accent:#FF7A1A;
+    --accent-soft:rgba(255,122,26,.16);
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);
+    -webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:#0a0a0a}
+  a{text-decoration:none;color:inherit}
+  img{display:block;max-width:100%}
+  button,input{font:inherit}
+
+  /* ---------- COSMOS BACKDROP ---------- */
+  .cosmos{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .cosmos__glow{
+    position:absolute;right:-18%;bottom:-30%;width:90%;height:130%;
+    background:radial-gradient(closest-side,
+      #FFFDF6 0%, #FFE1A6 7%, #FF9E3D 18%,
+      rgba(255,122,26,.55) 34%, rgba(255,122,26,.16) 56%, transparent 76%);
+    filter:blur(8px);
+  }
+  .cosmos__dots{
+    position:absolute;inset:0;
+    background-image:radial-gradient(circle, rgba(255,255,255,.95) 1.1px, transparent 1.5px);
+    background-size:13px 13px;
+    -webkit-mask-image:radial-gradient(closest-side at 74% 64%, #000 0%, #000 26%, transparent 74%);
+    mask-image:radial-gradient(closest-side at 74% 64%, #000 0%, #000 26%, transparent 74%);
+    mix-blend-mode:screen;
+  }
+  .cosmos__grain{
+    position:absolute;inset:0;
+    background:radial-gradient(120% 100% at 0% 100%, rgba(5,5,6,.96) 0%, rgba(5,5,6,.4) 42%, transparent 70%);
+  }
+
+  /* ---------- SHELL ---------- */
+  .wrap{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;
+        padding:20px clamp(20px,4vw,56px)}
+
+  /* ---------- NAV ---------- */
+  .nav{display:flex;align-items:center;justify-content:space-between}
+  .brand{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:10px 12px 10px 16px;border-radius:999px;
+    background:var(--glass);border:1px solid var(--line);
+    backdrop-filter:blur(10px);font-weight:600;font-size:15px;letter-spacing:-.01em;
+  }
+  .brand .mark{width:16px;height:16px;color:var(--accent)}
+  .brand .menu{
+    width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);
+    display:grid;place-items:center;color:#fff;margin-left:6px;
+  }
+  .brand .menu svg{width:14px;height:14px}
+  .nav__cta{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;border-radius:999px;background:#fff;color:#0a0a0a;
+    font-weight:600;font-size:14.5px;border:1px solid #fff;
+    transition:transform .18s var(--ease),background .18s;
+  }
+  .nav__cta:hover{transform:translateY(-1px);background:#F2F2F2}
+
+  /* ---------- HERO ---------- */
+  .hero{margin-top:auto;padding-bottom:clamp(24px,4vw,48px);position:relative}
+  h1{
+    font-weight:600;letter-spacing:-.03em;line-height:1.02;
+    font-size:clamp(40px,7.2vw,92px);max-width:14ch;color:#fff;
+  }
+  .lede{
+    color:var(--body);font-size:clamp(15px,1.5vw,17.5px);line-height:1.65;
+    max-width:46ch;margin-top:26px;
+  }
+
+  /* ---------- EMAIL CAPTURE ---------- */
+  .capture{
+    display:flex;align-items:center;gap:8px;margin-top:34px;
+    width:min(430px,100%);padding:7px;border-radius:999px;
+    background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);
+  }
+  .capture input{
+    flex:1;background:transparent;border:none;outline:none;color:#fff;
+    padding:11px 18px;font-size:14.5px;
+  }
+  .capture input::placeholder{color:var(--muted)}
+  .capture button{
+    border:none;cursor:pointer;background:#fff;color:#0a0a0a;font-weight:600;
+    font-size:14.5px;padding:12px 22px;border-radius:999px;white-space:nowrap;
+    transition:transform .18s var(--ease),background .18s;
+  }
+  .capture button:hover{transform:translateY(-1px);background:#F2F2F2}
+
+  /* ---------- FEATURE PILLS ---------- */
+  .features{
+    position:absolute;right:clamp(20px,4vw,56px);bottom:clamp(28px,5vw,64px);
+    display:flex;flex-direction:column;gap:10px;align-items:flex-end;
+  }
+  .features span{
+    padding:11px 20px;border-radius:999px;font-size:14px;font-weight:500;
+    color:#EDEDEF;background:var(--glass);border:1px solid var(--line);
+    backdrop-filter:blur(10px);transition:border-color .18s,color .18s;
+  }
+  .features span:hover{border-color:rgba(255,255,255,.32);color:#fff}
+
+  @media(max-width:900px){
+    .features{position:static;flex-direction:row;flex-wrap:wrap;align-items:flex-start;
+              margin-top:40px;justify-content:flex-start}
+  }
+  @media(max-width:560px){
+    h1{max-width:100%}
+    .capture{flex-direction:column;border-radius:20px;padding:10px}
+    .capture input,.capture button{width:100%;border-radius:999px}
+    .nav__cta span.long{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="cosmos" aria-hidden="true">
+  <div class="cosmos__glow"></div>
+  <div class="cosmos__dots"></div>
+  <div class="cosmos__grain"></div>
+</div>
+
+<div class="wrap">
+
+  <nav class="nav">
+    <a href="#" class="brand">
+      <svg class="mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 1.6l2.7 7.7L22.4 12l-7.7 2.7L12 22.4l-2.7-7.7L1.6 12l7.7-2.7z"/>
+      </svg>
+      Galaxa
+      <span class="menu" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M4 8h16M4 16h16"/>
+        </svg>
+      </span>
+    </a>
+    <a href="#" class="nav__cta">Join the list<span class="long"></span></a>
+  </nav>
+
+  <section class="hero">
+    <h1>Your cosmos is always in motion</h1>
+    <p class="lede">
+      Galaxa is your always-on window to the universe. Built by leading
+      astronomers, it brings you the wonder and clarity of deep space right
+      when you need it.
+    </p>
+
+    <form class="capture" onsubmit="return false">
+      <input type="email" placeholder="Your email address" aria-label="Your email address" />
+      <button type="submit">Join the list</button>
+    </form>
+
+    <div class="features">
+      <span>Live Star Maps</span>
+      <span>Real-time Tracking</span>
+      <span>Cosmic Insights</span>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
